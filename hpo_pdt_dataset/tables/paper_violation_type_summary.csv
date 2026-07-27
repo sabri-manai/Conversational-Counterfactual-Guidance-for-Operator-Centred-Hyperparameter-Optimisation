@@ -1,0 +1,9 @@
+condition_label,task_name,violation,count
+API (A),task_1,quality outside required range,1
+API (A),task_1,training fraction outside required range,1
+API (A),task_2,review budget outside required range,1
+API (A),task_2,training fraction outside required range,1
+API (A),task_3,quality lower than base configuration,1
+Conversational (B),task_1,training fraction outside allowed range,2
+Conversational (B),task_3,review budget not reduced by at least 5%,2
+Conversational (B),task_3,quality lower than base configuration,1

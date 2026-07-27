@@ -1,0 +1,739 @@
+{
+  "participant_id": "P-FB95A8",
+  "questionnaire_id": "P-FB95A8",
+  "session_id": "20260527_112250",
+  "study_condition": "condition_a",
+  "notebook_version": "2026-05-10-condition-a-v6",
+  "study_random_seed": 42,
+  "what_if_base_random_seed": 342,
+  "timing": {
+    "notebook_total_seconds_at_save": 1386.75,
+    "task_1_started_at_relative_seconds": 19.43,
+    "task_1_answered_at_relative_seconds": 492.72,
+    "task_1_elapsed_seconds": 473.29,
+    "task_2_started_at_relative_seconds": 492.72,
+    "task_2_answered_at_relative_seconds": 991.92,
+    "task_2_elapsed_seconds": 499.2,
+    "task_3_started_at_relative_seconds": 0.0,
+    "task_3_answered_at_relative_seconds": 1381.02,
+    "task_3_elapsed_seconds": 1381.02,
+    "task_1_attempt_count": 1,
+    "task_1_first_attempt_relative_seconds": 492.72,
+    "task_1_last_attempt_relative_seconds": 492.72,
+    "task_2_attempt_count": 1,
+    "task_2_first_attempt_relative_seconds": 991.92,
+    "task_2_last_attempt_relative_seconds": 991.92,
+    "task_3_attempt_count": 1,
+    "task_3_first_attempt_relative_seconds": 1381.02,
+    "task_3_last_attempt_relative_seconds": 1381.02
+  },
+  "save_runs_in_session": 1,
+  "attempt_log": [
+    {
+      "attempt_index": 1,
+      "task_name": "task_1",
+      "relative_seconds": 492.72,
+      "run_id": "1098",
+      "justification": "It satisfies all constraints. It has high F1 score and lower review budget.",
+      "confidence": "high"
+    },
+    {
+      "attempt_index": 2,
+      "task_name": "task_2",
+      "relative_seconds": 991.92,
+      "run_id": "1317",
+      "justification": "It fits the constraints. It has the highest F1 score from fitting options, lowest review budget and lowest training fraction.",
+      "confidence": "high"
+    },
+    {
+      "attempt_index": 3,
+      "task_name": "task_3",
+      "relative_seconds": 1381.02,
+      "run_id": "2930",
+      "justification": "Fits the constraints. High F1, lowest review budget out of fitting options, training fraction also plausibly low.",
+      "confidence": "high",
+      "base_run_id": 1889
+    }
+  ],
+  "save_history": [
+    {
+      "save_run": 1,
+      "saved_at_relative_seconds": 1386.75,
+      "answers_snapshot": {
+        "task_1": {
+          "run_id": "1098",
+          "justification": "It satisfies all constraints. It has high F1 score and lower review budget.",
+          "confidence": "high",
+          "answered_at": 1779874277.6450703
+        },
+        "task_2": {
+          "run_id": "1317",
+          "justification": "It fits the constraints. It has the highest F1 score from fitting options, lowest review budget and lowest training fraction.",
+          "confidence": "high",
+          "answered_at": 1779874776.8472273
+        },
+        "task_3": {
+          "run_id": "2930",
+          "justification": "Fits the constraints. High F1, lowest review budget out of fitting options, training fraction also plausibly low.",
+          "confidence": "high",
+          "answered_at": 1779875165.9461794
+        }
+      },
+      "records": [
+        {
+          "run_id": 1098,
+          "value": 0.8438003220611916,
+          "params_soft_train_fraction": 0.56,
+          "params_soft_review_budget": 0.37,
+          "params_soft_corruption_level": "mild",
+          "display_order": 8,
+          "shown_in_option_table": true,
+          "quality_rank_within_displayed_options": 11,
+          "review_budget_rank_within_displayed_options": 9,
+          "quality_margin_lower": 0.043800322061191554,
+          "quality_margin_upper": 0.07619967793880844,
+          "train_fraction_margin_lower": 0.16000000000000003,
+          "train_fraction_margin_upper": 0.1399999999999999,
+          "review_budget_margin_lower": 0.37,
+          "review_budget_margin_upper": 0.030000000000000027,
+          "quality_ok": true,
+          "train_fraction_ok": true,
+          "review_budget_ok": true,
+          "corruption_ok": true,
+          "valid_selection": true,
+          "n_violations": 0,
+          "task_name": "task_1",
+          "base_run_id": null,
+          "base_quality_score": null,
+          "base_review_budget": null,
+          "base_training_fraction": null,
+          "base_corruption_level": null,
+          "minimum_acceptable_quality": null,
+          "required_max_review_budget": null,
+          "same_performance_ok": null,
+          "review_budget_5pct_lower_ok": null,
+          "different_from_base_ok": null,
+          "quality_drop_from_base": null,
+          "review_budget_reduction_absolute": null,
+          "review_budget_reduction_percent": null,
+          "candidate_type": null,
+          "valid_what_if": null,
+          "justification": "It satisfies all constraints. It has high F1 score and lower review budget.",
+          "confidence": "high"
+        },
+        {
+          "run_id": 1317,
+          "value": 0.8239845261121856,
+          "params_soft_train_fraction": 0.32,
+          "params_soft_review_budget": 0.25,
+          "params_soft_corruption_level": "none",
+          "display_order": 9,
+          "shown_in_option_table": true,
+          "quality_rank_within_displayed_options": 9,
+          "review_budget_rank_within_displayed_options": 1,
+          "quality_margin_lower": 0.04398452611218562,
+          "quality_margin_upper": 0.08601547388781439,
+          "train_fraction_margin_lower": 0.12,
+          "train_fraction_margin_upper": 0.27999999999999997,
+          "review_budget_margin_lower": 0.25,
+          "review_budget_margin_upper": 0.04999999999999999,
+          "quality_ok": true,
+          "train_fraction_ok": true,
+          "review_budget_ok": true,
+          "corruption_ok": true,
+          "valid_selection": true,
+          "n_violations": 0,
+          "task_name": "task_2",
+          "base_run_id": null,
+          "base_quality_score": null,
+          "base_review_budget": null,
+          "base_training_fraction": null,
+          "base_corruption_level": null,
+          "minimum_acceptable_quality": null,
+          "required_max_review_budget": null,
+          "same_performance_ok": null,
+          "review_budget_5pct_lower_ok": null,
+          "different_from_base_ok": null,
+          "quality_drop_from_base": null,
+          "review_budget_reduction_absolute": null,
+          "review_budget_reduction_percent": null,
+          "candidate_type": null,
+          "valid_what_if": null,
+          "justification": "It fits the constraints. It has the highest F1 score from fitting options, lowest review budget and lowest training fraction.",
+          "confidence": "high"
+        },
+        {
+          "run_id": 2930,
+          "value": 0.8707964601769912,
+          "params_soft_train_fraction": 0.86,
+          "params_soft_review_budget": 0.305,
+          "params_soft_corruption_level": "none",
+          "task_name": "task_3",
+          "display_order": null,
+          "shown_in_option_table": false,
+          "quality_rank_within_displayed_options": null,
+          "review_budget_rank_within_displayed_options": null,
+          "base_run_id": 1889,
+          "base_quality_score": 0.84984,
+          "base_review_budget": 0.375,
+          "base_training_fraction": 0.95,
+          "base_corruption_level": "strong",
+          "minimum_acceptable_quality": 0.84984,
+          "required_max_review_budget": 0.355,
+          "quality_ok": null,
+          "train_fraction_ok": null,
+          "review_budget_ok": null,
+          "corruption_ok": null,
+          "quality_margin_lower": 0.020956460176991154,
+          "quality_margin_upper": null,
+          "train_fraction_margin_lower": null,
+          "train_fraction_margin_upper": null,
+          "review_budget_margin_lower": null,
+          "review_budget_margin_upper": 0.04999999999999999,
+          "same_performance_ok": true,
+          "review_budget_5pct_lower_ok": true,
+          "different_from_base_ok": true,
+          "quality_drop_from_base": -0.020956460176991154,
+          "review_budget_reduction_absolute": 0.07,
+          "review_budget_reduction_percent": 0.18666666666666668,
+          "valid_what_if": true,
+          "valid_selection": true,
+          "n_violations": 0,
+          "candidate_type": null,
+          "justification": "Fits the constraints. High F1, lowest review budget out of fitting options, training fraction also plausibly low.",
+          "confidence": "high"
+        }
+      ]
+    }
+  ],
+  "displayed_order": [
+    {
+      "task_name": "task_1",
+      "run_id": 2738,
+      "display_order": 1
+    },
+    {
+      "task_name": "task_1",
+      "run_id": 2544,
+      "display_order": 2
+    },
+    {
+      "task_name": "task_1",
+      "run_id": 2549,
+      "display_order": 3
+    },
+    {
+      "task_name": "task_1",
+      "run_id": 2553,
+      "display_order": 4
+    },
+    {
+      "task_name": "task_1",
+      "run_id": 2565,
+      "display_order": 5
+    },
+    {
+      "task_name": "task_1",
+      "run_id": 1213,
+      "display_order": 6
+    },
+    {
+      "task_name": "task_1",
+      "run_id": 2572,
+      "display_order": 7
+    },
+    {
+      "task_name": "task_1",
+      "run_id": 1098,
+      "display_order": 8
+    },
+    {
+      "task_name": "task_1",
+      "run_id": 2541,
+      "display_order": 9
+    },
+    {
+      "task_name": "task_1",
+      "run_id": 956,
+      "display_order": 10
+    },
+    {
+      "task_name": "task_1",
+      "run_id": 615,
+      "display_order": 11
+    },
+    {
+      "task_name": "task_1",
+      "run_id": 2449,
+      "display_order": 12
+    },
+    {
+      "task_name": "task_2",
+      "run_id": 2565,
+      "display_order": 1
+    },
+    {
+      "task_name": "task_2",
+      "run_id": 2553,
+      "display_order": 2
+    },
+    {
+      "task_name": "task_2",
+      "run_id": 1481,
+      "display_order": 3
+    },
+    {
+      "task_name": "task_2",
+      "run_id": 2738,
+      "display_order": 4
+    },
+    {
+      "task_name": "task_2",
+      "run_id": 716,
+      "display_order": 5
+    },
+    {
+      "task_name": "task_2",
+      "run_id": 2549,
+      "display_order": 6
+    },
+    {
+      "task_name": "task_2",
+      "run_id": 2656,
+      "display_order": 7
+    },
+    {
+      "task_name": "task_2",
+      "run_id": 2548,
+      "display_order": 8
+    },
+    {
+      "task_name": "task_2",
+      "run_id": 1317,
+      "display_order": 9
+    },
+    {
+      "task_name": "task_2",
+      "run_id": 2541,
+      "display_order": 10
+    },
+    {
+      "task_name": "task_2",
+      "run_id": 2544,
+      "display_order": 11
+    },
+    {
+      "task_name": "task_3",
+      "base_run_id": 1889,
+      "run_id": 2452,
+      "display_order": 1
+    },
+    {
+      "task_name": "task_3",
+      "base_run_id": 1889,
+      "run_id": 108,
+      "display_order": 2
+    },
+    {
+      "task_name": "task_3",
+      "base_run_id": 1889,
+      "run_id": 2719,
+      "display_order": 3
+    },
+    {
+      "task_name": "task_3",
+      "base_run_id": 1889,
+      "run_id": 2339,
+      "display_order": 4
+    },
+    {
+      "task_name": "task_3",
+      "base_run_id": 1889,
+      "run_id": 2312,
+      "display_order": 5
+    },
+    {
+      "task_name": "task_3",
+      "base_run_id": 1889,
+      "run_id": 1138,
+      "display_order": 6
+    },
+    {
+      "task_name": "task_3",
+      "base_run_id": 1889,
+      "run_id": 2606,
+      "display_order": 7
+    },
+    {
+      "task_name": "task_3",
+      "base_run_id": 1889,
+      "run_id": 2322,
+      "display_order": 8
+    },
+    {
+      "task_name": "task_3",
+      "base_run_id": 1889,
+      "run_id": 2689,
+      "display_order": 9
+    },
+    {
+      "task_name": "task_3",
+      "base_run_id": 1889,
+      "run_id": 2730,
+      "display_order": 10
+    }
+  ],
+  "task_3_base_configuration": {
+    "run_id": 1889,
+    "quality_score": 0.84984,
+    "training_fraction": 0.95,
+    "review_budget": 0.375,
+    "corruption_level": "strong",
+    "minimum_acceptable_quality": 0.84984,
+    "required_max_review_budget": 0.355,
+    "required_review_budget_reduction_percent": 0.05
+  },
+  "task_3_candidate_diagnostics": [
+    {
+      "run_id": 2452,
+      "display_order": 1,
+      "candidate_type": "valid",
+      "valid_what_if": true,
+      "same_performance_ok": true,
+      "review_budget_5pct_lower_ok": true,
+      "different_from_base_ok": true,
+      "quality_drop_from_base": -0.05349307774227885,
+      "review_budget_reduction_absolute": 0.030000000000000027,
+      "review_budget_reduction_percent": 0.08000000000000007,
+      "base_run_id": 1889,
+      "base_quality_score": 0.8498402555910544,
+      "base_review_budget": 0.375,
+      "minimum_acceptable_quality": 0.8498402555910544,
+      "required_max_review_budget": 0.35624999999999996
+    },
+    {
+      "run_id": 108,
+      "display_order": 2,
+      "candidate_type": "invalid_quality_drop",
+      "valid_what_if": false,
+      "same_performance_ok": false,
+      "review_budget_5pct_lower_ok": true,
+      "different_from_base_ok": true,
+      "quality_drop_from_base": 0.708663785002819,
+      "review_budget_reduction_absolute": 0.034999999999999976,
+      "review_budget_reduction_percent": 0.09333333333333327,
+      "base_run_id": 1889,
+      "base_quality_score": 0.8498402555910544,
+      "base_review_budget": 0.375,
+      "minimum_acceptable_quality": 0.8498402555910544,
+      "required_max_review_budget": 0.35624999999999996
+    },
+    {
+      "run_id": 2719,
+      "display_order": 3,
+      "candidate_type": "valid",
+      "valid_what_if": true,
+      "same_performance_ok": true,
+      "review_budget_5pct_lower_ok": true,
+      "different_from_base_ok": true,
+      "quality_drop_from_base": -0.047638736005584326,
+      "review_budget_reduction_absolute": 0.034999999999999976,
+      "review_budget_reduction_percent": 0.09333333333333327,
+      "base_run_id": 1889,
+      "base_quality_score": 0.8498402555910544,
+      "base_review_budget": 0.375,
+      "minimum_acceptable_quality": 0.8498402555910544,
+      "required_max_review_budget": 0.35624999999999996
+    },
+    {
+      "run_id": 2339,
+      "display_order": 4,
+      "candidate_type": "invalid_budget_reduction",
+      "valid_what_if": false,
+      "same_performance_ok": true,
+      "review_budget_5pct_lower_ok": false,
+      "different_from_base_ok": true,
+      "quality_drop_from_base": -0.04481128411721147,
+      "review_budget_reduction_absolute": 0.010000000000000009,
+      "review_budget_reduction_percent": 0.02666666666666669,
+      "base_run_id": 1889,
+      "base_quality_score": 0.8498402555910544,
+      "base_review_budget": 0.375,
+      "minimum_acceptable_quality": 0.8498402555910544,
+      "required_max_review_budget": 0.35624999999999996
+    },
+    {
+      "run_id": 2312,
+      "display_order": 5,
+      "candidate_type": "invalid_budget_reduction",
+      "valid_what_if": false,
+      "same_performance_ok": true,
+      "review_budget_5pct_lower_ok": false,
+      "different_from_base_ok": true,
+      "quality_drop_from_base": -0.03832830194541237,
+      "review_budget_reduction_absolute": 0.010000000000000009,
+      "review_budget_reduction_percent": 0.02666666666666669,
+      "base_run_id": 1889,
+      "base_quality_score": 0.8498402555910544,
+      "base_review_budget": 0.375,
+      "minimum_acceptable_quality": 0.8498402555910544,
+      "required_max_review_budget": 0.35624999999999996
+    },
+    {
+      "run_id": 1138,
+      "display_order": 6,
+      "candidate_type": "invalid_quality_drop",
+      "valid_what_if": false,
+      "same_performance_ok": false,
+      "review_budget_5pct_lower_ok": true,
+      "different_from_base_ok": true,
+      "quality_drop_from_base": 0.28947579089857145,
+      "review_budget_reduction_absolute": 0.215,
+      "review_budget_reduction_percent": 0.5733333333333334,
+      "base_run_id": 1889,
+      "base_quality_score": 0.8498402555910544,
+      "base_review_budget": 0.375,
+      "minimum_acceptable_quality": 0.8498402555910544,
+      "required_max_review_budget": 0.35624999999999996
+    },
+    {
+      "run_id": 2606,
+      "display_order": 7,
+      "candidate_type": "invalid_quality_drop",
+      "valid_what_if": false,
+      "same_performance_ok": false,
+      "review_budget_5pct_lower_ok": true,
+      "different_from_base_ok": true,
+      "quality_drop_from_base": 0.3851937909445898,
+      "review_budget_reduction_absolute": 0.265,
+      "review_budget_reduction_percent": 0.7066666666666667,
+      "base_run_id": 1889,
+      "base_quality_score": 0.8498402555910544,
+      "base_review_budget": 0.375,
+      "minimum_acceptable_quality": 0.8498402555910544,
+      "required_max_review_budget": 0.35624999999999996
+    },
+    {
+      "run_id": 2322,
+      "display_order": 8,
+      "candidate_type": "invalid_budget_reduction",
+      "valid_what_if": false,
+      "same_performance_ok": true,
+      "review_budget_5pct_lower_ok": false,
+      "different_from_base_ok": true,
+      "quality_drop_from_base": -0.04481128411721147,
+      "review_budget_reduction_absolute": 0.010000000000000009,
+      "review_budget_reduction_percent": 0.02666666666666669,
+      "base_run_id": 1889,
+      "base_quality_score": 0.8498402555910544,
+      "base_review_budget": 0.375,
+      "minimum_acceptable_quality": 0.8498402555910544,
+      "required_max_review_budget": 0.35624999999999996
+    },
+    {
+      "run_id": 2689,
+      "display_order": 9,
+      "candidate_type": "valid",
+      "valid_what_if": true,
+      "same_performance_ok": true,
+      "review_budget_5pct_lower_ok": true,
+      "different_from_base_ok": true,
+      "quality_drop_from_base": -0.05100008054339944,
+      "review_budget_reduction_absolute": 0.034999999999999976,
+      "review_budget_reduction_percent": 0.09333333333333327,
+      "base_run_id": 1889,
+      "base_quality_score": 0.8498402555910544,
+      "base_review_budget": 0.375,
+      "minimum_acceptable_quality": 0.8498402555910544,
+      "required_max_review_budget": 0.35624999999999996
+    },
+    {
+      "run_id": 2730,
+      "display_order": 10,
+      "candidate_type": "valid",
+      "valid_what_if": true,
+      "same_performance_ok": true,
+      "review_budget_5pct_lower_ok": true,
+      "different_from_base_ok": true,
+      "quality_drop_from_base": -0.05100008054339944,
+      "review_budget_reduction_absolute": 0.034999999999999976,
+      "review_budget_reduction_percent": 0.09333333333333327,
+      "base_run_id": 1889,
+      "base_quality_score": 0.8498402555910544,
+      "base_review_budget": 0.375,
+      "minimum_acceptable_quality": 0.8498402555910544,
+      "required_max_review_budget": 0.35624999999999996
+    }
+  ],
+  "answers": [
+    {
+      "run_id": 1098,
+      "value": 0.8438003220611916,
+      "params_soft_train_fraction": 0.56,
+      "params_soft_review_budget": 0.37,
+      "params_soft_corruption_level": "mild",
+      "display_order": 8,
+      "shown_in_option_table": true,
+      "quality_rank_within_displayed_options": 11,
+      "review_budget_rank_within_displayed_options": 9,
+      "quality_margin_lower": 0.043800322061191554,
+      "quality_margin_upper": 0.07619967793880844,
+      "train_fraction_margin_lower": 0.16000000000000003,
+      "train_fraction_margin_upper": 0.1399999999999999,
+      "review_budget_margin_lower": 0.37,
+      "review_budget_margin_upper": 0.030000000000000027,
+      "quality_ok": true,
+      "train_fraction_ok": true,
+      "review_budget_ok": true,
+      "corruption_ok": true,
+      "valid_selection": true,
+      "n_violations": 0,
+      "task_name": "task_1",
+      "base_run_id": null,
+      "base_quality_score": null,
+      "base_review_budget": null,
+      "base_training_fraction": null,
+      "base_corruption_level": null,
+      "minimum_acceptable_quality": null,
+      "required_max_review_budget": null,
+      "same_performance_ok": null,
+      "review_budget_5pct_lower_ok": null,
+      "different_from_base_ok": null,
+      "quality_drop_from_base": null,
+      "review_budget_reduction_absolute": null,
+      "review_budget_reduction_percent": null,
+      "candidate_type": null,
+      "valid_what_if": null,
+      "justification": "It satisfies all constraints. It has high F1 score and lower review budget.",
+      "confidence": "high"
+    },
+    {
+      "run_id": 1317,
+      "value": 0.8239845261121856,
+      "params_soft_train_fraction": 0.32,
+      "params_soft_review_budget": 0.25,
+      "params_soft_corruption_level": "none",
+      "display_order": 9,
+      "shown_in_option_table": true,
+      "quality_rank_within_displayed_options": 9,
+      "review_budget_rank_within_displayed_options": 1,
+      "quality_margin_lower": 0.04398452611218562,
+      "quality_margin_upper": 0.08601547388781439,
+      "train_fraction_margin_lower": 0.12,
+      "train_fraction_margin_upper": 0.27999999999999997,
+      "review_budget_margin_lower": 0.25,
+      "review_budget_margin_upper": 0.04999999999999999,
+      "quality_ok": true,
+      "train_fraction_ok": true,
+      "review_budget_ok": true,
+      "corruption_ok": true,
+      "valid_selection": true,
+      "n_violations": 0,
+      "task_name": "task_2",
+      "base_run_id": null,
+      "base_quality_score": null,
+      "base_review_budget": null,
+      "base_training_fraction": null,
+      "base_corruption_level": null,
+      "minimum_acceptable_quality": null,
+      "required_max_review_budget": null,
+      "same_performance_ok": null,
+      "review_budget_5pct_lower_ok": null,
+      "different_from_base_ok": null,
+      "quality_drop_from_base": null,
+      "review_budget_reduction_absolute": null,
+      "review_budget_reduction_percent": null,
+      "candidate_type": null,
+      "valid_what_if": null,
+      "justification": "It fits the constraints. It has the highest F1 score from fitting options, lowest review budget and lowest training fraction.",
+      "confidence": "high"
+    },
+    {
+      "run_id": 2930,
+      "value": 0.8707964601769912,
+      "params_soft_train_fraction": 0.86,
+      "params_soft_review_budget": 0.305,
+      "params_soft_corruption_level": "none",
+      "task_name": "task_3",
+      "display_order": null,
+      "shown_in_option_table": false,
+      "quality_rank_within_displayed_options": null,
+      "review_budget_rank_within_displayed_options": null,
+      "base_run_id": 1889,
+      "base_quality_score": 0.84984,
+      "base_review_budget": 0.375,
+      "base_training_fraction": 0.95,
+      "base_corruption_level": "strong",
+      "minimum_acceptable_quality": 0.84984,
+      "required_max_review_budget": 0.355,
+      "quality_ok": null,
+      "train_fraction_ok": null,
+      "review_budget_ok": null,
+      "corruption_ok": null,
+      "quality_margin_lower": 0.020956460176991154,
+      "quality_margin_upper": null,
+      "train_fraction_margin_lower": null,
+      "train_fraction_margin_upper": null,
+      "review_budget_margin_lower": null,
+      "review_budget_margin_upper": 0.04999999999999999,
+      "same_performance_ok": true,
+      "review_budget_5pct_lower_ok": true,
+      "different_from_base_ok": true,
+      "quality_drop_from_base": -0.020956460176991154,
+      "review_budget_reduction_absolute": 0.07,
+      "review_budget_reduction_percent": 0.18666666666666668,
+      "valid_what_if": true,
+      "valid_selection": true,
+      "n_violations": 0,
+      "candidate_type": null,
+      "justification": "Fits the constraints. High F1, lowest review budget out of fitting options, training fraction also plausibly low.",
+      "confidence": "high"
+    }
+  ],
+  "tasks": {
+    "task_1": {
+      "quality_range": [
+        0.8,
+        0.92
+      ],
+      "train_fraction_range": [
+        0.4,
+        0.7
+      ],
+      "review_budget_range": [
+        0.0,
+        0.4
+      ],
+      "corruption_allowed": [
+        "none",
+        "mild",
+        "strong"
+      ]
+    },
+    "task_2": {
+      "quality_range": [
+        0.78,
+        0.91
+      ],
+      "train_fraction_range": [
+        0.2,
+        0.6
+      ],
+      "review_budget_range": [
+        0.0,
+        0.3
+      ],
+      "corruption_allowed": [
+        "none",
+        "mild"
+      ]
+    }
+  },
+  "what_if_task": {
+    "base_run_id": 1889,
+    "quality_tolerance": 0.0,
+    "review_budget_multiplier": 0.95,
+    "minimum_acceptable_quality": 0.84984,
+    "required_max_review_budget": 0.355
+  }
+}

@@ -1,0 +1,2930 @@
+{
+  "participant_id": "P-30C813",
+  "questionnaire_id": "P-30C813",
+  "session_id": "20260513_092413",
+  "study_condition": "condition_llm_interface",
+  "app_version": "2026-05-06-parser-valid-only-v2",
+  "session_started_at": "2026-05-13T09:24:13.150646+02:00",
+  "exported_at": "2026-05-13T09:40:16.518724+02:00",
+  "total_elapsed_seconds": 963.37,
+  "attempt_count": 5,
+  "active_task": "task_2",
+  "task_user_texts": {
+    "task_1": "I want predicted F1 between 0.8 and  0.9, training fraction between   0. and 0.65,  review budget  between 0.3 and  0.4 , and  corruption level can be vary ",
+    "task_2": "I want predicted f1 between 0.78 and 0.91, training fraction between 0.3 and 0.5, review budget between 0.2 and 0.3 and corruption level must be none or mild"
+  },
+  "task_chat_history": {},
+  "task_results_summary": {
+    "task_1": {
+      "n_options": 2,
+      "query_template": {
+        "objective": {
+          "type": "target_band",
+          "lower": 0.8,
+          "upper": 0.9,
+          "eps": 0.01
+        },
+        "soft_constraints": {
+          "params_soft_review_budget": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.4
+          },
+          "params_soft_train_fraction": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.4
+          },
+          "params_soft_corruption_level": {
+            "mode": "free"
+          }
+        },
+        "selection": {
+          "k": 3
+        },
+        "_meta": {
+          "used_fallback": false,
+          "attempts": 1,
+          "parser": "llm_only_with_repair"
+        },
+        "llm_provider": "OpenRouter",
+        "llm_model": "qwen/qwen-2.5-7b-instruct"
+      },
+      "anchor_runs": [
+        {
+          "source": "dataset_filter",
+          "n_valid_dataset_matches": 2,
+          "used_as_primary_source": true
+        },
+        {
+          "source": "counterfactual_generation_started",
+          "reason": "not_enough_factual_options",
+          "n_factual_options": 2,
+          "n_needed": 1
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2529,
+          "anchor_score": 0.897843920884358,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.8,
+            0.9
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2731,
+          "anchor_score": 0.8931386489817918,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.8,
+            0.9
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2325,
+          "anchor_score": 0.8928438132445735,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.8,
+            0.9
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        }
+      ],
+      "options": [
+        {
+          "cf_id": 0,
+          "params_backbone": "resnet18",
+          "params_batch_size": "8",
+          "params_center_crop_key": "none",
+          "params_coreset_sampling_ratio": 0.047,
+          "params_image_size_key": "224",
+          "params_layers_key": "l3",
+          "params_max_patches_per_image": "1024",
+          "params_num_neighbors": 3,
+          "params_pre_trained": "True",
+          "params_reduction": "mean",
+          "params_soft_corruption_level": "none",
+          "params_soft_review_budget": 0.355,
+          "params_soft_train_fraction": 0.34,
+          "value": 0.868421052631579
+        },
+        {
+          "cf_id": 1,
+          "params_backbone": "resnet18",
+          "params_batch_size": "16",
+          "params_center_crop_key": "0.875",
+          "params_coreset_sampling_ratio": 0.099,
+          "params_image_size_key": "256",
+          "params_layers_key": "l3",
+          "params_max_patches_per_image": "128",
+          "params_num_neighbors": 11,
+          "params_pre_trained": "True",
+          "params_reduction": "mean",
+          "params_soft_corruption_level": "mild",
+          "params_soft_review_budget": 0.3,
+          "params_soft_train_fraction": 0.39,
+          "value": 0.8092691622103387
+        }
+      ],
+      "explanation": "All shown options meet the requested constraints. The quality range was set from 0.800 to 0.900.\n\nOption A is the reference option due to its highest displayed quality.\n\nOption A has the highest displayed quality and the lowest training fraction. Compared to Option A, Option B offers slightly lower quality by 0.059, a lower review budget by 0.055, and a higher training fraction by 0.050. However, Option B also shows better robustness to corrupted data, specifically from clean-data settings to mild-corruption robustness.\n\nFor the best quality, choose Option A.\nFor the lowest review budget, choose Option B.\nFor a balanced choice considering quality, review budget, and training fraction, Option A is recommended.",
+      "n_valid_dataset_matches": 2
+    },
+    "task_2": {
+      "n_options": 3,
+      "query_template": {
+        "objective": {
+          "type": "target_band",
+          "lower": 0.78,
+          "upper": 0.91,
+          "eps": 0.01
+        },
+        "soft_constraints": {
+          "params_soft_review_budget": {
+            "mode": "range",
+            "lower": 0.2,
+            "upper": 0.3
+          },
+          "params_soft_train_fraction": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.5
+          },
+          "params_soft_corruption_level": {
+            "mode": "allowed",
+            "allowed": [
+              "mild",
+              "none"
+            ]
+          }
+        },
+        "selection": {
+          "k": 3
+        },
+        "_meta": {
+          "used_fallback": false,
+          "attempts": 1,
+          "parser": "llm_only_with_repair"
+        },
+        "llm_provider": "OpenRouter",
+        "llm_model": "qwen/qwen-2.5-7b-instruct"
+      },
+      "anchor_runs": [
+        {
+          "source": "dataset_filter",
+          "n_valid_dataset_matches": 3,
+          "used_as_primary_source": true
+        }
+      ],
+      "options": [
+        {
+          "cf_id": 0,
+          "params_backbone": "resnet34",
+          "params_batch_size": "16",
+          "params_center_crop_key": "0.875",
+          "params_coreset_sampling_ratio": 0.011,
+          "params_image_size_key": "256",
+          "params_layers_key": "l1_l2_l3",
+          "params_max_patches_per_image": "1024",
+          "params_num_neighbors": 16,
+          "params_pre_trained": "False",
+          "params_reduction": "max",
+          "params_soft_corruption_level": "none",
+          "params_soft_review_budget": 0.25,
+          "params_soft_train_fraction": 0.32,
+          "value": 0.8239845261121856
+        },
+        {
+          "cf_id": 1,
+          "params_backbone": "resnet18",
+          "params_batch_size": "16",
+          "params_center_crop_key": "0.875",
+          "params_coreset_sampling_ratio": 0.099,
+          "params_image_size_key": "256",
+          "params_layers_key": "l3",
+          "params_max_patches_per_image": "128",
+          "params_num_neighbors": 11,
+          "params_pre_trained": "True",
+          "params_reduction": "mean",
+          "params_soft_corruption_level": "mild",
+          "params_soft_review_budget": 0.3,
+          "params_soft_train_fraction": 0.39,
+          "value": 0.8092691622103387
+        },
+        {
+          "cf_id": 2,
+          "params_backbone": "resnet50",
+          "params_batch_size": "8",
+          "params_center_crop_key": "none",
+          "params_coreset_sampling_ratio": 0.061,
+          "params_image_size_key": "224",
+          "params_layers_key": "l2_l3",
+          "params_max_patches_per_image": "128",
+          "params_num_neighbors": 17,
+          "params_pre_trained": "False",
+          "params_reduction": "max",
+          "params_soft_corruption_level": "none",
+          "params_soft_review_budget": 0.285,
+          "params_soft_train_fraction": 0.32,
+          "value": 0.8065693430656934
+        }
+      ],
+      "explanation": "All options meet the required constraints. The quality range requested was between 0.780 and 0.910. The explanation focuses on the trade-offs between the options.\n\nOption A is the reference option for quality because it has the highest displayed quality. It also has the lowest review budget and the lowest training fraction.\n\nOption B has slightly lower quality by 0.015, a higher review budget by 0.050, and a higher training fraction by 0.070. However, it offers better robustness to mildly corrupted data compared to clean data.\n\nOption C also has slightly lower quality by 0.017, a higher review budget by 0.035, and maintains the same training fraction as Option A. It does not show any improvement in robustness to corrupted data.\n\nFor the best quality, choose Option A. For the lowest review budget, Option A is the best choice. If you want a balanced option considering quality, review budget, and training fraction, Option A is the best choice as well.",
+      "n_valid_dataset_matches": 3
+    }
+  },
+  "final_answers_by_task": {
+    "task_1": {
+      "task_name": "task_1",
+      "submitted_at": "2026-05-13T09:33:59.944382+02:00",
+      "relative_seconds": 586.79,
+      "selected_option_label": "Option A | quality=0.868 | review=0.355 | train=0.340 | corruption=none",
+      "selected_configuration": {
+        "cf_id": 0,
+        "params_backbone": "resnet18",
+        "params_batch_size": "8",
+        "params_center_crop_key": "none",
+        "params_coreset_sampling_ratio": 0.047,
+        "params_image_size_key": "224",
+        "params_layers_key": "l3",
+        "params_max_patches_per_image": "1024",
+        "params_num_neighbors": 3,
+        "params_pre_trained": "True",
+        "params_reduction": "mean",
+        "params_soft_corruption_level": "none",
+        "params_soft_review_budget": 0.355,
+        "params_soft_train_fraction": 0.34,
+        "value": 0.868421052631579,
+        "_score_source": "dataset_value",
+        "_source": "dataset_filter",
+        "_anchor_idx": -1,
+        "_anchor_score": 0.897843920884358,
+        "_signature": "params_backbone=resnet18|params_batch_size=8|params_center_crop_key=none|params_coreset_sampling_ratio=0.047000|params_image_size_key=224|params_layers_key=l3|params_max_patches_per_image=1024|params_num_neighbors=3.000000|params_pre_trained=True|params_reduction=mean|params_soft_corruption_level=none|params_soft_review_budget=0.355000|params_soft_train_fraction=0.340000",
+        "_source_priority": 0
+      },
+      "justification": "Option A offers better quality and lowest training fraction",
+      "confidence": "medium",
+      "attempt_count_at_submission": 3,
+      "current_query_template": {
+        "objective": {
+          "type": "target_band",
+          "lower": 0.8,
+          "upper": 0.9,
+          "eps": 0.01
+        },
+        "soft_constraints": {
+          "params_soft_review_budget": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.4
+          },
+          "params_soft_train_fraction": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.4
+          },
+          "params_soft_corruption_level": {
+            "mode": "free"
+          }
+        },
+        "selection": {
+          "k": 3
+        },
+        "_meta": {
+          "used_fallback": false,
+          "attempts": 1,
+          "parser": "llm_only_with_repair"
+        },
+        "llm_provider": "OpenRouter",
+        "llm_model": "qwen/qwen-2.5-7b-instruct"
+      },
+      "current_options": [
+        {
+          "cf_id": 0,
+          "params_backbone": "resnet18",
+          "params_batch_size": "8",
+          "params_center_crop_key": "none",
+          "params_coreset_sampling_ratio": 0.047,
+          "params_image_size_key": "224",
+          "params_layers_key": "l3",
+          "params_max_patches_per_image": "1024",
+          "params_num_neighbors": 3,
+          "params_pre_trained": "True",
+          "params_reduction": "mean",
+          "params_soft_corruption_level": "none",
+          "params_soft_review_budget": 0.355,
+          "params_soft_train_fraction": 0.34,
+          "value": 0.868421052631579
+        },
+        {
+          "cf_id": 1,
+          "params_backbone": "resnet18",
+          "params_batch_size": "16",
+          "params_center_crop_key": "0.875",
+          "params_coreset_sampling_ratio": 0.099,
+          "params_image_size_key": "256",
+          "params_layers_key": "l3",
+          "params_max_patches_per_image": "128",
+          "params_num_neighbors": 11,
+          "params_pre_trained": "True",
+          "params_reduction": "mean",
+          "params_soft_corruption_level": "mild",
+          "params_soft_review_budget": 0.3,
+          "params_soft_train_fraction": 0.39,
+          "value": 0.8092691622103387
+        }
+      ],
+      "current_explanation": "All shown options meet the requested constraints. The quality range was set from 0.800 to 0.900.\n\nOption A is the reference option due to its highest displayed quality.\n\nOption A has the highest displayed quality and the lowest training fraction. Compared to Option A, Option B offers slightly lower quality by 0.059, a lower review budget by 0.055, and a higher training fraction by 0.050. However, Option B also shows better robustness to corrupted data, specifically from clean-data settings to mild-corruption robustness.\n\nFor the best quality, choose Option A.\nFor the lowest review budget, choose Option B.\nFor a balanced choice considering quality, review budget, and training fraction, Option A is recommended.",
+      "task3_baseline": {
+        "run_id": 1889,
+        "value": 0.84984,
+        "params_soft_train_fraction": 0.95,
+        "params_soft_review_budget": 0.375,
+        "params_soft_corruption_level": "strong",
+        "task3_min_quality": 0.84984,
+        "task3_max_review_budget": 0.355
+      },
+      "was_update": false,
+      "analysis_fields": {
+        "selected_cf_id": 0,
+        "selected_option_name": "Option A",
+        "selected_run_id": null,
+        "selected_quality": 0.868421052631579,
+        "selected_review_budget": 0.355,
+        "selected_training_fraction": 0.34,
+        "selected_corruption_level": "none",
+        "displayed_option_count": 2,
+        "selected_source": "dataset_filter",
+        "selected_score_source": "dataset_value",
+        "display_order": 1,
+        "shown_in_option_table": true,
+        "quality_rank_within_displayed_options": 1,
+        "review_budget_rank_within_displayed_options": 2,
+        "training_fraction_rank_within_displayed_options": 1,
+        "corruption_robustness_rank_within_displayed_options": 2,
+        "analysis_task_type": "independent_constraints",
+        "required_quality_lower": 0.8,
+        "required_quality_upper": 0.92,
+        "required_train_fraction_lower": 0.4,
+        "required_train_fraction_upper": 0.7,
+        "required_review_budget_lower": 0.005,
+        "required_review_budget_upper": 0.4,
+        "required_corruption_allowed": [
+          "mild",
+          "none",
+          "strong"
+        ],
+        "quality_ok": true,
+        "train_fraction_ok": false,
+        "review_budget_ok": true,
+        "corruption_ok": true,
+        "quality_margin_lower": 0.06842105263157894,
+        "quality_margin_upper": 0.05157894736842106,
+        "train_fraction_margin_lower": -0.06,
+        "train_fraction_margin_upper": 0.35999999999999993,
+        "review_budget_margin_lower": 0.35,
+        "review_budget_margin_upper": 0.04500000000000004,
+        "same_performance_ok": null,
+        "review_budget_5pct_lower_ok": null,
+        "different_from_base_ok": null,
+        "quality_drop_from_base": null,
+        "quality_change_from_base": null,
+        "review_budget_reduction_absolute": null,
+        "review_budget_reduction_percent": null,
+        "valid_what_if": null,
+        "valid_selection": false,
+        "n_violations": 1,
+        "violated_constraints": [
+          "training fraction outside allowed range"
+        ]
+      },
+      "selected_cf_id": 0,
+      "selected_option_name": "Option A",
+      "selected_run_id": null,
+      "selected_quality": 0.868421052631579,
+      "selected_review_budget": 0.355,
+      "selected_training_fraction": 0.34,
+      "selected_corruption_level": "none",
+      "displayed_option_count": 2,
+      "selected_source": "dataset_filter",
+      "selected_score_source": "dataset_value",
+      "display_order": 1,
+      "shown_in_option_table": true,
+      "quality_rank_within_displayed_options": 1,
+      "review_budget_rank_within_displayed_options": 2,
+      "training_fraction_rank_within_displayed_options": 1,
+      "corruption_robustness_rank_within_displayed_options": 2,
+      "analysis_task_type": "independent_constraints",
+      "required_quality_lower": 0.8,
+      "required_quality_upper": 0.92,
+      "required_train_fraction_lower": 0.4,
+      "required_train_fraction_upper": 0.7,
+      "required_review_budget_lower": 0.005,
+      "required_review_budget_upper": 0.4,
+      "required_corruption_allowed": [
+        "mild",
+        "none",
+        "strong"
+      ],
+      "quality_ok": true,
+      "train_fraction_ok": false,
+      "review_budget_ok": true,
+      "corruption_ok": true,
+      "quality_margin_lower": 0.06842105263157894,
+      "quality_margin_upper": 0.05157894736842106,
+      "train_fraction_margin_lower": -0.06,
+      "train_fraction_margin_upper": 0.35999999999999993,
+      "review_budget_margin_lower": 0.35,
+      "review_budget_margin_upper": 0.04500000000000004,
+      "same_performance_ok": null,
+      "review_budget_5pct_lower_ok": null,
+      "different_from_base_ok": null,
+      "quality_drop_from_base": null,
+      "quality_change_from_base": null,
+      "review_budget_reduction_absolute": null,
+      "review_budget_reduction_percent": null,
+      "valid_what_if": null,
+      "valid_selection": false,
+      "n_violations": 1,
+      "violated_constraints": [
+        "training fraction outside allowed range"
+      ]
+    },
+    "task_2": {
+      "task_name": "task_2",
+      "submitted_at": "2026-05-13T09:40:16.474361+02:00",
+      "relative_seconds": 963.32,
+      "selected_option_label": "Option B | quality=0.809 | review=0.300 | train=0.390 | corruption=mild",
+      "selected_configuration": {
+        "cf_id": 1,
+        "params_backbone": "resnet18",
+        "params_batch_size": "16",
+        "params_center_crop_key": "0.875",
+        "params_coreset_sampling_ratio": 0.099,
+        "params_image_size_key": "256",
+        "params_layers_key": "l3",
+        "params_max_patches_per_image": "128",
+        "params_num_neighbors": 11,
+        "params_pre_trained": "True",
+        "params_reduction": "mean",
+        "params_soft_corruption_level": "mild",
+        "params_soft_review_budget": 0.3,
+        "params_soft_train_fraction": 0.39,
+        "value": 0.8092691622103387,
+        "_score_source": "dataset_value",
+        "_source": "dataset_filter",
+        "_anchor_idx": -1,
+        "_anchor_score": 0.897843920884358,
+        "_signature": "params_backbone=resnet18|params_batch_size=16|params_center_crop_key=0.875|params_coreset_sampling_ratio=0.099000|params_image_size_key=256|params_layers_key=l3|params_max_patches_per_image=128|params_num_neighbors=11.000000|params_pre_trained=True|params_reduction=mean|params_soft_corruption_level=mild|params_soft_review_budget=0.300000|params_soft_train_fraction=0.390000",
+        "_source_priority": 0
+      },
+      "justification": "because is  offers stronger robustness than a and c,   acceptable quality (f1) and training fraction",
+      "confidence": "medium",
+      "attempt_count_at_submission": 5,
+      "current_query_template": {
+        "objective": {
+          "type": "target_band",
+          "lower": 0.78,
+          "upper": 0.91,
+          "eps": 0.01
+        },
+        "soft_constraints": {
+          "params_soft_review_budget": {
+            "mode": "range",
+            "lower": 0.2,
+            "upper": 0.3
+          },
+          "params_soft_train_fraction": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.5
+          },
+          "params_soft_corruption_level": {
+            "mode": "allowed",
+            "allowed": [
+              "mild",
+              "none"
+            ]
+          }
+        },
+        "selection": {
+          "k": 3
+        },
+        "_meta": {
+          "used_fallback": false,
+          "attempts": 1,
+          "parser": "llm_only_with_repair"
+        },
+        "llm_provider": "OpenRouter",
+        "llm_model": "qwen/qwen-2.5-7b-instruct"
+      },
+      "current_options": [
+        {
+          "cf_id": 0,
+          "params_backbone": "resnet34",
+          "params_batch_size": "16",
+          "params_center_crop_key": "0.875",
+          "params_coreset_sampling_ratio": 0.011,
+          "params_image_size_key": "256",
+          "params_layers_key": "l1_l2_l3",
+          "params_max_patches_per_image": "1024",
+          "params_num_neighbors": 16,
+          "params_pre_trained": "False",
+          "params_reduction": "max",
+          "params_soft_corruption_level": "none",
+          "params_soft_review_budget": 0.25,
+          "params_soft_train_fraction": 0.32,
+          "value": 0.8239845261121856
+        },
+        {
+          "cf_id": 1,
+          "params_backbone": "resnet18",
+          "params_batch_size": "16",
+          "params_center_crop_key": "0.875",
+          "params_coreset_sampling_ratio": 0.099,
+          "params_image_size_key": "256",
+          "params_layers_key": "l3",
+          "params_max_patches_per_image": "128",
+          "params_num_neighbors": 11,
+          "params_pre_trained": "True",
+          "params_reduction": "mean",
+          "params_soft_corruption_level": "mild",
+          "params_soft_review_budget": 0.3,
+          "params_soft_train_fraction": 0.39,
+          "value": 0.8092691622103387
+        },
+        {
+          "cf_id": 2,
+          "params_backbone": "resnet50",
+          "params_batch_size": "8",
+          "params_center_crop_key": "none",
+          "params_coreset_sampling_ratio": 0.061,
+          "params_image_size_key": "224",
+          "params_layers_key": "l2_l3",
+          "params_max_patches_per_image": "128",
+          "params_num_neighbors": 17,
+          "params_pre_trained": "False",
+          "params_reduction": "max",
+          "params_soft_corruption_level": "none",
+          "params_soft_review_budget": 0.285,
+          "params_soft_train_fraction": 0.32,
+          "value": 0.8065693430656934
+        }
+      ],
+      "current_explanation": "All options meet the required constraints. The quality range requested was between 0.780 and 0.910. The explanation focuses on the trade-offs between the options.\n\nOption A is the reference option for quality because it has the highest displayed quality. It also has the lowest review budget and the lowest training fraction.\n\nOption B has slightly lower quality by 0.015, a higher review budget by 0.050, and a higher training fraction by 0.070. However, it offers better robustness to mildly corrupted data compared to clean data.\n\nOption C also has slightly lower quality by 0.017, a higher review budget by 0.035, and maintains the same training fraction as Option A. It does not show any improvement in robustness to corrupted data.\n\nFor the best quality, choose Option A. For the lowest review budget, Option A is the best choice. If you want a balanced option considering quality, review budget, and training fraction, Option A is the best choice as well.",
+      "task3_baseline": {
+        "run_id": 1889,
+        "value": 0.84984,
+        "params_soft_train_fraction": 0.95,
+        "params_soft_review_budget": 0.375,
+        "params_soft_corruption_level": "strong",
+        "task3_min_quality": 0.84984,
+        "task3_max_review_budget": 0.355
+      },
+      "was_update": false,
+      "analysis_fields": {
+        "selected_cf_id": 1,
+        "selected_option_name": "Option B",
+        "selected_run_id": null,
+        "selected_quality": 0.8092691622103387,
+        "selected_review_budget": 0.3,
+        "selected_training_fraction": 0.39,
+        "selected_corruption_level": "mild",
+        "displayed_option_count": 3,
+        "selected_source": "dataset_filter",
+        "selected_score_source": "dataset_value",
+        "display_order": 2,
+        "shown_in_option_table": true,
+        "quality_rank_within_displayed_options": 2,
+        "review_budget_rank_within_displayed_options": 3,
+        "training_fraction_rank_within_displayed_options": 3,
+        "corruption_robustness_rank_within_displayed_options": 1,
+        "analysis_task_type": "independent_constraints",
+        "required_quality_lower": 0.78,
+        "required_quality_upper": 0.91,
+        "required_train_fraction_lower": 0.2,
+        "required_train_fraction_upper": 0.6,
+        "required_review_budget_lower": 0.005,
+        "required_review_budget_upper": 0.3,
+        "required_corruption_allowed": [
+          "mild",
+          "none"
+        ],
+        "quality_ok": true,
+        "train_fraction_ok": true,
+        "review_budget_ok": true,
+        "corruption_ok": true,
+        "quality_margin_lower": 0.029269162210338706,
+        "quality_margin_upper": 0.1007308377896613,
+        "train_fraction_margin_lower": 0.19,
+        "train_fraction_margin_upper": 0.20999999999999996,
+        "review_budget_margin_lower": 0.295,
+        "review_budget_margin_upper": 0.0,
+        "same_performance_ok": null,
+        "review_budget_5pct_lower_ok": null,
+        "different_from_base_ok": null,
+        "quality_drop_from_base": null,
+        "quality_change_from_base": null,
+        "review_budget_reduction_absolute": null,
+        "review_budget_reduction_percent": null,
+        "valid_what_if": null,
+        "valid_selection": true,
+        "n_violations": 0,
+        "violated_constraints": []
+      },
+      "selected_cf_id": 1,
+      "selected_option_name": "Option B",
+      "selected_run_id": null,
+      "selected_quality": 0.8092691622103387,
+      "selected_review_budget": 0.3,
+      "selected_training_fraction": 0.39,
+      "selected_corruption_level": "mild",
+      "displayed_option_count": 3,
+      "selected_source": "dataset_filter",
+      "selected_score_source": "dataset_value",
+      "display_order": 2,
+      "shown_in_option_table": true,
+      "quality_rank_within_displayed_options": 2,
+      "review_budget_rank_within_displayed_options": 3,
+      "training_fraction_rank_within_displayed_options": 3,
+      "corruption_robustness_rank_within_displayed_options": 1,
+      "analysis_task_type": "independent_constraints",
+      "required_quality_lower": 0.78,
+      "required_quality_upper": 0.91,
+      "required_train_fraction_lower": 0.2,
+      "required_train_fraction_upper": 0.6,
+      "required_review_budget_lower": 0.005,
+      "required_review_budget_upper": 0.3,
+      "required_corruption_allowed": [
+        "mild",
+        "none"
+      ],
+      "quality_ok": true,
+      "train_fraction_ok": true,
+      "review_budget_ok": true,
+      "corruption_ok": true,
+      "quality_margin_lower": 0.029269162210338706,
+      "quality_margin_upper": 0.1007308377896613,
+      "train_fraction_margin_lower": 0.19,
+      "train_fraction_margin_upper": 0.20999999999999996,
+      "review_budget_margin_lower": 0.295,
+      "review_budget_margin_upper": 0.0,
+      "same_performance_ok": null,
+      "review_budget_5pct_lower_ok": null,
+      "different_from_base_ok": null,
+      "quality_drop_from_base": null,
+      "quality_change_from_base": null,
+      "review_budget_reduction_absolute": null,
+      "review_budget_reduction_percent": null,
+      "valid_what_if": null,
+      "valid_selection": true,
+      "n_violations": 0,
+      "violated_constraints": []
+    }
+  },
+  "generated_attempts": [
+    {
+      "attempt_number": 1,
+      "task_name": "task_1",
+      "timestamp": "2026-05-13T09:28:54.160975+02:00",
+      "relative_seconds": 281.01,
+      "user_text": "I want predicted F1 = 0.85, training fraction = 0.5,  review budget = 0.4 , and strong corruption level ",
+      "openrouter_model_id": "qwen/qwen-2.5-7b-instruct",
+      "anchor_count": 3,
+      "query_template": {
+        "objective": {
+          "type": "target_min",
+          "value": 0.85,
+          "eps": 0.01
+        },
+        "soft_constraints": {
+          "params_soft_review_budget": {
+            "mode": "fixed",
+            "value": 0.4
+          },
+          "params_soft_train_fraction": {
+            "mode": "fixed",
+            "value": 0.5
+          },
+          "params_soft_corruption_level": {
+            "mode": "allowed",
+            "allowed": [
+              "strong"
+            ]
+          }
+        },
+        "selection": {
+          "k": 3
+        },
+        "_meta": {
+          "used_fallback": false,
+          "attempts": 1,
+          "parser": "llm_only_with_repair"
+        },
+        "llm_provider": "OpenRouter",
+        "llm_model": "qwen/qwen-2.5-7b-instruct"
+      },
+      "anchor_runs": [
+        {
+          "source": "dataset_filter",
+          "n_valid_dataset_matches": 0,
+          "used_as_primary_source": false
+        },
+        {
+          "source": "counterfactual_generation_started",
+          "reason": "not_enough_factual_options",
+          "n_factual_options": 0,
+          "n_needed": 3
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2529,
+          "anchor_score": 0.897843920884358,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.85,
+            1.0
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2731,
+          "anchor_score": 0.8931386489817918,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.85,
+            1.0
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2325,
+          "anchor_score": 0.8928438132445735,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.85,
+            1.0
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        }
+      ],
+      "n_options": 0,
+      "options": [],
+      "explanation": "Only 0 valid alternative(s) were found after checking both existing factual configurations and generated counterfactual alternatives. The study interface requires at least 1 valid alternatives before showing options. Try relaxing the request slightly, for example by lowering the minimum F1 score or allowing a slightly higher review budget.",
+      "raw_explanation": "Only 0 valid alternative(s) were found after checking both existing factual configurations and generated counterfactual alternatives. The study interface requires at least 1 valid alternatives before showing options. Try relaxing the request slightly, for example by lowering the minimum F1 score or allowing a slightly higher review budget."
+    },
+    {
+      "attempt_number": 2,
+      "task_name": "task_1",
+      "timestamp": "2026-05-13T09:30:41.846327+02:00",
+      "relative_seconds": 388.7,
+      "user_text": "I want predicted F1 between 0.8 and  0.9, training fraction between   0. and 0.65,  review budget  between 0.3 and  0.4 , and strong corruption level ",
+      "openrouter_model_id": "qwen/qwen-2.5-7b-instruct",
+      "anchor_count": 3,
+      "query_template": {
+        "objective": {
+          "type": "target_band",
+          "lower": 0.8,
+          "upper": 0.9,
+          "eps": 0.01
+        },
+        "soft_constraints": {
+          "params_soft_review_budget": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.4
+          },
+          "params_soft_train_fraction": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.4
+          },
+          "params_soft_corruption_level": {
+            "mode": "allowed",
+            "allowed": [
+              "strong"
+            ]
+          }
+        },
+        "selection": {
+          "k": 3
+        },
+        "_meta": {
+          "used_fallback": false,
+          "attempts": 1,
+          "parser": "llm_only_with_repair"
+        },
+        "llm_provider": "OpenRouter",
+        "llm_model": "qwen/qwen-2.5-7b-instruct"
+      },
+      "anchor_runs": [
+        {
+          "source": "dataset_filter",
+          "n_valid_dataset_matches": 0,
+          "used_as_primary_source": false
+        },
+        {
+          "source": "counterfactual_generation_started",
+          "reason": "not_enough_factual_options",
+          "n_factual_options": 0,
+          "n_needed": 3
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2529,
+          "anchor_score": 0.897843920884358,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.8,
+            0.9
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2731,
+          "anchor_score": 0.8931386489817918,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.8,
+            0.9
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2325,
+          "anchor_score": 0.8928438132445735,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.8,
+            0.9
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        }
+      ],
+      "n_options": 0,
+      "options": [],
+      "explanation": "Only 0 valid alternative(s) were found after checking both existing factual configurations and generated counterfactual alternatives. The study interface requires at least 1 valid alternatives before showing options. Try relaxing the request slightly, for example by lowering the minimum F1 score or allowing a slightly higher review budget.",
+      "raw_explanation": "Only 0 valid alternative(s) were found after checking both existing factual configurations and generated counterfactual alternatives. The study interface requires at least 1 valid alternatives before showing options. Try relaxing the request slightly, for example by lowering the minimum F1 score or allowing a slightly higher review budget."
+    },
+    {
+      "attempt_number": 3,
+      "task_name": "task_1",
+      "timestamp": "2026-05-13T09:31:12.023511+02:00",
+      "relative_seconds": 418.87,
+      "user_text": "I want predicted F1 between 0.8 and  0.9, training fraction between   0. and 0.65,  review budget  between 0.3 and  0.4 , and  corruption level can be vary ",
+      "openrouter_model_id": "qwen/qwen-2.5-7b-instruct",
+      "anchor_count": 3,
+      "query_template": {
+        "objective": {
+          "type": "target_band",
+          "lower": 0.8,
+          "upper": 0.9,
+          "eps": 0.01
+        },
+        "soft_constraints": {
+          "params_soft_review_budget": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.4
+          },
+          "params_soft_train_fraction": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.4
+          },
+          "params_soft_corruption_level": {
+            "mode": "free"
+          }
+        },
+        "selection": {
+          "k": 3
+        },
+        "_meta": {
+          "used_fallback": false,
+          "attempts": 1,
+          "parser": "llm_only_with_repair"
+        },
+        "llm_provider": "OpenRouter",
+        "llm_model": "qwen/qwen-2.5-7b-instruct"
+      },
+      "anchor_runs": [
+        {
+          "source": "dataset_filter",
+          "n_valid_dataset_matches": 2,
+          "used_as_primary_source": true
+        },
+        {
+          "source": "counterfactual_generation_started",
+          "reason": "not_enough_factual_options",
+          "n_factual_options": 2,
+          "n_needed": 1
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2529,
+          "anchor_score": 0.897843920884358,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.8,
+            0.9
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2731,
+          "anchor_score": 0.8931386489817918,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.8,
+            0.9
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2325,
+          "anchor_score": 0.8928438132445735,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.8,
+            0.9
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        }
+      ],
+      "n_options": 2,
+      "options": [
+        {
+          "cf_id": 0,
+          "params_backbone": "resnet18",
+          "params_batch_size": "8",
+          "params_center_crop_key": "none",
+          "params_coreset_sampling_ratio": 0.047,
+          "params_image_size_key": "224",
+          "params_layers_key": "l3",
+          "params_max_patches_per_image": "1024",
+          "params_num_neighbors": 3,
+          "params_pre_trained": "True",
+          "params_reduction": "mean",
+          "params_soft_corruption_level": "none",
+          "params_soft_review_budget": 0.355,
+          "params_soft_train_fraction": 0.34,
+          "value": 0.868421052631579
+        },
+        {
+          "cf_id": 1,
+          "params_backbone": "resnet18",
+          "params_batch_size": "16",
+          "params_center_crop_key": "0.875",
+          "params_coreset_sampling_ratio": 0.099,
+          "params_image_size_key": "256",
+          "params_layers_key": "l3",
+          "params_max_patches_per_image": "128",
+          "params_num_neighbors": 11,
+          "params_pre_trained": "True",
+          "params_reduction": "mean",
+          "params_soft_corruption_level": "mild",
+          "params_soft_review_budget": 0.3,
+          "params_soft_train_fraction": 0.39,
+          "value": 0.8092691622103387
+        }
+      ],
+      "explanation": "All shown options meet the requested constraints. The quality range was set from 0.800 to 0.900.\n\nOption A is the reference option due to its highest displayed quality.\n\nOption A has the highest displayed quality and the lowest training fraction. Compared to Option A, Option B offers slightly lower quality by 0.059, a lower review budget by 0.055, and a higher training fraction by 0.050. However, Option B also shows better robustness to corrupted data, specifically from clean-data settings to mild-corruption robustness.\n\nFor the best quality, choose Option A.\nFor the lowest review budget, choose Option B.\nFor a balanced choice considering quality, review budget, and training fraction, Option A is recommended.",
+      "raw_explanation": "All shown options satisfy the requested constraints.\nThe requested quality range was 0.800 to 0.900.\nThe table gives the exact option values. The explanation below focuses only on the trade-offs.\nOption A is used as the quality reference because it has the highest displayed quality.\n\nOption A (highest displayed quality and lowest training fraction): this is the reference option for quality.\nOption B (lowest review budget): compared with Option A, it has 0.059 lower quality, 0.055 lower review budget, 0.050 higher training fraction, and higher robustness to corrupted data (clean-data setting → mild-corruption robustness).\n\nBest quality choice: Option A.\nLowest review-budget choice: Option B.\nBalanced choice: Option A, based on the combined quality, review budget, and training-fraction trade-off."
+    },
+    {
+      "attempt_number": 4,
+      "task_name": "task_2",
+      "timestamp": "2026-05-13T09:35:34.129916+02:00",
+      "relative_seconds": 680.98,
+      "user_text": "I want predicted f1 between 0.78 and 0.91, training fraction between 0.4 and 0.5, review budget between 0.2 and 0.3 and corruption level must be none or mild",
+      "openrouter_model_id": "qwen/qwen-2.5-7b-instruct",
+      "anchor_count": 3,
+      "query_template": {
+        "objective": {
+          "type": "target_band",
+          "lower": 0.78,
+          "upper": 0.91,
+          "eps": 0.01
+        },
+        "soft_constraints": {
+          "params_soft_review_budget": {
+            "mode": "range",
+            "lower": 0.2,
+            "upper": 0.3
+          },
+          "params_soft_train_fraction": {
+            "mode": "range",
+            "lower": 0.4,
+            "upper": 0.5
+          },
+          "params_soft_corruption_level": {
+            "mode": "allowed",
+            "allowed": [
+              "mild",
+              "none"
+            ]
+          }
+        },
+        "selection": {
+          "k": 3
+        },
+        "_meta": {
+          "used_fallback": false,
+          "attempts": 1,
+          "parser": "llm_only_with_repair"
+        },
+        "llm_provider": "OpenRouter",
+        "llm_model": "qwen/qwen-2.5-7b-instruct"
+      },
+      "anchor_runs": [
+        {
+          "source": "dataset_filter",
+          "n_valid_dataset_matches": 0,
+          "used_as_primary_source": false
+        },
+        {
+          "source": "counterfactual_generation_started",
+          "reason": "not_enough_factual_options",
+          "n_factual_options": 0,
+          "n_needed": 3
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2529,
+          "anchor_score": 0.897843920884358,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.78,
+            0.91
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2731,
+          "anchor_score": 0.8931386489817918,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.78,
+            0.91
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2325,
+          "anchor_score": 0.8928438132445735,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.78,
+            0.91
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        }
+      ],
+      "n_options": 0,
+      "options": [],
+      "explanation": "Only 0 valid alternative(s) were found after checking both existing factual configurations and generated counterfactual alternatives. The study interface requires at least 1 valid alternatives before showing options. Try relaxing the request slightly, for example by lowering the minimum F1 score or allowing a slightly higher review budget.",
+      "raw_explanation": "Only 0 valid alternative(s) were found after checking both existing factual configurations and generated counterfactual alternatives. The study interface requires at least 1 valid alternatives before showing options. Try relaxing the request slightly, for example by lowering the minimum F1 score or allowing a slightly higher review budget."
+    },
+    {
+      "attempt_number": 5,
+      "task_name": "task_2",
+      "timestamp": "2026-05-13T09:35:51.395556+02:00",
+      "relative_seconds": 698.24,
+      "user_text": "I want predicted f1 between 0.78 and 0.91, training fraction between 0.3 and 0.5, review budget between 0.2 and 0.3 and corruption level must be none or mild",
+      "openrouter_model_id": "qwen/qwen-2.5-7b-instruct",
+      "anchor_count": 3,
+      "query_template": {
+        "objective": {
+          "type": "target_band",
+          "lower": 0.78,
+          "upper": 0.91,
+          "eps": 0.01
+        },
+        "soft_constraints": {
+          "params_soft_review_budget": {
+            "mode": "range",
+            "lower": 0.2,
+            "upper": 0.3
+          },
+          "params_soft_train_fraction": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.5
+          },
+          "params_soft_corruption_level": {
+            "mode": "allowed",
+            "allowed": [
+              "mild",
+              "none"
+            ]
+          }
+        },
+        "selection": {
+          "k": 3
+        },
+        "_meta": {
+          "used_fallback": false,
+          "attempts": 1,
+          "parser": "llm_only_with_repair"
+        },
+        "llm_provider": "OpenRouter",
+        "llm_model": "qwen/qwen-2.5-7b-instruct"
+      },
+      "anchor_runs": [
+        {
+          "source": "dataset_filter",
+          "n_valid_dataset_matches": 3,
+          "used_as_primary_source": true
+        }
+      ],
+      "n_options": 3,
+      "options": [
+        {
+          "cf_id": 0,
+          "params_backbone": "resnet34",
+          "params_batch_size": "16",
+          "params_center_crop_key": "0.875",
+          "params_coreset_sampling_ratio": 0.011,
+          "params_image_size_key": "256",
+          "params_layers_key": "l1_l2_l3",
+          "params_max_patches_per_image": "1024",
+          "params_num_neighbors": 16,
+          "params_pre_trained": "False",
+          "params_reduction": "max",
+          "params_soft_corruption_level": "none",
+          "params_soft_review_budget": 0.25,
+          "params_soft_train_fraction": 0.32,
+          "value": 0.8239845261121856
+        },
+        {
+          "cf_id": 1,
+          "params_backbone": "resnet18",
+          "params_batch_size": "16",
+          "params_center_crop_key": "0.875",
+          "params_coreset_sampling_ratio": 0.099,
+          "params_image_size_key": "256",
+          "params_layers_key": "l3",
+          "params_max_patches_per_image": "128",
+          "params_num_neighbors": 11,
+          "params_pre_trained": "True",
+          "params_reduction": "mean",
+          "params_soft_corruption_level": "mild",
+          "params_soft_review_budget": 0.3,
+          "params_soft_train_fraction": 0.39,
+          "value": 0.8092691622103387
+        },
+        {
+          "cf_id": 2,
+          "params_backbone": "resnet50",
+          "params_batch_size": "8",
+          "params_center_crop_key": "none",
+          "params_coreset_sampling_ratio": 0.061,
+          "params_image_size_key": "224",
+          "params_layers_key": "l2_l3",
+          "params_max_patches_per_image": "128",
+          "params_num_neighbors": 17,
+          "params_pre_trained": "False",
+          "params_reduction": "max",
+          "params_soft_corruption_level": "none",
+          "params_soft_review_budget": 0.285,
+          "params_soft_train_fraction": 0.32,
+          "value": 0.8065693430656934
+        }
+      ],
+      "explanation": "All options meet the required constraints. The quality range requested was between 0.780 and 0.910. The explanation focuses on the trade-offs between the options.\n\nOption A is the reference option for quality because it has the highest displayed quality. It also has the lowest review budget and the lowest training fraction.\n\nOption B has slightly lower quality by 0.015, a higher review budget by 0.050, and a higher training fraction by 0.070. However, it offers better robustness to mildly corrupted data compared to clean data.\n\nOption C also has slightly lower quality by 0.017, a higher review budget by 0.035, and maintains the same training fraction as Option A. It does not show any improvement in robustness to corrupted data.\n\nFor the best quality, choose Option A. For the lowest review budget, Option A is the best choice. If you want a balanced option considering quality, review budget, and training fraction, Option A is the best choice as well.",
+      "raw_explanation": "All shown options satisfy the requested constraints.\nThe requested quality range was 0.780 to 0.910.\nThe table gives the exact option values. The explanation below focuses only on the trade-offs.\nOption A is used as the quality reference because it has the highest displayed quality.\n\nOption A (highest displayed quality, lowest review budget, and lowest training fraction): this is the reference option for quality.\nOption B: compared with Option A, it has 0.015 lower quality, 0.050 higher review budget, 0.070 higher training fraction, and higher robustness to corrupted data (clean-data setting → mild-corruption robustness).\nOption C: compared with Option A, it has 0.017 lower quality, 0.035 higher review budget, same training fraction at the displayed precision, and same corruption robustness level (clean-data setting).\n\nBest quality choice: Option A.\nLowest review-budget choice: Option A.\nBalanced choice: Option A, based on the combined quality, review budget, and training-fraction trade-off."
+    }
+  ],
+  "final_answers": [
+    {
+      "task_name": "task_1",
+      "submitted_at": "2026-05-13T09:33:59.944382+02:00",
+      "relative_seconds": 586.79,
+      "selected_option_label": "Option A | quality=0.868 | review=0.355 | train=0.340 | corruption=none",
+      "selected_configuration": {
+        "cf_id": 0,
+        "params_backbone": "resnet18",
+        "params_batch_size": "8",
+        "params_center_crop_key": "none",
+        "params_coreset_sampling_ratio": 0.047,
+        "params_image_size_key": "224",
+        "params_layers_key": "l3",
+        "params_max_patches_per_image": "1024",
+        "params_num_neighbors": 3,
+        "params_pre_trained": "True",
+        "params_reduction": "mean",
+        "params_soft_corruption_level": "none",
+        "params_soft_review_budget": 0.355,
+        "params_soft_train_fraction": 0.34,
+        "value": 0.868421052631579,
+        "_score_source": "dataset_value",
+        "_source": "dataset_filter",
+        "_anchor_idx": -1,
+        "_anchor_score": 0.897843920884358,
+        "_signature": "params_backbone=resnet18|params_batch_size=8|params_center_crop_key=none|params_coreset_sampling_ratio=0.047000|params_image_size_key=224|params_layers_key=l3|params_max_patches_per_image=1024|params_num_neighbors=3.000000|params_pre_trained=True|params_reduction=mean|params_soft_corruption_level=none|params_soft_review_budget=0.355000|params_soft_train_fraction=0.340000",
+        "_source_priority": 0
+      },
+      "justification": "Option A offers better quality and lowest training fraction",
+      "confidence": "medium",
+      "attempt_count_at_submission": 3,
+      "current_query_template": {
+        "objective": {
+          "type": "target_band",
+          "lower": 0.8,
+          "upper": 0.9,
+          "eps": 0.01
+        },
+        "soft_constraints": {
+          "params_soft_review_budget": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.4
+          },
+          "params_soft_train_fraction": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.4
+          },
+          "params_soft_corruption_level": {
+            "mode": "free"
+          }
+        },
+        "selection": {
+          "k": 3
+        },
+        "_meta": {
+          "used_fallback": false,
+          "attempts": 1,
+          "parser": "llm_only_with_repair"
+        },
+        "llm_provider": "OpenRouter",
+        "llm_model": "qwen/qwen-2.5-7b-instruct"
+      },
+      "current_options": [
+        {
+          "cf_id": 0,
+          "params_backbone": "resnet18",
+          "params_batch_size": "8",
+          "params_center_crop_key": "none",
+          "params_coreset_sampling_ratio": 0.047,
+          "params_image_size_key": "224",
+          "params_layers_key": "l3",
+          "params_max_patches_per_image": "1024",
+          "params_num_neighbors": 3,
+          "params_pre_trained": "True",
+          "params_reduction": "mean",
+          "params_soft_corruption_level": "none",
+          "params_soft_review_budget": 0.355,
+          "params_soft_train_fraction": 0.34,
+          "value": 0.868421052631579
+        },
+        {
+          "cf_id": 1,
+          "params_backbone": "resnet18",
+          "params_batch_size": "16",
+          "params_center_crop_key": "0.875",
+          "params_coreset_sampling_ratio": 0.099,
+          "params_image_size_key": "256",
+          "params_layers_key": "l3",
+          "params_max_patches_per_image": "128",
+          "params_num_neighbors": 11,
+          "params_pre_trained": "True",
+          "params_reduction": "mean",
+          "params_soft_corruption_level": "mild",
+          "params_soft_review_budget": 0.3,
+          "params_soft_train_fraction": 0.39,
+          "value": 0.8092691622103387
+        }
+      ],
+      "current_explanation": "All shown options meet the requested constraints. The quality range was set from 0.800 to 0.900.\n\nOption A is the reference option due to its highest displayed quality.\n\nOption A has the highest displayed quality and the lowest training fraction. Compared to Option A, Option B offers slightly lower quality by 0.059, a lower review budget by 0.055, and a higher training fraction by 0.050. However, Option B also shows better robustness to corrupted data, specifically from clean-data settings to mild-corruption robustness.\n\nFor the best quality, choose Option A.\nFor the lowest review budget, choose Option B.\nFor a balanced choice considering quality, review budget, and training fraction, Option A is recommended.",
+      "task3_baseline": {
+        "run_id": 1889,
+        "value": 0.84984,
+        "params_soft_train_fraction": 0.95,
+        "params_soft_review_budget": 0.375,
+        "params_soft_corruption_level": "strong",
+        "task3_min_quality": 0.84984,
+        "task3_max_review_budget": 0.355
+      },
+      "was_update": false,
+      "analysis_fields": {
+        "selected_cf_id": 0,
+        "selected_option_name": "Option A",
+        "selected_run_id": null,
+        "selected_quality": 0.868421052631579,
+        "selected_review_budget": 0.355,
+        "selected_training_fraction": 0.34,
+        "selected_corruption_level": "none",
+        "displayed_option_count": 2,
+        "selected_source": "dataset_filter",
+        "selected_score_source": "dataset_value",
+        "display_order": 1,
+        "shown_in_option_table": true,
+        "quality_rank_within_displayed_options": 1,
+        "review_budget_rank_within_displayed_options": 2,
+        "training_fraction_rank_within_displayed_options": 1,
+        "corruption_robustness_rank_within_displayed_options": 2,
+        "analysis_task_type": "independent_constraints",
+        "required_quality_lower": 0.8,
+        "required_quality_upper": 0.92,
+        "required_train_fraction_lower": 0.4,
+        "required_train_fraction_upper": 0.7,
+        "required_review_budget_lower": 0.005,
+        "required_review_budget_upper": 0.4,
+        "required_corruption_allowed": [
+          "mild",
+          "none",
+          "strong"
+        ],
+        "quality_ok": true,
+        "train_fraction_ok": false,
+        "review_budget_ok": true,
+        "corruption_ok": true,
+        "quality_margin_lower": 0.06842105263157894,
+        "quality_margin_upper": 0.05157894736842106,
+        "train_fraction_margin_lower": -0.06,
+        "train_fraction_margin_upper": 0.35999999999999993,
+        "review_budget_margin_lower": 0.35,
+        "review_budget_margin_upper": 0.04500000000000004,
+        "same_performance_ok": null,
+        "review_budget_5pct_lower_ok": null,
+        "different_from_base_ok": null,
+        "quality_drop_from_base": null,
+        "quality_change_from_base": null,
+        "review_budget_reduction_absolute": null,
+        "review_budget_reduction_percent": null,
+        "valid_what_if": null,
+        "valid_selection": false,
+        "n_violations": 1,
+        "violated_constraints": [
+          "training fraction outside allowed range"
+        ]
+      },
+      "selected_cf_id": 0,
+      "selected_option_name": "Option A",
+      "selected_run_id": null,
+      "selected_quality": 0.868421052631579,
+      "selected_review_budget": 0.355,
+      "selected_training_fraction": 0.34,
+      "selected_corruption_level": "none",
+      "displayed_option_count": 2,
+      "selected_source": "dataset_filter",
+      "selected_score_source": "dataset_value",
+      "display_order": 1,
+      "shown_in_option_table": true,
+      "quality_rank_within_displayed_options": 1,
+      "review_budget_rank_within_displayed_options": 2,
+      "training_fraction_rank_within_displayed_options": 1,
+      "corruption_robustness_rank_within_displayed_options": 2,
+      "analysis_task_type": "independent_constraints",
+      "required_quality_lower": 0.8,
+      "required_quality_upper": 0.92,
+      "required_train_fraction_lower": 0.4,
+      "required_train_fraction_upper": 0.7,
+      "required_review_budget_lower": 0.005,
+      "required_review_budget_upper": 0.4,
+      "required_corruption_allowed": [
+        "mild",
+        "none",
+        "strong"
+      ],
+      "quality_ok": true,
+      "train_fraction_ok": false,
+      "review_budget_ok": true,
+      "corruption_ok": true,
+      "quality_margin_lower": 0.06842105263157894,
+      "quality_margin_upper": 0.05157894736842106,
+      "train_fraction_margin_lower": -0.06,
+      "train_fraction_margin_upper": 0.35999999999999993,
+      "review_budget_margin_lower": 0.35,
+      "review_budget_margin_upper": 0.04500000000000004,
+      "same_performance_ok": null,
+      "review_budget_5pct_lower_ok": null,
+      "different_from_base_ok": null,
+      "quality_drop_from_base": null,
+      "quality_change_from_base": null,
+      "review_budget_reduction_absolute": null,
+      "review_budget_reduction_percent": null,
+      "valid_what_if": null,
+      "valid_selection": false,
+      "n_violations": 1,
+      "violated_constraints": [
+        "training fraction outside allowed range"
+      ]
+    },
+    {
+      "task_name": "task_2",
+      "submitted_at": "2026-05-13T09:40:16.474361+02:00",
+      "relative_seconds": 963.32,
+      "selected_option_label": "Option B | quality=0.809 | review=0.300 | train=0.390 | corruption=mild",
+      "selected_configuration": {
+        "cf_id": 1,
+        "params_backbone": "resnet18",
+        "params_batch_size": "16",
+        "params_center_crop_key": "0.875",
+        "params_coreset_sampling_ratio": 0.099,
+        "params_image_size_key": "256",
+        "params_layers_key": "l3",
+        "params_max_patches_per_image": "128",
+        "params_num_neighbors": 11,
+        "params_pre_trained": "True",
+        "params_reduction": "mean",
+        "params_soft_corruption_level": "mild",
+        "params_soft_review_budget": 0.3,
+        "params_soft_train_fraction": 0.39,
+        "value": 0.8092691622103387,
+        "_score_source": "dataset_value",
+        "_source": "dataset_filter",
+        "_anchor_idx": -1,
+        "_anchor_score": 0.897843920884358,
+        "_signature": "params_backbone=resnet18|params_batch_size=16|params_center_crop_key=0.875|params_coreset_sampling_ratio=0.099000|params_image_size_key=256|params_layers_key=l3|params_max_patches_per_image=128|params_num_neighbors=11.000000|params_pre_trained=True|params_reduction=mean|params_soft_corruption_level=mild|params_soft_review_budget=0.300000|params_soft_train_fraction=0.390000",
+        "_source_priority": 0
+      },
+      "justification": "because is  offers stronger robustness than a and c,   acceptable quality (f1) and training fraction",
+      "confidence": "medium",
+      "attempt_count_at_submission": 5,
+      "current_query_template": {
+        "objective": {
+          "type": "target_band",
+          "lower": 0.78,
+          "upper": 0.91,
+          "eps": 0.01
+        },
+        "soft_constraints": {
+          "params_soft_review_budget": {
+            "mode": "range",
+            "lower": 0.2,
+            "upper": 0.3
+          },
+          "params_soft_train_fraction": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.5
+          },
+          "params_soft_corruption_level": {
+            "mode": "allowed",
+            "allowed": [
+              "mild",
+              "none"
+            ]
+          }
+        },
+        "selection": {
+          "k": 3
+        },
+        "_meta": {
+          "used_fallback": false,
+          "attempts": 1,
+          "parser": "llm_only_with_repair"
+        },
+        "llm_provider": "OpenRouter",
+        "llm_model": "qwen/qwen-2.5-7b-instruct"
+      },
+      "current_options": [
+        {
+          "cf_id": 0,
+          "params_backbone": "resnet34",
+          "params_batch_size": "16",
+          "params_center_crop_key": "0.875",
+          "params_coreset_sampling_ratio": 0.011,
+          "params_image_size_key": "256",
+          "params_layers_key": "l1_l2_l3",
+          "params_max_patches_per_image": "1024",
+          "params_num_neighbors": 16,
+          "params_pre_trained": "False",
+          "params_reduction": "max",
+          "params_soft_corruption_level": "none",
+          "params_soft_review_budget": 0.25,
+          "params_soft_train_fraction": 0.32,
+          "value": 0.8239845261121856
+        },
+        {
+          "cf_id": 1,
+          "params_backbone": "resnet18",
+          "params_batch_size": "16",
+          "params_center_crop_key": "0.875",
+          "params_coreset_sampling_ratio": 0.099,
+          "params_image_size_key": "256",
+          "params_layers_key": "l3",
+          "params_max_patches_per_image": "128",
+          "params_num_neighbors": 11,
+          "params_pre_trained": "True",
+          "params_reduction": "mean",
+          "params_soft_corruption_level": "mild",
+          "params_soft_review_budget": 0.3,
+          "params_soft_train_fraction": 0.39,
+          "value": 0.8092691622103387
+        },
+        {
+          "cf_id": 2,
+          "params_backbone": "resnet50",
+          "params_batch_size": "8",
+          "params_center_crop_key": "none",
+          "params_coreset_sampling_ratio": 0.061,
+          "params_image_size_key": "224",
+          "params_layers_key": "l2_l3",
+          "params_max_patches_per_image": "128",
+          "params_num_neighbors": 17,
+          "params_pre_trained": "False",
+          "params_reduction": "max",
+          "params_soft_corruption_level": "none",
+          "params_soft_review_budget": 0.285,
+          "params_soft_train_fraction": 0.32,
+          "value": 0.8065693430656934
+        }
+      ],
+      "current_explanation": "All options meet the required constraints. The quality range requested was between 0.780 and 0.910. The explanation focuses on the trade-offs between the options.\n\nOption A is the reference option for quality because it has the highest displayed quality. It also has the lowest review budget and the lowest training fraction.\n\nOption B has slightly lower quality by 0.015, a higher review budget by 0.050, and a higher training fraction by 0.070. However, it offers better robustness to mildly corrupted data compared to clean data.\n\nOption C also has slightly lower quality by 0.017, a higher review budget by 0.035, and maintains the same training fraction as Option A. It does not show any improvement in robustness to corrupted data.\n\nFor the best quality, choose Option A. For the lowest review budget, Option A is the best choice. If you want a balanced option considering quality, review budget, and training fraction, Option A is the best choice as well.",
+      "task3_baseline": {
+        "run_id": 1889,
+        "value": 0.84984,
+        "params_soft_train_fraction": 0.95,
+        "params_soft_review_budget": 0.375,
+        "params_soft_corruption_level": "strong",
+        "task3_min_quality": 0.84984,
+        "task3_max_review_budget": 0.355
+      },
+      "was_update": false,
+      "analysis_fields": {
+        "selected_cf_id": 1,
+        "selected_option_name": "Option B",
+        "selected_run_id": null,
+        "selected_quality": 0.8092691622103387,
+        "selected_review_budget": 0.3,
+        "selected_training_fraction": 0.39,
+        "selected_corruption_level": "mild",
+        "displayed_option_count": 3,
+        "selected_source": "dataset_filter",
+        "selected_score_source": "dataset_value",
+        "display_order": 2,
+        "shown_in_option_table": true,
+        "quality_rank_within_displayed_options": 2,
+        "review_budget_rank_within_displayed_options": 3,
+        "training_fraction_rank_within_displayed_options": 3,
+        "corruption_robustness_rank_within_displayed_options": 1,
+        "analysis_task_type": "independent_constraints",
+        "required_quality_lower": 0.78,
+        "required_quality_upper": 0.91,
+        "required_train_fraction_lower": 0.2,
+        "required_train_fraction_upper": 0.6,
+        "required_review_budget_lower": 0.005,
+        "required_review_budget_upper": 0.3,
+        "required_corruption_allowed": [
+          "mild",
+          "none"
+        ],
+        "quality_ok": true,
+        "train_fraction_ok": true,
+        "review_budget_ok": true,
+        "corruption_ok": true,
+        "quality_margin_lower": 0.029269162210338706,
+        "quality_margin_upper": 0.1007308377896613,
+        "train_fraction_margin_lower": 0.19,
+        "train_fraction_margin_upper": 0.20999999999999996,
+        "review_budget_margin_lower": 0.295,
+        "review_budget_margin_upper": 0.0,
+        "same_performance_ok": null,
+        "review_budget_5pct_lower_ok": null,
+        "different_from_base_ok": null,
+        "quality_drop_from_base": null,
+        "quality_change_from_base": null,
+        "review_budget_reduction_absolute": null,
+        "review_budget_reduction_percent": null,
+        "valid_what_if": null,
+        "valid_selection": true,
+        "n_violations": 0,
+        "violated_constraints": []
+      },
+      "selected_cf_id": 1,
+      "selected_option_name": "Option B",
+      "selected_run_id": null,
+      "selected_quality": 0.8092691622103387,
+      "selected_review_budget": 0.3,
+      "selected_training_fraction": 0.39,
+      "selected_corruption_level": "mild",
+      "displayed_option_count": 3,
+      "selected_source": "dataset_filter",
+      "selected_score_source": "dataset_value",
+      "display_order": 2,
+      "shown_in_option_table": true,
+      "quality_rank_within_displayed_options": 2,
+      "review_budget_rank_within_displayed_options": 3,
+      "training_fraction_rank_within_displayed_options": 3,
+      "corruption_robustness_rank_within_displayed_options": 1,
+      "analysis_task_type": "independent_constraints",
+      "required_quality_lower": 0.78,
+      "required_quality_upper": 0.91,
+      "required_train_fraction_lower": 0.2,
+      "required_train_fraction_upper": 0.6,
+      "required_review_budget_lower": 0.005,
+      "required_review_budget_upper": 0.3,
+      "required_corruption_allowed": [
+        "mild",
+        "none"
+      ],
+      "quality_ok": true,
+      "train_fraction_ok": true,
+      "review_budget_ok": true,
+      "corruption_ok": true,
+      "quality_margin_lower": 0.029269162210338706,
+      "quality_margin_upper": 0.1007308377896613,
+      "train_fraction_margin_lower": 0.19,
+      "train_fraction_margin_upper": 0.20999999999999996,
+      "review_budget_margin_lower": 0.295,
+      "review_budget_margin_upper": 0.0,
+      "same_performance_ok": null,
+      "review_budget_5pct_lower_ok": null,
+      "different_from_base_ok": null,
+      "quality_drop_from_base": null,
+      "quality_change_from_base": null,
+      "review_budget_reduction_absolute": null,
+      "review_budget_reduction_percent": null,
+      "valid_what_if": null,
+      "valid_selection": true,
+      "n_violations": 0,
+      "violated_constraints": []
+    }
+  ],
+  "interaction_log": [
+    {
+      "event_index": 1,
+      "event_type": "task3_baseline_selected",
+      "timestamp": "2026-05-13T09:24:13.156911+02:00",
+      "relative_seconds": 0.01,
+      "participant_id": "P-30C813",
+      "questionnaire_id": "P-30C813",
+      "session_id": "20260513_092413",
+      "study_condition": "condition_llm_interface",
+      "app_version": "2026-05-06-parser-valid-only-v2",
+      "task3_baseline": {
+        "run_id": 1889,
+        "value": 0.84984,
+        "params_soft_train_fraction": 0.95,
+        "params_soft_review_budget": 0.375,
+        "params_soft_corruption_level": "strong",
+        "task3_min_quality": 0.84984,
+        "task3_max_review_budget": 0.355
+      }
+    },
+    {
+      "event_index": 2,
+      "event_type": "page_loaded",
+      "timestamp": "2026-05-13T09:24:13.192567+02:00",
+      "relative_seconds": 0.04,
+      "participant_id": "P-30C813",
+      "questionnaire_id": "P-30C813",
+      "session_id": "20260513_092413",
+      "study_condition": "condition_llm_interface",
+      "app_version": "2026-05-06-parser-valid-only-v2",
+      "dataset_path": "surrogate_ready_dataset/patchcore_surrogate_dataset_xgb.csv",
+      "model_path": "surrogate_pkl_cfs_metadata/surrogate_catboost.cbm",
+      "export_dir": "surrogate_pkl_cfs_metadata",
+      "n_rows": 2999,
+      "n_features": 13,
+      "openrouter_default_model": "qwen/qwen-2.5-7b-instruct"
+    },
+    {
+      "event_index": 3,
+      "event_type": "generate_clicked",
+      "timestamp": "2026-05-13T09:28:42.018887+02:00",
+      "relative_seconds": 268.87,
+      "participant_id": "P-30C813",
+      "questionnaire_id": "P-30C813",
+      "session_id": "20260513_092413",
+      "study_condition": "condition_llm_interface",
+      "app_version": "2026-05-06-parser-valid-only-v2",
+      "task_name": "task_1",
+      "attempt_number": 1,
+      "user_text": "I want predicted F1 = 0.85, training fraction = 0.5,  review budget = 0.4 , and strong corruption level ",
+      "openrouter_model_id": "qwen/qwen-2.5-7b-instruct",
+      "anchor_count": 3,
+      "dataset_path": "surrogate_ready_dataset/patchcore_surrogate_dataset_xgb.csv",
+      "model_path": "surrogate_pkl_cfs_metadata/surrogate_catboost.cbm",
+      "export_dir": "surrogate_pkl_cfs_metadata"
+    },
+    {
+      "event_index": 4,
+      "event_type": "generation_success",
+      "timestamp": "2026-05-13T09:28:54.163622+02:00",
+      "relative_seconds": 281.01,
+      "participant_id": "P-30C813",
+      "questionnaire_id": "P-30C813",
+      "session_id": "20260513_092413",
+      "study_condition": "condition_llm_interface",
+      "app_version": "2026-05-06-parser-valid-only-v2",
+      "task_name": "task_1",
+      "attempt_number": 1,
+      "user_text": "I want predicted F1 = 0.85, training fraction = 0.5,  review budget = 0.4 , and strong corruption level ",
+      "openrouter_model_id": "qwen/qwen-2.5-7b-instruct",
+      "anchor_count": 3,
+      "query_template": {
+        "objective": {
+          "type": "target_min",
+          "value": 0.85,
+          "eps": 0.01
+        },
+        "soft_constraints": {
+          "params_soft_review_budget": {
+            "mode": "fixed",
+            "value": 0.4
+          },
+          "params_soft_train_fraction": {
+            "mode": "fixed",
+            "value": 0.5
+          },
+          "params_soft_corruption_level": {
+            "mode": "allowed",
+            "allowed": [
+              "strong"
+            ]
+          }
+        },
+        "selection": {
+          "k": 3
+        },
+        "_meta": {
+          "used_fallback": false,
+          "attempts": 1,
+          "parser": "llm_only_with_repair"
+        },
+        "llm_provider": "OpenRouter",
+        "llm_model": "qwen/qwen-2.5-7b-instruct"
+      },
+      "anchor_runs": [
+        {
+          "source": "dataset_filter",
+          "n_valid_dataset_matches": 0,
+          "used_as_primary_source": false
+        },
+        {
+          "source": "counterfactual_generation_started",
+          "reason": "not_enough_factual_options",
+          "n_factual_options": 0,
+          "n_needed": 3
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2529,
+          "anchor_score": 0.897843920884358,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.85,
+            1.0
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2731,
+          "anchor_score": 0.8931386489817918,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.85,
+            1.0
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2325,
+          "anchor_score": 0.8928438132445735,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.85,
+            1.0
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        }
+      ],
+      "n_options": 0,
+      "options": [],
+      "explanation": "Only 0 valid alternative(s) were found after checking both existing factual configurations and generated counterfactual alternatives. The study interface requires at least 1 valid alternatives before showing options. Try relaxing the request slightly, for example by lowering the minimum F1 score or allowing a slightly higher review budget.",
+      "raw_explanation": "Only 0 valid alternative(s) were found after checking both existing factual configurations and generated counterfactual alternatives. The study interface requires at least 1 valid alternatives before showing options. Try relaxing the request slightly, for example by lowering the minimum F1 score or allowing a slightly higher review budget."
+    },
+    {
+      "event_index": 5,
+      "event_type": "task_selected",
+      "timestamp": "2026-05-13T09:29:03.308784+02:00",
+      "relative_seconds": 290.16,
+      "participant_id": "P-30C813",
+      "questionnaire_id": "P-30C813",
+      "session_id": "20260513_092413",
+      "study_condition": "condition_llm_interface",
+      "app_version": "2026-05-06-parser-valid-only-v2",
+      "task_name": "task_2",
+      "was_submitted": false
+    },
+    {
+      "event_index": 6,
+      "event_type": "task_selected",
+      "timestamp": "2026-05-13T09:29:06.137005+02:00",
+      "relative_seconds": 292.99,
+      "participant_id": "P-30C813",
+      "questionnaire_id": "P-30C813",
+      "session_id": "20260513_092413",
+      "study_condition": "condition_llm_interface",
+      "app_version": "2026-05-06-parser-valid-only-v2",
+      "task_name": "task_1",
+      "was_submitted": false
+    },
+    {
+      "event_index": 7,
+      "event_type": "task_selected",
+      "timestamp": "2026-05-13T09:29:08.915582+02:00",
+      "relative_seconds": 295.76,
+      "participant_id": "P-30C813",
+      "questionnaire_id": "P-30C813",
+      "session_id": "20260513_092413",
+      "study_condition": "condition_llm_interface",
+      "app_version": "2026-05-06-parser-valid-only-v2",
+      "task_name": "task_2",
+      "was_submitted": false
+    },
+    {
+      "event_index": 8,
+      "event_type": "task_selected",
+      "timestamp": "2026-05-13T09:29:15.726249+02:00",
+      "relative_seconds": 302.58,
+      "participant_id": "P-30C813",
+      "questionnaire_id": "P-30C813",
+      "session_id": "20260513_092413",
+      "study_condition": "condition_llm_interface",
+      "app_version": "2026-05-06-parser-valid-only-v2",
+      "task_name": "task_1",
+      "was_submitted": false
+    },
+    {
+      "event_index": 9,
+      "event_type": "generate_clicked",
+      "timestamp": "2026-05-13T09:30:26.974397+02:00",
+      "relative_seconds": 373.82,
+      "participant_id": "P-30C813",
+      "questionnaire_id": "P-30C813",
+      "session_id": "20260513_092413",
+      "study_condition": "condition_llm_interface",
+      "app_version": "2026-05-06-parser-valid-only-v2",
+      "task_name": "task_1",
+      "attempt_number": 2,
+      "user_text": "I want predicted F1 between 0.8 and  0.9, training fraction between   0. and 0.65,  review budget  between 0.3 and  0.4 , and strong corruption level ",
+      "openrouter_model_id": "qwen/qwen-2.5-7b-instruct",
+      "anchor_count": 3,
+      "dataset_path": "surrogate_ready_dataset/patchcore_surrogate_dataset_xgb.csv",
+      "model_path": "surrogate_pkl_cfs_metadata/surrogate_catboost.cbm",
+      "export_dir": "surrogate_pkl_cfs_metadata"
+    },
+    {
+      "event_index": 10,
+      "event_type": "generation_success",
+      "timestamp": "2026-05-13T09:30:41.849403+02:00",
+      "relative_seconds": 388.7,
+      "participant_id": "P-30C813",
+      "questionnaire_id": "P-30C813",
+      "session_id": "20260513_092413",
+      "study_condition": "condition_llm_interface",
+      "app_version": "2026-05-06-parser-valid-only-v2",
+      "task_name": "task_1",
+      "attempt_number": 2,
+      "user_text": "I want predicted F1 between 0.8 and  0.9, training fraction between   0. and 0.65,  review budget  between 0.3 and  0.4 , and strong corruption level ",
+      "openrouter_model_id": "qwen/qwen-2.5-7b-instruct",
+      "anchor_count": 3,
+      "query_template": {
+        "objective": {
+          "type": "target_band",
+          "lower": 0.8,
+          "upper": 0.9,
+          "eps": 0.01
+        },
+        "soft_constraints": {
+          "params_soft_review_budget": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.4
+          },
+          "params_soft_train_fraction": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.4
+          },
+          "params_soft_corruption_level": {
+            "mode": "allowed",
+            "allowed": [
+              "strong"
+            ]
+          }
+        },
+        "selection": {
+          "k": 3
+        },
+        "_meta": {
+          "used_fallback": false,
+          "attempts": 1,
+          "parser": "llm_only_with_repair"
+        },
+        "llm_provider": "OpenRouter",
+        "llm_model": "qwen/qwen-2.5-7b-instruct"
+      },
+      "anchor_runs": [
+        {
+          "source": "dataset_filter",
+          "n_valid_dataset_matches": 0,
+          "used_as_primary_source": false
+        },
+        {
+          "source": "counterfactual_generation_started",
+          "reason": "not_enough_factual_options",
+          "n_factual_options": 0,
+          "n_needed": 3
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2529,
+          "anchor_score": 0.897843920884358,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.8,
+            0.9
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2731,
+          "anchor_score": 0.8931386489817918,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.8,
+            0.9
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2325,
+          "anchor_score": 0.8928438132445735,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.8,
+            0.9
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        }
+      ],
+      "n_options": 0,
+      "options": [],
+      "explanation": "Only 0 valid alternative(s) were found after checking both existing factual configurations and generated counterfactual alternatives. The study interface requires at least 1 valid alternatives before showing options. Try relaxing the request slightly, for example by lowering the minimum F1 score or allowing a slightly higher review budget.",
+      "raw_explanation": "Only 0 valid alternative(s) were found after checking both existing factual configurations and generated counterfactual alternatives. The study interface requires at least 1 valid alternatives before showing options. Try relaxing the request slightly, for example by lowering the minimum F1 score or allowing a slightly higher review budget."
+    },
+    {
+      "event_index": 11,
+      "event_type": "generate_clicked",
+      "timestamp": "2026-05-13T09:30:56.904291+02:00",
+      "relative_seconds": 403.75,
+      "participant_id": "P-30C813",
+      "questionnaire_id": "P-30C813",
+      "session_id": "20260513_092413",
+      "study_condition": "condition_llm_interface",
+      "app_version": "2026-05-06-parser-valid-only-v2",
+      "task_name": "task_1",
+      "attempt_number": 3,
+      "user_text": "I want predicted F1 between 0.8 and  0.9, training fraction between   0. and 0.65,  review budget  between 0.3 and  0.4 , and  corruption level can be vary ",
+      "openrouter_model_id": "qwen/qwen-2.5-7b-instruct",
+      "anchor_count": 3,
+      "dataset_path": "surrogate_ready_dataset/patchcore_surrogate_dataset_xgb.csv",
+      "model_path": "surrogate_pkl_cfs_metadata/surrogate_catboost.cbm",
+      "export_dir": "surrogate_pkl_cfs_metadata"
+    },
+    {
+      "event_index": 12,
+      "event_type": "generation_success",
+      "timestamp": "2026-05-13T09:31:12.031713+02:00",
+      "relative_seconds": 418.88,
+      "participant_id": "P-30C813",
+      "questionnaire_id": "P-30C813",
+      "session_id": "20260513_092413",
+      "study_condition": "condition_llm_interface",
+      "app_version": "2026-05-06-parser-valid-only-v2",
+      "task_name": "task_1",
+      "attempt_number": 3,
+      "user_text": "I want predicted F1 between 0.8 and  0.9, training fraction between   0. and 0.65,  review budget  between 0.3 and  0.4 , and  corruption level can be vary ",
+      "openrouter_model_id": "qwen/qwen-2.5-7b-instruct",
+      "anchor_count": 3,
+      "query_template": {
+        "objective": {
+          "type": "target_band",
+          "lower": 0.8,
+          "upper": 0.9,
+          "eps": 0.01
+        },
+        "soft_constraints": {
+          "params_soft_review_budget": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.4
+          },
+          "params_soft_train_fraction": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.4
+          },
+          "params_soft_corruption_level": {
+            "mode": "free"
+          }
+        },
+        "selection": {
+          "k": 3
+        },
+        "_meta": {
+          "used_fallback": false,
+          "attempts": 1,
+          "parser": "llm_only_with_repair"
+        },
+        "llm_provider": "OpenRouter",
+        "llm_model": "qwen/qwen-2.5-7b-instruct"
+      },
+      "anchor_runs": [
+        {
+          "source": "dataset_filter",
+          "n_valid_dataset_matches": 2,
+          "used_as_primary_source": true
+        },
+        {
+          "source": "counterfactual_generation_started",
+          "reason": "not_enough_factual_options",
+          "n_factual_options": 2,
+          "n_needed": 1
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2529,
+          "anchor_score": 0.897843920884358,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.8,
+            0.9
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2731,
+          "anchor_score": 0.8931386489817918,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.8,
+            0.9
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2325,
+          "anchor_score": 0.8928438132445735,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.8,
+            0.9
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        }
+      ],
+      "n_options": 2,
+      "options": [
+        {
+          "cf_id": 0,
+          "params_backbone": "resnet18",
+          "params_batch_size": "8",
+          "params_center_crop_key": "none",
+          "params_coreset_sampling_ratio": 0.047,
+          "params_image_size_key": "224",
+          "params_layers_key": "l3",
+          "params_max_patches_per_image": "1024",
+          "params_num_neighbors": 3,
+          "params_pre_trained": "True",
+          "params_reduction": "mean",
+          "params_soft_corruption_level": "none",
+          "params_soft_review_budget": 0.355,
+          "params_soft_train_fraction": 0.34,
+          "value": 0.868421052631579
+        },
+        {
+          "cf_id": 1,
+          "params_backbone": "resnet18",
+          "params_batch_size": "16",
+          "params_center_crop_key": "0.875",
+          "params_coreset_sampling_ratio": 0.099,
+          "params_image_size_key": "256",
+          "params_layers_key": "l3",
+          "params_max_patches_per_image": "128",
+          "params_num_neighbors": 11,
+          "params_pre_trained": "True",
+          "params_reduction": "mean",
+          "params_soft_corruption_level": "mild",
+          "params_soft_review_budget": 0.3,
+          "params_soft_train_fraction": 0.39,
+          "value": 0.8092691622103387
+        }
+      ],
+      "explanation": "All shown options meet the requested constraints. The quality range was set from 0.800 to 0.900.\n\nOption A is the reference option due to its highest displayed quality.\n\nOption A has the highest displayed quality and the lowest training fraction. Compared to Option A, Option B offers slightly lower quality by 0.059, a lower review budget by 0.055, and a higher training fraction by 0.050. However, Option B also shows better robustness to corrupted data, specifically from clean-data settings to mild-corruption robustness.\n\nFor the best quality, choose Option A.\nFor the lowest review budget, choose Option B.\nFor a balanced choice considering quality, review budget, and training fraction, Option A is recommended.",
+      "raw_explanation": "All shown options satisfy the requested constraints.\nThe requested quality range was 0.800 to 0.900.\nThe table gives the exact option values. The explanation below focuses only on the trade-offs.\nOption A is used as the quality reference because it has the highest displayed quality.\n\nOption A (highest displayed quality and lowest training fraction): this is the reference option for quality.\nOption B (lowest review budget): compared with Option A, it has 0.059 lower quality, 0.055 lower review budget, 0.050 higher training fraction, and higher robustness to corrupted data (clean-data setting → mild-corruption robustness).\n\nBest quality choice: Option A.\nLowest review-budget choice: Option B.\nBalanced choice: Option A, based on the combined quality, review budget, and training-fraction trade-off."
+    },
+    {
+      "event_index": 13,
+      "event_type": "final_answer_submitted",
+      "timestamp": "2026-05-13T09:33:59.948872+02:00",
+      "relative_seconds": 586.79,
+      "participant_id": "P-30C813",
+      "questionnaire_id": "P-30C813",
+      "session_id": "20260513_092413",
+      "study_condition": "condition_llm_interface",
+      "app_version": "2026-05-06-parser-valid-only-v2",
+      "task_name": "task_1",
+      "submitted_at": "2026-05-13T09:33:59.944382+02:00",
+      "selected_option_label": "Option A | quality=0.868 | review=0.355 | train=0.340 | corruption=none",
+      "selected_configuration": {
+        "cf_id": 0,
+        "params_backbone": "resnet18",
+        "params_batch_size": "8",
+        "params_center_crop_key": "none",
+        "params_coreset_sampling_ratio": 0.047,
+        "params_image_size_key": "224",
+        "params_layers_key": "l3",
+        "params_max_patches_per_image": "1024",
+        "params_num_neighbors": 3,
+        "params_pre_trained": "True",
+        "params_reduction": "mean",
+        "params_soft_corruption_level": "none",
+        "params_soft_review_budget": 0.355,
+        "params_soft_train_fraction": 0.34,
+        "value": 0.868421052631579,
+        "_score_source": "dataset_value",
+        "_source": "dataset_filter",
+        "_anchor_idx": -1,
+        "_anchor_score": 0.897843920884358,
+        "_signature": "params_backbone=resnet18|params_batch_size=8|params_center_crop_key=none|params_coreset_sampling_ratio=0.047000|params_image_size_key=224|params_layers_key=l3|params_max_patches_per_image=1024|params_num_neighbors=3.000000|params_pre_trained=True|params_reduction=mean|params_soft_corruption_level=none|params_soft_review_budget=0.355000|params_soft_train_fraction=0.340000",
+        "_source_priority": 0
+      },
+      "justification": "Option A offers better quality and lowest training fraction",
+      "confidence": "medium",
+      "attempt_count_at_submission": 3,
+      "current_query_template": {
+        "objective": {
+          "type": "target_band",
+          "lower": 0.8,
+          "upper": 0.9,
+          "eps": 0.01
+        },
+        "soft_constraints": {
+          "params_soft_review_budget": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.4
+          },
+          "params_soft_train_fraction": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.4
+          },
+          "params_soft_corruption_level": {
+            "mode": "free"
+          }
+        },
+        "selection": {
+          "k": 3
+        },
+        "_meta": {
+          "used_fallback": false,
+          "attempts": 1,
+          "parser": "llm_only_with_repair"
+        },
+        "llm_provider": "OpenRouter",
+        "llm_model": "qwen/qwen-2.5-7b-instruct"
+      },
+      "current_options": [
+        {
+          "cf_id": 0,
+          "params_backbone": "resnet18",
+          "params_batch_size": "8",
+          "params_center_crop_key": "none",
+          "params_coreset_sampling_ratio": 0.047,
+          "params_image_size_key": "224",
+          "params_layers_key": "l3",
+          "params_max_patches_per_image": "1024",
+          "params_num_neighbors": 3,
+          "params_pre_trained": "True",
+          "params_reduction": "mean",
+          "params_soft_corruption_level": "none",
+          "params_soft_review_budget": 0.355,
+          "params_soft_train_fraction": 0.34,
+          "value": 0.868421052631579
+        },
+        {
+          "cf_id": 1,
+          "params_backbone": "resnet18",
+          "params_batch_size": "16",
+          "params_center_crop_key": "0.875",
+          "params_coreset_sampling_ratio": 0.099,
+          "params_image_size_key": "256",
+          "params_layers_key": "l3",
+          "params_max_patches_per_image": "128",
+          "params_num_neighbors": 11,
+          "params_pre_trained": "True",
+          "params_reduction": "mean",
+          "params_soft_corruption_level": "mild",
+          "params_soft_review_budget": 0.3,
+          "params_soft_train_fraction": 0.39,
+          "value": 0.8092691622103387
+        }
+      ],
+      "current_explanation": "All shown options meet the requested constraints. The quality range was set from 0.800 to 0.900.\n\nOption A is the reference option due to its highest displayed quality.\n\nOption A has the highest displayed quality and the lowest training fraction. Compared to Option A, Option B offers slightly lower quality by 0.059, a lower review budget by 0.055, and a higher training fraction by 0.050. However, Option B also shows better robustness to corrupted data, specifically from clean-data settings to mild-corruption robustness.\n\nFor the best quality, choose Option A.\nFor the lowest review budget, choose Option B.\nFor a balanced choice considering quality, review budget, and training fraction, Option A is recommended.",
+      "task3_baseline": {
+        "run_id": 1889,
+        "value": 0.84984,
+        "params_soft_train_fraction": 0.95,
+        "params_soft_review_budget": 0.375,
+        "params_soft_corruption_level": "strong",
+        "task3_min_quality": 0.84984,
+        "task3_max_review_budget": 0.355
+      },
+      "was_update": false,
+      "analysis_fields": {
+        "selected_cf_id": 0,
+        "selected_option_name": "Option A",
+        "selected_run_id": null,
+        "selected_quality": 0.868421052631579,
+        "selected_review_budget": 0.355,
+        "selected_training_fraction": 0.34,
+        "selected_corruption_level": "none",
+        "displayed_option_count": 2,
+        "selected_source": "dataset_filter",
+        "selected_score_source": "dataset_value",
+        "display_order": 1,
+        "shown_in_option_table": true,
+        "quality_rank_within_displayed_options": 1,
+        "review_budget_rank_within_displayed_options": 2,
+        "training_fraction_rank_within_displayed_options": 1,
+        "corruption_robustness_rank_within_displayed_options": 2,
+        "analysis_task_type": "independent_constraints",
+        "required_quality_lower": 0.8,
+        "required_quality_upper": 0.92,
+        "required_train_fraction_lower": 0.4,
+        "required_train_fraction_upper": 0.7,
+        "required_review_budget_lower": 0.005,
+        "required_review_budget_upper": 0.4,
+        "required_corruption_allowed": [
+          "mild",
+          "none",
+          "strong"
+        ],
+        "quality_ok": true,
+        "train_fraction_ok": false,
+        "review_budget_ok": true,
+        "corruption_ok": true,
+        "quality_margin_lower": 0.06842105263157894,
+        "quality_margin_upper": 0.05157894736842106,
+        "train_fraction_margin_lower": -0.06,
+        "train_fraction_margin_upper": 0.35999999999999993,
+        "review_budget_margin_lower": 0.35,
+        "review_budget_margin_upper": 0.04500000000000004,
+        "same_performance_ok": null,
+        "review_budget_5pct_lower_ok": null,
+        "different_from_base_ok": null,
+        "quality_drop_from_base": null,
+        "quality_change_from_base": null,
+        "review_budget_reduction_absolute": null,
+        "review_budget_reduction_percent": null,
+        "valid_what_if": null,
+        "valid_selection": false,
+        "n_violations": 1,
+        "violated_constraints": [
+          "training fraction outside allowed range"
+        ]
+      },
+      "selected_cf_id": 0,
+      "selected_option_name": "Option A",
+      "selected_run_id": null,
+      "selected_quality": 0.868421052631579,
+      "selected_review_budget": 0.355,
+      "selected_training_fraction": 0.34,
+      "selected_corruption_level": "none",
+      "displayed_option_count": 2,
+      "selected_source": "dataset_filter",
+      "selected_score_source": "dataset_value",
+      "display_order": 1,
+      "shown_in_option_table": true,
+      "quality_rank_within_displayed_options": 1,
+      "review_budget_rank_within_displayed_options": 2,
+      "training_fraction_rank_within_displayed_options": 1,
+      "corruption_robustness_rank_within_displayed_options": 2,
+      "analysis_task_type": "independent_constraints",
+      "required_quality_lower": 0.8,
+      "required_quality_upper": 0.92,
+      "required_train_fraction_lower": 0.4,
+      "required_train_fraction_upper": 0.7,
+      "required_review_budget_lower": 0.005,
+      "required_review_budget_upper": 0.4,
+      "required_corruption_allowed": [
+        "mild",
+        "none",
+        "strong"
+      ],
+      "quality_ok": true,
+      "train_fraction_ok": false,
+      "review_budget_ok": true,
+      "corruption_ok": true,
+      "quality_margin_lower": 0.06842105263157894,
+      "quality_margin_upper": 0.05157894736842106,
+      "train_fraction_margin_lower": -0.06,
+      "train_fraction_margin_upper": 0.35999999999999993,
+      "review_budget_margin_lower": 0.35,
+      "review_budget_margin_upper": 0.04500000000000004,
+      "same_performance_ok": null,
+      "review_budget_5pct_lower_ok": null,
+      "different_from_base_ok": null,
+      "quality_drop_from_base": null,
+      "quality_change_from_base": null,
+      "review_budget_reduction_absolute": null,
+      "review_budget_reduction_percent": null,
+      "valid_what_if": null,
+      "valid_selection": false,
+      "n_violations": 1,
+      "violated_constraints": [
+        "training fraction outside allowed range"
+      ]
+    },
+    {
+      "event_index": 14,
+      "event_type": "task_selected",
+      "timestamp": "2026-05-13T09:34:14.964135+02:00",
+      "relative_seconds": 601.81,
+      "participant_id": "P-30C813",
+      "questionnaire_id": "P-30C813",
+      "session_id": "20260513_092413",
+      "study_condition": "condition_llm_interface",
+      "app_version": "2026-05-06-parser-valid-only-v2",
+      "task_name": "task_2",
+      "was_submitted": false
+    },
+    {
+      "event_index": 15,
+      "event_type": "generate_clicked",
+      "timestamp": "2026-05-13T09:35:24.361000+02:00",
+      "relative_seconds": 671.21,
+      "participant_id": "P-30C813",
+      "questionnaire_id": "P-30C813",
+      "session_id": "20260513_092413",
+      "study_condition": "condition_llm_interface",
+      "app_version": "2026-05-06-parser-valid-only-v2",
+      "task_name": "task_2",
+      "attempt_number": 4,
+      "user_text": "I want predicted f1 between 0.78 and 0.91, training fraction between 0.4 and 0.5, review budget between 0.2 and 0.3 and corruption level must be none or mild",
+      "openrouter_model_id": "qwen/qwen-2.5-7b-instruct",
+      "anchor_count": 3,
+      "dataset_path": "surrogate_ready_dataset/patchcore_surrogate_dataset_xgb.csv",
+      "model_path": "surrogate_pkl_cfs_metadata/surrogate_catboost.cbm",
+      "export_dir": "surrogate_pkl_cfs_metadata"
+    },
+    {
+      "event_index": 16,
+      "event_type": "generation_success",
+      "timestamp": "2026-05-13T09:35:34.133077+02:00",
+      "relative_seconds": 680.98,
+      "participant_id": "P-30C813",
+      "questionnaire_id": "P-30C813",
+      "session_id": "20260513_092413",
+      "study_condition": "condition_llm_interface",
+      "app_version": "2026-05-06-parser-valid-only-v2",
+      "task_name": "task_2",
+      "attempt_number": 4,
+      "user_text": "I want predicted f1 between 0.78 and 0.91, training fraction between 0.4 and 0.5, review budget between 0.2 and 0.3 and corruption level must be none or mild",
+      "openrouter_model_id": "qwen/qwen-2.5-7b-instruct",
+      "anchor_count": 3,
+      "query_template": {
+        "objective": {
+          "type": "target_band",
+          "lower": 0.78,
+          "upper": 0.91,
+          "eps": 0.01
+        },
+        "soft_constraints": {
+          "params_soft_review_budget": {
+            "mode": "range",
+            "lower": 0.2,
+            "upper": 0.3
+          },
+          "params_soft_train_fraction": {
+            "mode": "range",
+            "lower": 0.4,
+            "upper": 0.5
+          },
+          "params_soft_corruption_level": {
+            "mode": "allowed",
+            "allowed": [
+              "mild",
+              "none"
+            ]
+          }
+        },
+        "selection": {
+          "k": 3
+        },
+        "_meta": {
+          "used_fallback": false,
+          "attempts": 1,
+          "parser": "llm_only_with_repair"
+        },
+        "llm_provider": "OpenRouter",
+        "llm_model": "qwen/qwen-2.5-7b-instruct"
+      },
+      "anchor_runs": [
+        {
+          "source": "dataset_filter",
+          "n_valid_dataset_matches": 0,
+          "used_as_primary_source": false
+        },
+        {
+          "source": "counterfactual_generation_started",
+          "reason": "not_enough_factual_options",
+          "n_factual_options": 0,
+          "n_needed": 3
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2529,
+          "anchor_score": 0.897843920884358,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.78,
+            0.91
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2731,
+          "anchor_score": 0.8931386489817918,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.78,
+            0.91
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        },
+        {
+          "source": "dice",
+          "anchor_idx": 2325,
+          "anchor_score": 0.8928438132445735,
+          "objective_reference_score": 0.897843920884358,
+          "desired_range": [
+            0.78,
+            0.91
+          ],
+          "before_range_filter": 250,
+          "after_range_filter": 250,
+          "n_cf_after_strict_validity_filter": 0
+        }
+      ],
+      "n_options": 0,
+      "options": [],
+      "explanation": "Only 0 valid alternative(s) were found after checking both existing factual configurations and generated counterfactual alternatives. The study interface requires at least 1 valid alternatives before showing options. Try relaxing the request slightly, for example by lowering the minimum F1 score or allowing a slightly higher review budget.",
+      "raw_explanation": "Only 0 valid alternative(s) were found after checking both existing factual configurations and generated counterfactual alternatives. The study interface requires at least 1 valid alternatives before showing options. Try relaxing the request slightly, for example by lowering the minimum F1 score or allowing a slightly higher review budget."
+    },
+    {
+      "event_index": 17,
+      "event_type": "generate_clicked",
+      "timestamp": "2026-05-13T09:35:45.991236+02:00",
+      "relative_seconds": 692.84,
+      "participant_id": "P-30C813",
+      "questionnaire_id": "P-30C813",
+      "session_id": "20260513_092413",
+      "study_condition": "condition_llm_interface",
+      "app_version": "2026-05-06-parser-valid-only-v2",
+      "task_name": "task_2",
+      "attempt_number": 5,
+      "user_text": "I want predicted f1 between 0.78 and 0.91, training fraction between 0.3 and 0.5, review budget between 0.2 and 0.3 and corruption level must be none or mild",
+      "openrouter_model_id": "qwen/qwen-2.5-7b-instruct",
+      "anchor_count": 3,
+      "dataset_path": "surrogate_ready_dataset/patchcore_surrogate_dataset_xgb.csv",
+      "model_path": "surrogate_pkl_cfs_metadata/surrogate_catboost.cbm",
+      "export_dir": "surrogate_pkl_cfs_metadata"
+    },
+    {
+      "event_index": 18,
+      "event_type": "generation_success",
+      "timestamp": "2026-05-13T09:35:51.402258+02:00",
+      "relative_seconds": 698.25,
+      "participant_id": "P-30C813",
+      "questionnaire_id": "P-30C813",
+      "session_id": "20260513_092413",
+      "study_condition": "condition_llm_interface",
+      "app_version": "2026-05-06-parser-valid-only-v2",
+      "task_name": "task_2",
+      "attempt_number": 5,
+      "user_text": "I want predicted f1 between 0.78 and 0.91, training fraction between 0.3 and 0.5, review budget between 0.2 and 0.3 and corruption level must be none or mild",
+      "openrouter_model_id": "qwen/qwen-2.5-7b-instruct",
+      "anchor_count": 3,
+      "query_template": {
+        "objective": {
+          "type": "target_band",
+          "lower": 0.78,
+          "upper": 0.91,
+          "eps": 0.01
+        },
+        "soft_constraints": {
+          "params_soft_review_budget": {
+            "mode": "range",
+            "lower": 0.2,
+            "upper": 0.3
+          },
+          "params_soft_train_fraction": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.5
+          },
+          "params_soft_corruption_level": {
+            "mode": "allowed",
+            "allowed": [
+              "mild",
+              "none"
+            ]
+          }
+        },
+        "selection": {
+          "k": 3
+        },
+        "_meta": {
+          "used_fallback": false,
+          "attempts": 1,
+          "parser": "llm_only_with_repair"
+        },
+        "llm_provider": "OpenRouter",
+        "llm_model": "qwen/qwen-2.5-7b-instruct"
+      },
+      "anchor_runs": [
+        {
+          "source": "dataset_filter",
+          "n_valid_dataset_matches": 3,
+          "used_as_primary_source": true
+        }
+      ],
+      "n_options": 3,
+      "options": [
+        {
+          "cf_id": 0,
+          "params_backbone": "resnet34",
+          "params_batch_size": "16",
+          "params_center_crop_key": "0.875",
+          "params_coreset_sampling_ratio": 0.011,
+          "params_image_size_key": "256",
+          "params_layers_key": "l1_l2_l3",
+          "params_max_patches_per_image": "1024",
+          "params_num_neighbors": 16,
+          "params_pre_trained": "False",
+          "params_reduction": "max",
+          "params_soft_corruption_level": "none",
+          "params_soft_review_budget": 0.25,
+          "params_soft_train_fraction": 0.32,
+          "value": 0.8239845261121856
+        },
+        {
+          "cf_id": 1,
+          "params_backbone": "resnet18",
+          "params_batch_size": "16",
+          "params_center_crop_key": "0.875",
+          "params_coreset_sampling_ratio": 0.099,
+          "params_image_size_key": "256",
+          "params_layers_key": "l3",
+          "params_max_patches_per_image": "128",
+          "params_num_neighbors": 11,
+          "params_pre_trained": "True",
+          "params_reduction": "mean",
+          "params_soft_corruption_level": "mild",
+          "params_soft_review_budget": 0.3,
+          "params_soft_train_fraction": 0.39,
+          "value": 0.8092691622103387
+        },
+        {
+          "cf_id": 2,
+          "params_backbone": "resnet50",
+          "params_batch_size": "8",
+          "params_center_crop_key": "none",
+          "params_coreset_sampling_ratio": 0.061,
+          "params_image_size_key": "224",
+          "params_layers_key": "l2_l3",
+          "params_max_patches_per_image": "128",
+          "params_num_neighbors": 17,
+          "params_pre_trained": "False",
+          "params_reduction": "max",
+          "params_soft_corruption_level": "none",
+          "params_soft_review_budget": 0.285,
+          "params_soft_train_fraction": 0.32,
+          "value": 0.8065693430656934
+        }
+      ],
+      "explanation": "All options meet the required constraints. The quality range requested was between 0.780 and 0.910. The explanation focuses on the trade-offs between the options.\n\nOption A is the reference option for quality because it has the highest displayed quality. It also has the lowest review budget and the lowest training fraction.\n\nOption B has slightly lower quality by 0.015, a higher review budget by 0.050, and a higher training fraction by 0.070. However, it offers better robustness to mildly corrupted data compared to clean data.\n\nOption C also has slightly lower quality by 0.017, a higher review budget by 0.035, and maintains the same training fraction as Option A. It does not show any improvement in robustness to corrupted data.\n\nFor the best quality, choose Option A. For the lowest review budget, Option A is the best choice. If you want a balanced option considering quality, review budget, and training fraction, Option A is the best choice as well.",
+      "raw_explanation": "All shown options satisfy the requested constraints.\nThe requested quality range was 0.780 to 0.910.\nThe table gives the exact option values. The explanation below focuses only on the trade-offs.\nOption A is used as the quality reference because it has the highest displayed quality.\n\nOption A (highest displayed quality, lowest review budget, and lowest training fraction): this is the reference option for quality.\nOption B: compared with Option A, it has 0.015 lower quality, 0.050 higher review budget, 0.070 higher training fraction, and higher robustness to corrupted data (clean-data setting → mild-corruption robustness).\nOption C: compared with Option A, it has 0.017 lower quality, 0.035 higher review budget, same training fraction at the displayed precision, and same corruption robustness level (clean-data setting).\n\nBest quality choice: Option A.\nLowest review-budget choice: Option A.\nBalanced choice: Option A, based on the combined quality, review budget, and training-fraction trade-off."
+    },
+    {
+      "event_index": 19,
+      "event_type": "final_answer_submitted",
+      "timestamp": "2026-05-13T09:40:16.480106+02:00",
+      "relative_seconds": 963.32,
+      "participant_id": "P-30C813",
+      "questionnaire_id": "P-30C813",
+      "session_id": "20260513_092413",
+      "study_condition": "condition_llm_interface",
+      "app_version": "2026-05-06-parser-valid-only-v2",
+      "task_name": "task_2",
+      "submitted_at": "2026-05-13T09:40:16.474361+02:00",
+      "selected_option_label": "Option B | quality=0.809 | review=0.300 | train=0.390 | corruption=mild",
+      "selected_configuration": {
+        "cf_id": 1,
+        "params_backbone": "resnet18",
+        "params_batch_size": "16",
+        "params_center_crop_key": "0.875",
+        "params_coreset_sampling_ratio": 0.099,
+        "params_image_size_key": "256",
+        "params_layers_key": "l3",
+        "params_max_patches_per_image": "128",
+        "params_num_neighbors": 11,
+        "params_pre_trained": "True",
+        "params_reduction": "mean",
+        "params_soft_corruption_level": "mild",
+        "params_soft_review_budget": 0.3,
+        "params_soft_train_fraction": 0.39,
+        "value": 0.8092691622103387,
+        "_score_source": "dataset_value",
+        "_source": "dataset_filter",
+        "_anchor_idx": -1,
+        "_anchor_score": 0.897843920884358,
+        "_signature": "params_backbone=resnet18|params_batch_size=16|params_center_crop_key=0.875|params_coreset_sampling_ratio=0.099000|params_image_size_key=256|params_layers_key=l3|params_max_patches_per_image=128|params_num_neighbors=11.000000|params_pre_trained=True|params_reduction=mean|params_soft_corruption_level=mild|params_soft_review_budget=0.300000|params_soft_train_fraction=0.390000",
+        "_source_priority": 0
+      },
+      "justification": "because is  offers stronger robustness than a and c,   acceptable quality (f1) and training fraction",
+      "confidence": "medium",
+      "attempt_count_at_submission": 5,
+      "current_query_template": {
+        "objective": {
+          "type": "target_band",
+          "lower": 0.78,
+          "upper": 0.91,
+          "eps": 0.01
+        },
+        "soft_constraints": {
+          "params_soft_review_budget": {
+            "mode": "range",
+            "lower": 0.2,
+            "upper": 0.3
+          },
+          "params_soft_train_fraction": {
+            "mode": "range",
+            "lower": 0.3,
+            "upper": 0.5
+          },
+          "params_soft_corruption_level": {
+            "mode": "allowed",
+            "allowed": [
+              "mild",
+              "none"
+            ]
+          }
+        },
+        "selection": {
+          "k": 3
+        },
+        "_meta": {
+          "used_fallback": false,
+          "attempts": 1,
+          "parser": "llm_only_with_repair"
+        },
+        "llm_provider": "OpenRouter",
+        "llm_model": "qwen/qwen-2.5-7b-instruct"
+      },
+      "current_options": [
+        {
+          "cf_id": 0,
+          "params_backbone": "resnet34",
+          "params_batch_size": "16",
+          "params_center_crop_key": "0.875",
+          "params_coreset_sampling_ratio": 0.011,
+          "params_image_size_key": "256",
+          "params_layers_key": "l1_l2_l3",
+          "params_max_patches_per_image": "1024",
+          "params_num_neighbors": 16,
+          "params_pre_trained": "False",
+          "params_reduction": "max",
+          "params_soft_corruption_level": "none",
+          "params_soft_review_budget": 0.25,
+          "params_soft_train_fraction": 0.32,
+          "value": 0.8239845261121856
+        },
+        {
+          "cf_id": 1,
+          "params_backbone": "resnet18",
+          "params_batch_size": "16",
+          "params_center_crop_key": "0.875",
+          "params_coreset_sampling_ratio": 0.099,
+          "params_image_size_key": "256",
+          "params_layers_key": "l3",
+          "params_max_patches_per_image": "128",
+          "params_num_neighbors": 11,
+          "params_pre_trained": "True",
+          "params_reduction": "mean",
+          "params_soft_corruption_level": "mild",
+          "params_soft_review_budget": 0.3,
+          "params_soft_train_fraction": 0.39,
+          "value": 0.8092691622103387
+        },
+        {
+          "cf_id": 2,
+          "params_backbone": "resnet50",
+          "params_batch_size": "8",
+          "params_center_crop_key": "none",
+          "params_coreset_sampling_ratio": 0.061,
+          "params_image_size_key": "224",
+          "params_layers_key": "l2_l3",
+          "params_max_patches_per_image": "128",
+          "params_num_neighbors": 17,
+          "params_pre_trained": "False",
+          "params_reduction": "max",
+          "params_soft_corruption_level": "none",
+          "params_soft_review_budget": 0.285,
+          "params_soft_train_fraction": 0.32,
+          "value": 0.8065693430656934
+        }
+      ],
+      "current_explanation": "All options meet the required constraints. The quality range requested was between 0.780 and 0.910. The explanation focuses on the trade-offs between the options.\n\nOption A is the reference option for quality because it has the highest displayed quality. It also has the lowest review budget and the lowest training fraction.\n\nOption B has slightly lower quality by 0.015, a higher review budget by 0.050, and a higher training fraction by 0.070. However, it offers better robustness to mildly corrupted data compared to clean data.\n\nOption C also has slightly lower quality by 0.017, a higher review budget by 0.035, and maintains the same training fraction as Option A. It does not show any improvement in robustness to corrupted data.\n\nFor the best quality, choose Option A. For the lowest review budget, Option A is the best choice. If you want a balanced option considering quality, review budget, and training fraction, Option A is the best choice as well.",
+      "task3_baseline": {
+        "run_id": 1889,
+        "value": 0.84984,
+        "params_soft_train_fraction": 0.95,
+        "params_soft_review_budget": 0.375,
+        "params_soft_corruption_level": "strong",
+        "task3_min_quality": 0.84984,
+        "task3_max_review_budget": 0.355
+      },
+      "was_update": false,
+      "analysis_fields": {
+        "selected_cf_id": 1,
+        "selected_option_name": "Option B",
+        "selected_run_id": null,
+        "selected_quality": 0.8092691622103387,
+        "selected_review_budget": 0.3,
+        "selected_training_fraction": 0.39,
+        "selected_corruption_level": "mild",
+        "displayed_option_count": 3,
+        "selected_source": "dataset_filter",
+        "selected_score_source": "dataset_value",
+        "display_order": 2,
+        "shown_in_option_table": true,
+        "quality_rank_within_displayed_options": 2,
+        "review_budget_rank_within_displayed_options": 3,
+        "training_fraction_rank_within_displayed_options": 3,
+        "corruption_robustness_rank_within_displayed_options": 1,
+        "analysis_task_type": "independent_constraints",
+        "required_quality_lower": 0.78,
+        "required_quality_upper": 0.91,
+        "required_train_fraction_lower": 0.2,
+        "required_train_fraction_upper": 0.6,
+        "required_review_budget_lower": 0.005,
+        "required_review_budget_upper": 0.3,
+        "required_corruption_allowed": [
+          "mild",
+          "none"
+        ],
+        "quality_ok": true,
+        "train_fraction_ok": true,
+        "review_budget_ok": true,
+        "corruption_ok": true,
+        "quality_margin_lower": 0.029269162210338706,
+        "quality_margin_upper": 0.1007308377896613,
+        "train_fraction_margin_lower": 0.19,
+        "train_fraction_margin_upper": 0.20999999999999996,
+        "review_budget_margin_lower": 0.295,
+        "review_budget_margin_upper": 0.0,
+        "same_performance_ok": null,
+        "review_budget_5pct_lower_ok": null,
+        "different_from_base_ok": null,
+        "quality_drop_from_base": null,
+        "quality_change_from_base": null,
+        "review_budget_reduction_absolute": null,
+        "review_budget_reduction_percent": null,
+        "valid_what_if": null,
+        "valid_selection": true,
+        "n_violations": 0,
+        "violated_constraints": []
+      },
+      "selected_cf_id": 1,
+      "selected_option_name": "Option B",
+      "selected_run_id": null,
+      "selected_quality": 0.8092691622103387,
+      "selected_review_budget": 0.3,
+      "selected_training_fraction": 0.39,
+      "selected_corruption_level": "mild",
+      "displayed_option_count": 3,
+      "selected_source": "dataset_filter",
+      "selected_score_source": "dataset_value",
+      "display_order": 2,
+      "shown_in_option_table": true,
+      "quality_rank_within_displayed_options": 2,
+      "review_budget_rank_within_displayed_options": 3,
+      "training_fraction_rank_within_displayed_options": 3,
+      "corruption_robustness_rank_within_displayed_options": 1,
+      "analysis_task_type": "independent_constraints",
+      "required_quality_lower": 0.78,
+      "required_quality_upper": 0.91,
+      "required_train_fraction_lower": 0.2,
+      "required_train_fraction_upper": 0.6,
+      "required_review_budget_lower": 0.005,
+      "required_review_budget_upper": 0.3,
+      "required_corruption_allowed": [
+        "mild",
+        "none"
+      ],
+      "quality_ok": true,
+      "train_fraction_ok": true,
+      "review_budget_ok": true,
+      "corruption_ok": true,
+      "quality_margin_lower": 0.029269162210338706,
+      "quality_margin_upper": 0.1007308377896613,
+      "train_fraction_margin_lower": 0.19,
+      "train_fraction_margin_upper": 0.20999999999999996,
+      "review_budget_margin_lower": 0.295,
+      "review_budget_margin_upper": 0.0,
+      "same_performance_ok": null,
+      "review_budget_5pct_lower_ok": null,
+      "different_from_base_ok": null,
+      "quality_drop_from_base": null,
+      "quality_change_from_base": null,
+      "review_budget_reduction_absolute": null,
+      "review_budget_reduction_percent": null,
+      "valid_what_if": null,
+      "valid_selection": true,
+      "n_violations": 0,
+      "violated_constraints": []
+    }
+  ]
+}

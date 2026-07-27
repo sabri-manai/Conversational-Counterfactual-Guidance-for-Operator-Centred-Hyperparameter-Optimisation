@@ -1,0 +1,21 @@
+utterance,n_unique,consistent
+Find configurations with F1 at least 0.85.,1,True
+"I need quality of minimum 0.8, three options please.",1,True
+Give me 5 setups reaching at least 0.9 F1.,1,True
+Quality no lower than 0.75 and review budget at most 0.30.,1,True
+"At least 0.85 F1, training on no more than 60% of the data.",1,True
+Reach 0.85 minimum; corruption must be none.,1,True
+Minimum 0.8 with corruption none or mild.,1,True
+"F1 of at least 0.85, review budget below 0.30, train on at most 60% of data, 3 options.",1,True
+Show options with predicted F1 between 0.75 and 0.95.,1,True
+Something in the 0.85 to 0.90 quality band.,1,True
+Keep quality between 0.8 and 0.9 while fixing review budget at 0.25.,1,True
+"Band 0.78-0.91, training fraction at most 0.6, corruption none or mild.",1,True
+Improve the F1 by at least 0.05 over the current setup.,1,True
+I want 10% less review effort at similar quality.,1,True
+Same quality but cut the review budget by 20%.,1,True
+"Slightly better than now, and don't increase the review budget.",1,True
+Improve by 0.02 while keeping training fraction under 50%.,1,True
+"Train on 60% of the data at most, F1 at least 0.85.",1,True
+Training fraction max 0.6; F1 >= 0.85.,1,True
+"Review at most 30 percent of images, quality above 0.8.",1,True

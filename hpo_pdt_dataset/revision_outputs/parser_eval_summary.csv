@@ -1,0 +1,16 @@
+metric,value
+JSON parseable (raw decode),1.0
+Schema-valid BEFORE repair,0.15
+Pipeline success (after repair),1.0
+Repair fired,0.85
+Objective type accuracy,0.35
+Objective value accuracy,0.125
+Training-fraction constraint fidelity,0.075
+Review-budget constraint fidelity,0.1
+Corruption constraint fidelity,0.075
+K extraction accuracy,0.1
+EXACT full-query accuracy,0.025
+  ... on relative-constraint subset,0.0
+  ... on paraphrase subset,0.0
+  ... on repair-provoking subset (pipeline_ok),1.0
+Mean parse latency (s),95.93208538657055

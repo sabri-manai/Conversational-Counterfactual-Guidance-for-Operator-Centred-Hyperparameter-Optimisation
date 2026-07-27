@@ -1,0 +1,4 @@
+method,n,mean_f1_at_own_budget,mean_f1_oracle,mean_transfer_loss,max_transfer_loss
+ACFX,8,0.7507,0.7969,0.0462,0.0986
+CFNOW,8,0.8866,0.8941,0.0075,0.0131
+DiCE,8,0.8064,0.826,0.0196,0.0532

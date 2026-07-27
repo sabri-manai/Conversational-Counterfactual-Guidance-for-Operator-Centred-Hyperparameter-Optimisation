@@ -1,0 +1,4 @@
+qid,method,n,surrogate_f1,confirmed_f1,gap,runtime_sec
+tight_band,DiCE,2,0.8962,0.876,-0.0202,72.2677
+tight_band,LogTopK,2,0.8976,0.8878,-0.0098,25.8614
+tight_band,NearestFeasible,2,0.8914,0.8822,-0.0092,28.2409

@@ -1,0 +1,4 @@
+split,R2,RMSE,MAE,leakage_pct
+"random_stratified_80_20 (paper protocol, reproduced)",0.9953,0.0155,0.0088,19.9399
+GroupKFold(5) by exact config signature (mean),0.9953,0.0157,0.0089,0.0
+GroupKFold(5) (sd),0.0005,0.001,0.0003,

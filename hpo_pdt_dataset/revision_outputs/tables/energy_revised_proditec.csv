@@ -1,0 +1,6 @@
+method,energy_per_query_Wh,retrain_energy_per_query_Wh,avoided_per_1000_queries_kWh,co2_avoided_per_1000_queries_kg
+ACFX,13.7928,3.9468,-9.8459,-6.4983
+CFNOW,11.8089,3.9468,-7.8621,-5.189
+DiCE,11.7881,3.9468,-7.8412,-5.1752
+LogTopK,11.782,3.9468,-7.8351,-5.1712
+NearestFeasible,11.782,3.9468,-7.8352,-5.1712

@@ -1,0 +1,3 @@
+mechanism,metric,value
+"1. Pooling of category score scales (ranking effect, threshold-free)",mean per-category AUROC − pooled AUROC,0.3298
+2. Single pooled validation-calibrated threshold (F1 effect),mean F1 @ class-wise thresholds − F1 @ pooled threshold,0.2482

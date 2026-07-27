@@ -1,0 +1,125 @@
+You are analysing participant comments from a user study comparing two systems:
+1. API baseline (condition A): pipeline used through its Python API in a notebook
+2. Conversational interface (condition B)
+
+The comments are short participant justifications for selected machine-learning configurations.
+Summarise them for an academic paper subsection under Human-Centred Evaluation.
+
+Focus on:
+- how participants justified their choices;
+- whether they mention F1 score, review budget, training fraction, corruption level, or trade-offs;
+- differences between the API (A) and conversational interface (B) conditions;
+- specific observations for Task 3, which required reasoning against a base configuration (baseline-relative constraints);
+- any signs of confusion, over-focus on predicted F1, or difficulty with relative review-budget reduction.
+
+Do not overclaim. Treat the analysis as qualitative and descriptive.
+Do not identify participants.
+Use concise academic language.
+
+Suggested output structure:
+1. Short paragraph summarising the overall pattern.
+2. Paragraph comparing the two conditions.
+3. Paragraph about Task 3 and baseline-relative reasoning.
+4. Two or three cautious implications for interface design.
+
+Use the following comments as evidence:
+
+# User Study Participant Justifications
+
+These comments are participant-written justifications for their final selected configuration in each task. Participant identifiers are anonymised.
+
+## Context
+
+- Condition `API (A)`: participants interacted with the recommendation pipeline through its Python API in a Jupyter notebook, with criteria specified in code and results returned as data tables.
+- Condition `Conversational (B)`: participants used the conversational counterfactual guidance interface.
+- Task 1 and Task 2 involved absolute (independent) constraints.
+- Task 3 involved constraints defined relative to a base configuration.
+
+## Comments
+
+### Condition: API (A)
+
+#### Task 1
+
+- (participant=API_A_P1; selection=valid; F1=0.844; review_budget=0.370; train_fraction=0.560; corruption=mild) This model has just a little lower quality score than 1213 , but it is the only one with mild confidence. Its review budget isn't too high (like 0.4).
+- (participant=API_A_P10; selection=valid; F1=0.844; review_budget=0.370; train_fraction=0.560; corruption=mild) It satisfies all constraints. It has high F1 score and lower review budget.
+- (participant=API_A_P2; selection=valid; F1=0.859; review_budget=0.375; train_fraction=0.550; corruption=none) I chose run ID 1213 because with the lowest training fraction we get very similar results to bigger fractions. The rest of the parameters don't vary that much but lower training fraction means reduced training effort.
+- (participant=API_A_P3; selection=valid; F1=0.844; review_budget=0.370; train_fraction=0.560; corruption=mild) If I have to choose a configuration with training fraction not higher then 0.70, the mild corruption level of this configuration seems to be worth the ~0.015 score decrese compared to the other options
+- (participant=API_A_P4; selection=valid; F1=0.844; review_budget=0.370; train_fraction=0.560; corruption=mild) between all configurations that satisfies criterias in task 1 I choose this configuration because it has very similar result to configuration with highest F1 score, has almost the same training fraction and review budget but uses mild corruption_level which means the data it was trained was more difficult(high score on the more difficult test seams better than slighty better result on simple test);
+- (participant=API_A_P5; selection=valid; F1=0.859; review_budget=0.375; train_fraction=0.550; corruption=none) This one had the highest F1 score with training fraction between 0.4 and 0.7
+- (participant=API_A_P6; selection=invalid; F1=0.076; review_budget=0.045; train_fraction=0.810; corruption=mild) If i undestend the task we must choose the one configuration with particulary configuration , sorry but now i read this heheh, okej but i will choice the most high score with the conifguration i can choose
+- (participant=API_A_P7; selection=valid; F1=0.859; review_budget=0.375; train_fraction=0.550; corruption=none) 1213 conf has the highest quality score from all available configurations with training fraction in given range
+- (participant=API_A_P8; selection=valid; F1=0.859; review_budget=0.375; train_fraction=0.550; corruption=none) Because it fits configuration requirements
+- (participant=API_A_P9; selection=valid; F1=0.844; review_budget=0.370; train_fraction=0.560; corruption=mild) Only one with corruption_level:mild,very low training_fraction and medium review_budget
+
+#### Task 2
+
+- (participant=API_A_P1; selection=valid; F1=0.824; review_budget=0.250; train_fraction=0.320; corruption=none) It has the highest quality score from valid ones and the lowest review budget.
+- (participant=API_A_P10; selection=valid; F1=0.824; review_budget=0.250; train_fraction=0.320; corruption=none) It fits the constraints. It has the highest F1 score from fitting options, lowest review budget and lowest training fraction.
+- (participant=API_A_P2; selection=valid; F1=0.824; review_budget=0.250; train_fraction=0.320; corruption=none) Run ID 1317 had the highest quality score for training fraction and budget within the given criteria.
+- (participant=API_A_P3; selection=valid; F1=0.824; review_budget=0.250; train_fraction=0.320; corruption=none) The highest score that fits the requirements. The mild corruption level configuration is too much of a downgrade in terms of quality score, training fraction and review_budget
+- (participant=API_A_P4; selection=valid; F1=0.809; review_budget=0.300; train_fraction=0.390; corruption=mild) between all configurations that satisfies criterias in task 2 I choose this configuration because it has very similar result to configuration with highest F1 score, has almost the same training fraction and review budget but uses mild corruption_level which means the data it was trained was more difficult(high score on the more difficult test seams better than slighty better result on simple test);
+- (participant=API_A_P5; selection=valid; F1=0.824; review_budget=0.250; train_fraction=0.320; corruption=none) This one also had the highest F1 score
+- (participant=API_A_P6; selection=invalid; F1=0.907; review_budget=0.345; train_fraction=0.840; corruption=none) The same page to the lasted justification, the best quality_scorde and training fraction
+- (participant=API_A_P7; selection=valid; F1=0.824; review_budget=0.250; train_fraction=0.320; corruption=none) This configuration has the highest quality score while having the lowest training fraction and much lower review budget than other options. Low review budget lowers the time human need to spednd which I consider as important.
+- (participant=API_A_P8; selection=valid; F1=0.824; review_budget=0.250; train_fraction=0.320; corruption=none) Because it has best quality_score while fitting configuration requirements
+- (participant=API_A_P9; selection=valid; F1=0.824; review_budget=0.250; train_fraction=0.320; corruption=none) lowest review_budget and highier quality_score than other models with training_fraction<=0.60
+
+#### Task 3
+
+- (participant=API_A_P1; selection=valid; F1=0.854; review_budget=0.285; train_fraction=0.870; corruption=none; delta_F1=0.004; budget_reduction_pct=24.00) Review budget got way lower while making quality score higher and even lowering training fraction.
+- (participant=API_A_P10; selection=valid; F1=0.871; review_budget=0.305; train_fraction=0.860; corruption=none; delta_F1=0.021; budget_reduction_pct=18.67) Fits the constraints. High F1, lowest review budget out of fitting options, training fraction also plausibly low.
+- (participant=API_A_P2; selection=valid; F1=0.900; review_budget=0.345; train_fraction=0.850; corruption=none; delta_F1=0.050; budget_reduction_pct=8.00) It has the highest quality score and its review budget fits within the criteria.
+- (participant=API_A_P3; selection=invalid; F1=0.845; review_budget=0.355; train_fraction=1.000; corruption=strong; delta_F1=-0.004; budget_reduction_pct=5.33) I'm quessing the strong corruption level should be preserved.
+- (participant=API_A_P4; selection=valid; F1=0.882; review_budget=0.310; train_fraction=0.860; corruption=none; delta_F1=0.032; budget_reduction_pct=17.33) In this task choosing one of the options was the most difficult. There were more configurations that satisfy both requirements with similar results and no set rules what is more important(quality score, training fraction, review budget or corruption level). If predicted F1 score didn't have to be higher than base configuration I would go with configuration with run_id 1691, it has almost identical quality_score with review budget 5% lower than the base configuration, but is done on the data with the same corruption_level. Rest results has none corruption level. So out of all that satisfy both requirements in task 3, i choose one that has the second lowest budget with 'good' quality score, but i would love to have bigger picture what's important in choosing configuration for this data.
+- (participant=API_A_P5; selection=valid; F1=0.900; review_budget=0.345; train_fraction=0.850; corruption=none; delta_F1=0.050; budget_reduction_pct=8.00) This one had the highest quality score
+- (participant=API_A_P6; selection=valid; F1=0.901; review_budget=0.340; train_fraction=0.910; corruption=none; delta_F1=0.051; budget_reduction_pct=9.33) The configuration have most aproximate data to the base configuration
+- (participant=API_A_P7; selection=valid; F1=0.854; review_budget=0.285; train_fraction=0.870; corruption=none; delta_F1=0.004; budget_reduction_pct=24.00) the lowest review_budget, it can't deal with strongly corrupted images, however configuration that does extends othe limits.
+- (participant=API_A_P8; selection=valid; F1=0.893; review_budget=0.325; train_fraction=0.860; corruption=none; delta_F1=0.044; budget_reduction_pct=13.33) Because it has better quality_score and lower review_budget
+- (participant=API_A_P9; selection=valid; F1=0.854; review_budget=0.285; train_fraction=0.870; corruption=none; delta_F1=0.004; budget_reduction_pct=24.00) Slightly higher quality_score with much lower review_budget
+
+### Condition: Conversational (B)
+
+#### Task 1
+
+- (participant=Conversational_B_P1; selection=valid; F1=0.844; review_budget=0.370; train_fraction=0.560; corruption=mild) It has lowest review budget
+- (participant=Conversational_B_P10; selection=valid; F1=0.844; review_budget=0.370; train_fraction=0.560; corruption=mild) This configuration uses more difficult data then others solutions having smallest raview budget and training fraction less than option B.
+- (participant=Conversational_B_P11; selection=valid; F1=0.859; review_budget=0.400; train_fraction=0.670; corruption=none) While having the same F1 score as the option A (F1 = 0.859, the highest value) option B provides bigger training fraction (0.67 vs 0.55). As a result, I think that option B is the best choice even under the condition that it uses a bit higher review budget (but it's still in the accepted margins).
+- (participant=Conversational_B_P12; selection=valid; F1=0.844; review_budget=0.370; train_fraction=0.560; corruption=mild) This is because of the higher robustness to corrupted data and training fraction, but a lower review budget
+- (participant=Conversational_B_P2; selection=invalid; F1=0.809; review_budget=0.300; train_fraction=0.390; corruption=mild) although this model is the further from best specification, other alternative's corruption level were none, so i choosed this one as the most optimal to ensure the model would handle some lower quality of data
+- (participant=Conversational_B_P3; selection=valid; F1=0.859; review_budget=0.375; train_fraction=0.550; corruption=none) I selected Option A because of the best quality. A little higher review budget isn't enough reason for me to choose option C instead. Option B doesn't seem much better than option A because the robustness level is the same and the only benefit of option B is higher training fraction but when taking all parameters it's worse (higher review budget having the same robustness level)
+- (participant=Conversational_B_P4; selection=invalid; F1=0.868; review_budget=0.355; train_fraction=0.340; corruption=none) Option A offers better quality and lowest training fraction
+- (participant=Conversational_B_P5; selection=valid; F1=0.859; review_budget=0.400; train_fraction=0.670; corruption=none) because is balance compromise. That compromise has the highest review.
+- (participant=Conversational_B_P6; selection=valid; F1=0.844; review_budget=0.370; train_fraction=0.560; corruption=mild) I selected Option B because it provides good quality while being more robust to mildly corrupted data and keeping the review budget low.
+- (participant=Conversational_B_P7; selection=valid; F1=0.859; review_budget=0.375; train_fraction=0.550; corruption=none) Option A has the highest F1 score (on par with B), with a lower review budget (less manual input required) and a lower Training Fraction (easier on computatinal requirements). It is unequivocally the best choice. One remark: B is listed as "balanced compromise" when it shows a similar F1 result with worse parameters than A (higher review Budget, higher training fraction). It feels like more like a direct downgrade to A than a compromise.
+- (participant=Conversational_B_P8; selection=valid; F1=0.859; review_budget=0.375; train_fraction=0.550; corruption=none) Option A is the balanced choice it has the highest F1 score with not much bigger review budget
+- (participant=Conversational_B_P9; selection=valid; F1=0.859; review_budget=0.375; train_fraction=0.550; corruption=none) It has better quality than the others and the review budget does not differ that much from C
+
+#### Task 2
+
+- (participant=Conversational_B_P1; selection=valid; F1=0.824; review_budget=0.250; train_fraction=0.320; corruption=none) lowest review budget
+- (participant=Conversational_B_P10; selection=valid; F1=0.809; review_budget=0.300; train_fraction=0.390; corruption=mild) Mostly due to the fact that it only configuration with uses data with mild corruption level. At beginning I was thinking about option 1 with higher quality and lower review and train but it might be caused by simplier data.
+- (participant=Conversational_B_P11; selection=valid; F1=0.809; review_budget=0.300; train_fraction=0.390; corruption=mild) Option B has mild corruption level and the highest training fraction that, in my opinion, compensate for the highest review budget and practically the lowest quality score.
+- (participant=Conversational_B_P12; selection=valid; F1=0.824; review_budget=0.250; train_fraction=0.320; corruption=none) This is because of the small difference in training friction as compared to option C, while keeping a higher score and review budget, although the corruption level of C is higher
+- (participant=Conversational_B_P2; selection=valid; F1=0.809; review_budget=0.300; train_fraction=0.390; corruption=mild) i find this option the best due to good value meets, also is the one most balanced over all
+- (participant=Conversational_B_P3; selection=valid; F1=0.824; review_budget=0.250; train_fraction=0.320; corruption=none) I selected option A because it's the best balance. It offers the best quality and lowest review budget. Training fraction isn't much lower. And training fraction and corruption level in option C are the same while having lower quality so that's why I rejected option C.
+- (participant=Conversational_B_P4; selection=valid; F1=0.809; review_budget=0.300; train_fraction=0.390; corruption=mild) because is offers stronger robustness than a and c, acceptable quality (f1) and training fraction
+- (participant=Conversational_B_P5; selection=valid; F1=0.809; review_budget=0.300; train_fraction=0.390; corruption=mild) because it was training on more data than rest model.
+- (participant=Conversational_B_P6; selection=valid; F1=0.824; review_budget=0.250; train_fraction=0.320; corruption=none) I prefer Option A because it has higher quality, while training fraction and corruption level are the same, so I do not take them into account. Additionally, Option A has a lower review budget, which makes it more efficient.
+- (participant=Conversational_B_P7; selection=valid; F1=0.824; review_budget=0.250; train_fraction=0.320; corruption=none) Option A performs the best for all metrics except corruption level. B offers better robustness to corrupted data, but the trade-off seems too steep.
+- (participant=Conversational_B_P8; selection=valid; F1=0.824; review_budget=0.250; train_fraction=0.320; corruption=none) The option A is a balanced choice - the only drawback is that corruption level is none
+- (participant=Conversational_B_P9; selection=valid; F1=0.824; review_budget=0.250; train_fraction=0.320; corruption=none) It is the best in every column
+
+#### Task 3
+
+- (participant=Conversational_B_P1; selection=valid; F1=0.855; review_budget=0.355; train_fraction=0.970; corruption=strong; delta_F1=0.005; budget_reduction_pct=5.33) quality is like the same, train is almost the same with very high value though probably doesnt matter if whats written in the instruction about it is the only thing that matters, get less review is better.
+- (participant=Conversational_B_P10; selection=invalid; F1=0.853; review_budget=0.370; train_fraction=0.940; corruption=strong; delta_F1=0.004; budget_reduction_pct=1.33) Raview budget was reduced to required level and training fraction is lower than in B.
+- (participant=Conversational_B_P11; selection=valid; F1=0.908; review_budget=0.340; train_fraction=0.900; corruption=none; delta_F1=0.058; budget_reduction_pct=9.33) Option A satisfies both requirements while also having the best indicators for quality (F1), review budget and training function.
+- (participant=Conversational_B_P12; selection=valid; F1=0.855; review_budget=0.355; train_fraction=0.970; corruption=strong; delta_F1=0.005; budget_reduction_pct=5.33) This is because of the lower review budget, the same robustness while quality and fraction are higher
+- (participant=Conversational_B_P2; selection=valid; F1=0.907; review_budget=0.345; train_fraction=0.800; corruption=none; delta_F1=0.057; budget_reduction_pct=8.00) for all options F1 score went almost the same, also at least 5% lower reviev budget were met, and got very similar score in every configuration i choosed based on a lowest training fraction
+- (participant=Conversational_B_P3; selection=invalid; F1=0.801; review_budget=0.500; train_fraction=0.840; corruption=none; delta_F1=-0.049; budget_reduction_pct=-33.33) Review budget isn't at least 5% lower than in base configuration but is close to it. All options has the same review budget but option A has better quality and highest robustness
+- (participant=Conversational_B_P5; selection=valid; F1=0.907; review_budget=0.345; train_fraction=0.830; corruption=none; delta_F1=0.057; budget_reduction_pct=8.00) because this is balance compromise
+- (participant=Conversational_B_P6; selection=valid; F1=0.908; review_budget=0.340; train_fraction=0.900; corruption=none; delta_F1=0.058; budget_reduction_pct=9.33) I prefer Option A because it has the highest quality, which is slightly better than Options B and C, even though the difference is small. The corruption level is the same across all options, while Option A has a lower review budget, which I prefer, even if it requires slightly more training data (0.90 vs 0.86).
+- (participant=Conversational_B_P7; selection=valid; F1=0.908; review_budget=0.340; train_fraction=0.900; corruption=none; delta_F1=0.058; budget_reduction_pct=9.33) I was easily able to gauge what intervals I should ask for by adjusting the metrics and looking at the alternatives table. F1 score between 0.85 and .95 was where I started getting diminishing returns and the marginal improvements started slowing down. For this reason the demaracation between A and B in terms of who is better seems less straightforward than before (probably because we're pushing the parameters to the limit) One remark: at F1 between 0.85 and 0.90 all three alternatives were exact copies of each other.
+- (participant=Conversational_B_P8; selection=valid; F1=0.908; review_budget=0.340; train_fraction=0.900; corruption=none; delta_F1=0.058; budget_reduction_pct=9.33) A is the best quality and lowest review budget which was our goal
+- (participant=Conversational_B_P9; selection=valid; F1=0.908; review_budget=0.340; train_fraction=0.900; corruption=none; delta_F1=0.058; budget_reduction_pct=9.33) We wanted higher or equal quality and lower review. This option satisfies the demands the best

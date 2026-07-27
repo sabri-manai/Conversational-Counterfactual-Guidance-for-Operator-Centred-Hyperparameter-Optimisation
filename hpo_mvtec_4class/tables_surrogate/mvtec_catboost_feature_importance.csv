@@ -1,0 +1,14 @@
+feature,importance
+params_soft_review_budget,87.39221734665078
+params_pre_trained,3.5933527159346714
+params_reduction,1.4805787806457589
+params_num_neighbors,1.4709518385409956
+params_max_patches_per_image,1.4324329084073142
+params_coreset_sampling_ratio,1.2343405967428613
+params_soft_train_fraction,1.0361385849981744
+params_image_size_key,0.4990718689013129
+params_layers_key,0.46864203405803917
+params_center_crop_key,0.4584668875255636
+params_backbone,0.3895802504189194
+params_batch_size,0.3433738134083036
+params_soft_corruption_level,0.20085237376739046

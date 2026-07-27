@@ -1,0 +1,9 @@
+cf_id,method,surrogate_pred,f1_test,auroc_test,gap_test_minus_surrogate_pred,distance_to_factual,params_backbone,params_pre_trained,params_layers_key,params_coreset_sampling_ratio,params_image_size_key,params_soft_review_budget,params_soft_train_fraction,params_soft_corruption_level,n_flags
+9,CFNOW,0.8198,0.5664,0.5365,-0.2534,5.853,wide_resnet50_2,True,l3,0.039,256,0.5,0.76,none,1
+10,CFNOW,0.8189,0.5674,0.5323,-0.2515,5.8455,wide_resnet50_2,True,l3,0.037,256,0.5,0.77,none,1
+11,CFNOW,0.8188,0.5684,0.5344,-0.2504,5.8654,wide_resnet50_2,True,l3,0.035,256,0.495,0.81,none,1
+8,CFNOW,0.8228,0.5754,0.536,-0.2473,4.8655,wide_resnet50_2,True,l3,0.039,256,0.5,0.77,none,1
+12,CFNOW,0.8117,0.5684,0.5085,-0.2433,5.8584,resnet50,True,l2_l3,0.029,256,0.495,0.88,none,0
+14,CFNOW,0.8096,0.5664,0.5183,-0.2431,4.8529,wide_resnet50_2,True,l2_l3,0.035,256,0.495,0.8,none,0
+13,CFNOW,0.81,0.5684,0.524,-0.2415,6.078,wide_resnet50_2,True,l2_l3,0.039,256,0.5,0.94,none,0
+15,CFNOW,0.8083,0.5684,0.5221,-0.2399,5.9829,wide_resnet50_2,True,l2_l3,0.033,256,0.495,0.92,none,0

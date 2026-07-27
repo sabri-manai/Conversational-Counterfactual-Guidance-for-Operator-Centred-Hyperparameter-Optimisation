@@ -1,0 +1,31 @@
+parser,metric,value
+v2,Fallback rate,0.225
+v2,Model-JSON accepted on attempt 1,0.725
+v2,Objective type accuracy (all),0.775
+v2,Objective value accuracy (all),0.7
+v2,Train-fraction fidelity (all),0.75
+v2,Review-budget fidelity (all),0.725
+v2,Corruption fidelity (all),0.75
+v2,K accuracy (all),0.875
+v2,EXACT full-query accuracy (all),0.6
+v2,SEMANTIC full-query accuracy (all),0.625
+v2,EXACT | model JSON accepted (no fallback),0.7741935483870968
+v2,EXACT on relative subset,0.0
+v2,SEMANTIC on relative subset,0.0
+v2,EXACT on paraphrase subset,0.6666666666666666
+v2,Mean parse latency (s),56.864050871506336
+as_deployed,Fallback rate,0.875
+as_deployed,Model-JSON accepted on attempt 1,0.125
+as_deployed,Objective type accuracy (all),0.35
+as_deployed,Objective value accuracy (all),0.125
+as_deployed,Train-fraction fidelity (all),0.075
+as_deployed,Review-budget fidelity (all),0.1
+as_deployed,Corruption fidelity (all),0.075
+as_deployed,K accuracy (all),0.825
+as_deployed,EXACT full-query accuracy (all),0.05
+as_deployed,SEMANTIC full-query accuracy (all),0.05
+as_deployed,EXACT | model JSON accepted (no fallback),0.4
+as_deployed,EXACT on relative subset,0.0
+as_deployed,SEMANTIC on relative subset,0.0
+as_deployed,EXACT on paraphrase subset,0.16666666666666666
+as_deployed,Mean parse latency (s),81.18861170578748

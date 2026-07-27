@@ -1,0 +1,2 @@
+study_name,n_trials_total,n_complete_valid_trials,n_surrogate_rows,n_features,best_validation_f1,mean_validation_f1,median_validation_f1,min_validation_f1,max_validation_f1
+mvtec_4class_patchcore_bottle_cable_capsule_hazelnut_v1.0.0,10000,9976,9976,13,0.8202491952491952,0.5249065230075715,0.5620762862970905,0.015625,0.8202491952491952

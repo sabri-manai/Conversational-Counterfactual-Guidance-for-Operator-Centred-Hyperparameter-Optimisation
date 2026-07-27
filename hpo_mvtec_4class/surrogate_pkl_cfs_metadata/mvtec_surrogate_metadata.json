@@ -1,0 +1,46 @@
+{
+  "dataset": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/surrogate_ready_dataset/mvtec_4class_patchcore_surrogate_dataset.csv",
+  "n_rows": 9976,
+  "n_train": 7980,
+  "n_test": 1996,
+  "target": "value",
+  "features": [
+    "params_backbone",
+    "params_batch_size",
+    "params_center_crop_key",
+    "params_image_size_key",
+    "params_layers_key",
+    "params_max_patches_per_image",
+    "params_pre_trained",
+    "params_reduction",
+    "params_soft_corruption_level",
+    "params_coreset_sampling_ratio",
+    "params_num_neighbors",
+    "params_soft_review_budget",
+    "params_soft_train_fraction"
+  ],
+  "categorical_features": [
+    "params_backbone",
+    "params_batch_size",
+    "params_center_crop_key",
+    "params_image_size_key",
+    "params_layers_key",
+    "params_max_patches_per_image",
+    "params_pre_trained",
+    "params_reduction",
+    "params_soft_corruption_level"
+  ],
+  "numeric_features": [
+    "params_coreset_sampling_ratio",
+    "params_num_neighbors",
+    "params_soft_review_budget",
+    "params_soft_train_fraction"
+  ],
+  "final_model": "CatBoost(native)",
+  "rmse": 0.015052618776028481,
+  "mae": 0.007954126782680787,
+  "r2": 0.9955963814940785,
+  "fit_sec": 19.312010049819946,
+  "best_iteration": 2422,
+  "seed": 42
+}

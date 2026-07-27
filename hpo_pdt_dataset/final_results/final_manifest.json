@@ -1,0 +1,338 @@
+{
+ "created": "2026-07-26T22:37:54",
+ "roots": {
+  "mvtec": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class",
+  "proditec": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset"
+ },
+ "gate_ok": true,
+ "missing": [],
+ "empty": [],
+ "environment": {
+  "catboost": "1.2.8",
+  "dice-ml": "0.12",
+  "torch": "2.10.0",
+  "transformers": "5.1.0",
+  "scikit-learn": "1.6.1",
+  "optuna": "4.2.0",
+  "jsonschema": "4.26.0",
+  "pandas": "1.5.3",
+  "numpy": "1.26.0"
+ },
+ "inventory": [
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/revision_outputs/tables/MANIFEST.csv",
+   "size": 4109,
+   "modified": "2026-07-23T10:33:12",
+   "md5": "354db0c2a21c"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/revision_outputs/tables/baseline_confirm_candidates_mvtec.csv",
+   "size": 1151,
+   "modified": "2026-07-23T10:32:44",
+   "md5": "c401f6fe0817"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/revision_outputs/tables/baseline_confirmation_mvtec.csv",
+   "size": 2142,
+   "modified": "2026-07-23T11:39:04",
+   "md5": "bb4f076abcf3"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/revision_outputs/tables/baseline_vs_generator_confirmed_mvtec.csv",
+   "size": 220,
+   "modified": "2026-07-26T22:37:53",
+   "md5": "29afc32fc511"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/revision_outputs/tables/decomposition_per_candidate_mvtec.csv",
+   "size": 2662,
+   "modified": "2026-07-23T10:32:29",
+   "md5": "ebb3b34c45da"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/revision_outputs/tables/decomposition_per_method_mvtec.csv",
+   "size": 331,
+   "modified": "2026-07-23T10:32:29",
+   "md5": "0cc2a29d255a"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/revision_outputs/tables/duplication_rate_mvtec.csv",
+   "size": 81,
+   "modified": "2026-07-23T10:32:30",
+   "md5": "0663de805710"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/revision_outputs/tables/end_to_end_latency_mvtec.csv",
+   "size": 397,
+   "modified": "2026-07-26T22:37:53",
+   "md5": "5588e98e028b"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/revision_outputs/tables/energy_revised_mvtec.csv",
+   "size": 306,
+   "modified": "2026-07-26T22:37:53",
+   "md5": "981755963226"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/revision_outputs/tables/gap_distance_correlations_descriptive_mvtec.csv",
+   "size": 225,
+   "modified": "2026-07-23T10:32:29",
+   "md5": "9ff508a39233"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/revision_outputs/tables/query_suite_aggregate_mvtec.csv",
+   "size": 2614,
+   "modified": "2026-07-23T10:32:44",
+   "md5": "d551f31d99d7"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/revision_outputs/tables/query_suite_mvtec.csv",
+   "size": 9485,
+   "modified": "2026-07-23T10:32:38",
+   "md5": "1e41cda7ad9f"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/revision_outputs/tables/soft_control_regression_mvtec.csv",
+   "size": 174,
+   "modified": "2026-07-23T10:32:30",
+   "md5": "8b8c5f102091"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/revision_outputs/tables/soft_control_spearman_mvtec.csv",
+   "size": 131,
+   "modified": "2026-07-23T10:32:30",
+   "md5": "06a15892cbc8"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/revision_outputs/tables/surrogate_split_check_mvtec.csv",
+   "size": 226,
+   "modified": "2026-07-23T10:32:59",
+   "md5": "739bc947e27e"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/revision_outputs/tables/table4_variability_mvtec.csv",
+   "size": 719,
+   "modified": "2026-07-23T10:32:29",
+   "md5": "93cf54e261bb"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/revision_outputs/tables/two_mechanisms_per_candidate_mvtec.csv",
+   "size": 1170,
+   "modified": "2026-07-23T10:32:29",
+   "md5": "1016b3415615"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/revision_outputs/tables/two_mechanisms_summary_mvtec.csv",
+   "size": 268,
+   "modified": "2026-07-23T10:32:29",
+   "md5": "d1e680896340"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/tables/MANIFEST.csv",
+   "size": 4164,
+   "modified": "2026-07-23T10:33:12",
+   "md5": "286999b78274"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/tables/baseline_confirm_candidates_proditec.csv",
+   "size": 1060,
+   "modified": "2026-07-21T15:25:36",
+   "md5": "110cdbaf4fec"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/tables/baseline_confirmation_proditec.csv",
+   "size": 2070,
+   "modified": "2026-07-22T10:21:57",
+   "md5": "fc284347119f"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/tables/baseline_vs_generator_confirmed_proditec.csv",
+   "size": 212,
+   "modified": "2026-07-26T22:37:53",
+   "md5": "3bb153782964"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/tables/decomposition_per_candidate_proditec.csv",
+   "size": 2658,
+   "modified": "2026-07-23T10:32:29",
+   "md5": "9da7096d1460"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/tables/decomposition_per_method_proditec.csv",
+   "size": 337,
+   "modified": "2026-07-23T10:32:29",
+   "md5": "04d6360a28f5"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/tables/duplication_rate_proditec.csv",
+   "size": 81,
+   "modified": "2026-07-23T10:32:30",
+   "md5": "0663de805710"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/tables/end_to_end_latency_proditec.csv",
+   "size": 395,
+   "modified": "2026-07-26T22:37:53",
+   "md5": "ef00e25299eb"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/tables/energy_revised_proditec.csv",
+   "size": 308,
+   "modified": "2026-07-26T22:37:53",
+   "md5": "17dd46702bac"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/tables/gap_distance_correlations_descriptive_proditec.csv",
+   "size": 223,
+   "modified": "2026-07-23T10:32:29",
+   "md5": "6140e8f60546"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/tables/query_suite_aggregate_proditec.csv",
+   "size": 2827,
+   "modified": "2026-07-23T10:32:44",
+   "md5": "3b2de77b0760"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/tables/query_suite_proditec.csv",
+   "size": 9074,
+   "modified": "2026-07-23T10:32:44",
+   "md5": "9d053751297c"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/tables/soft_control_regression_proditec.csv",
+   "size": 186,
+   "modified": "2026-07-23T10:32:30",
+   "md5": "19fd73195268"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/tables/soft_control_spearman_proditec.csv",
+   "size": 140,
+   "modified": "2026-07-23T10:32:30",
+   "md5": "2a0deb70b038"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/tables/surrogate_split_check_proditec.csv",
+   "size": 226,
+   "modified": "2026-07-23T10:33:11",
+   "md5": "021115123714"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/tables/table4_variability_proditec.csv",
+   "size": 718,
+   "modified": "2026-07-23T10:32:29",
+   "md5": "aa03c10e77c8"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/parser_eval_v2_summary.csv",
+   "size": 1313,
+   "modified": "2026-07-26T20:45:01",
+   "md5": "b49118552a17"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/parser_eval_v2_per_utterance.csv",
+   "size": 25662,
+   "modified": "2026-07-26T20:45:01",
+   "md5": "17471080ca3e"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/parser_eval_v2_relative_diagnostic.csv",
+   "size": 915,
+   "modified": "2026-07-26T20:45:01",
+   "md5": "0738e3b6ed4b"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/parser_eval_v2_consistency.csv",
+   "size": 1279,
+   "modified": "2026-07-26T21:35:06",
+   "md5": "14a5adbb121f"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/parser_eval_summary.csv",
+   "size": 531,
+   "modified": "2026-07-21T18:18:54",
+   "md5": "4c2dab2d9d47"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/parser_eval_latency.json",
+   "size": 401,
+   "modified": "2026-07-26T21:42:08",
+   "md5": "afe93965bb3a"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/table9_valid_only_split.csv",
+   "size": 501,
+   "modified": "2026-07-22T09:36:52",
+   "md5": "36aeff184eac"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/whatif_validity_by_condition.csv",
+   "size": 94,
+   "modified": "2026-07-22T09:36:52",
+   "md5": "760085267636"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/interface_attempts_by_task.csv",
+   "size": 119,
+   "modified": "2026-07-22T09:36:52",
+   "md5": "3e70364fb221"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/violations_breakdown.csv",
+   "size": 562,
+   "modified": "2026-07-22T09:36:52",
+   "md5": "1e74dcb9d0f4"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/revision_outputs/task_level_answers_export.csv",
+   "size": 5700,
+   "modified": "2026-07-22T09:36:52",
+   "md5": "45897170f74a"
+  }
+ ]
+}

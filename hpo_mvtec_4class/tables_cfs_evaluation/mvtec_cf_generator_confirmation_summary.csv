@@ -1,0 +1,2 @@
+method,n,mean_surrogate_f1,mean_real_test_f1,median_real_test_f1,mean_gap_test_minus_surrogate,mean_review_budget,mean_train_fraction,mean_test_auroc,mean_runtime_sec
+Unknown,3,0.764888,0.617578,0.617544,-0.14731,0.484333,0.75,0.489275,31.348607

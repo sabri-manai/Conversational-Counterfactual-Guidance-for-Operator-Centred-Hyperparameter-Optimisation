@@ -1,0 +1,102 @@
+{
+  "dataset": "proditec",
+  "methods": [
+    "ACFX",
+    "CFNOW",
+    "DiCE"
+  ],
+  "target": "value",
+  "score_semantics": {
+    "cf_method_score": "Score returned or preserved from the counterfactual-generation method. For DiCE this is the DiCE target column. For CFNOW this is the observed HPO-log target. For ACFX it may be NaN because the adapter does not return a direct F1 score.",
+    "surrogate_pred": "Fresh CatBoost surrogate prediction for the exported candidate configuration.",
+    "value": "Kept equal to surrogate_pred for objective checking and ranking compatibility.",
+    "delta_surrogate_minus_method_score": "surrogate_pred - cf_method_score."
+  },
+  "features": [
+    "params_backbone",
+    "params_batch_size",
+    "params_center_crop_key",
+    "params_coreset_sampling_ratio",
+    "params_image_size_key",
+    "params_layers_key",
+    "params_max_patches_per_image",
+    "params_num_neighbors",
+    "params_pre_trained",
+    "params_reduction",
+    "params_soft_corruption_level",
+    "params_soft_review_budget",
+    "params_soft_train_fraction"
+  ],
+  "categorical": [
+    "params_backbone",
+    "params_batch_size",
+    "params_center_crop_key",
+    "params_image_size_key",
+    "params_layers_key",
+    "params_max_patches_per_image",
+    "params_pre_trained",
+    "params_reduction",
+    "params_soft_corruption_level"
+  ],
+  "numeric": [
+    "params_coreset_sampling_ratio",
+    "params_num_neighbors",
+    "params_soft_review_budget",
+    "params_soft_train_fraction"
+  ],
+  "surrogate_model_path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/surrogate_pkl_cfs_metadata/proditec_surrogate_catboost.cbm",
+  "surrogate_metadata_path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/surrogate_pkl_cfs_metadata/proditec_surrogate_metadata.json",
+  "surrogate_dataset_path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/surrogate_ready_dataset/patchcore_surrogate_dataset_xgb.csv",
+  "factual_index": 177,
+  "factual_value_observed": 0.568075117370892,
+  "factual_value_surrogate": 0.5234312680912757,
+  "objective": {
+    "type": "target_band",
+    "target_band": [
+      0.75,
+      0.95
+    ]
+  },
+  "soft_constraints": {
+    "params_soft_train_fraction": {
+      "mode": "free"
+    },
+    "params_soft_review_budget": {
+      "mode": "free"
+    },
+    "params_soft_corruption_level": {
+      "mode": "free"
+    }
+  },
+  "selection": {
+    "k": 8,
+    "mode": "balanced"
+  },
+  "desired_range": [
+    0.75,
+    0.95
+  ],
+  "permitted_range": {
+    "params_soft_train_fraction": [
+      0.2,
+      1.0
+    ],
+    "params_soft_review_budget": [
+      0.005,
+      0.5
+    ],
+    "params_soft_corruption_level": [
+      "mild",
+      "none",
+      "strong"
+    ]
+  },
+  "method_runtime": {
+    "DiCE": 0.3366665840148926,
+    "CFNOW": 1.491987705230713,
+    "ACFX": 111.36624050140381
+  },
+  "n_total_returned": 24,
+  "n_strictly_valid_total": 24,
+  "n_with_cf_method_score": 16
+}

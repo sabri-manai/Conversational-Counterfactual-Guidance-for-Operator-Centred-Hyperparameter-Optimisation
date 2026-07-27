@@ -1,0 +1,89 @@
+{
+  "dataset": "mvtec_4class",
+  "method": "dice_random",
+  "surrogate_model_path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/surrogate_pkl_cfs_metadata/mvtec_surrogate_catboost.cbm",
+  "surrogate_metadata_path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/surrogate_pkl_cfs_metadata/mvtec_surrogate_metadata.json",
+  "surrogate_dataset_path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/surrogate_ready_dataset/mvtec_4class_patchcore_surrogate_dataset.csv",
+  "target": "value",
+  "features": [
+    "params_backbone",
+    "params_batch_size",
+    "params_center_crop_key",
+    "params_image_size_key",
+    "params_layers_key",
+    "params_max_patches_per_image",
+    "params_pre_trained",
+    "params_reduction",
+    "params_soft_corruption_level",
+    "params_coreset_sampling_ratio",
+    "params_num_neighbors",
+    "params_soft_review_budget",
+    "params_soft_train_fraction"
+  ],
+  "categorical": [
+    "params_backbone",
+    "params_batch_size",
+    "params_center_crop_key",
+    "params_image_size_key",
+    "params_layers_key",
+    "params_max_patches_per_image",
+    "params_pre_trained",
+    "params_reduction",
+    "params_soft_corruption_level"
+  ],
+  "numeric": [
+    "params_coreset_sampling_ratio",
+    "params_num_neighbors",
+    "params_soft_review_budget",
+    "params_soft_train_fraction"
+  ],
+  "factual_index": 565,
+  "factual_value_observed": 0.5620762862970905,
+  "factual_value_surrogate": 0.5521290187317024,
+  "objective": {
+    "type": "target_min",
+    "target_min": 0.7
+  },
+  "soft_constraints": {
+    "params_soft_train_fraction": {
+      "mode": "range",
+      "bounds": [
+        0.6,
+        0.8
+      ]
+    },
+    "params_soft_review_budget": {
+      "mode": "free"
+    },
+    "params_soft_corruption_level": {
+      "mode": "free"
+    }
+  },
+  "selection": {
+    "k": 3,
+    "mode": "balanced"
+  },
+  "desired_range": [
+    0.7,
+    1.0
+  ],
+  "permitted_range": {
+    "params_soft_train_fraction": [
+      0.6,
+      0.8
+    ],
+    "params_soft_review_budget": [
+      0.005,
+      0.5
+    ],
+    "params_soft_corruption_level": [
+      "mild",
+      "none",
+      "strong"
+    ]
+  },
+  "generation_sec": 0.26729774475097656,
+  "n_raw_cfs": 30,
+  "n_returned_cfs": 3,
+  "n_strictly_valid_returned": 3
+}

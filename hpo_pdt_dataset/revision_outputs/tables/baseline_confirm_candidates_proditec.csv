@@ -1,0 +1,7 @@
+confirm_id,dataset,qid,anchor,method,params_backbone,params_batch_size,params_center_crop_key,params_coreset_sampling_ratio,params_image_size_key,params_layers_key,params_max_patches_per_image,params_num_neighbors,params_pre_trained,params_reduction,params_soft_corruption_level,params_soft_review_budget,params_soft_train_fraction,surrogate_pred
+0,proditec,tight_band,p85,DiCE,resnet50,8,0.875,0.097,224,l3,1024,2,True,mean,none,0.325,0.87,0.897557241014183
+1,proditec,tight_band,p85,DiCE,wide_resnet50_2,8,0.875,0.097,224,l3,1024,2,True,mean,none,0.325,0.87,0.8947637583075791
+2,proditec,tight_band,p85,LogTopK,resnet34,16,0.875,0.093,224,l3,1024,1,True,mean,none,0.345,0.78,0.897843920884358
+3,proditec,tight_band,p85,LogTopK,resnet34,16,0.875,0.097,224,l3,1024,1,True,mean,none,0.345,0.79,0.8973628338872321
+4,proditec,tight_band,p85,NearestFeasible,resnet34,16,0.875,0.099,224,l3,1024,2,True,mean,none,0.34,0.87,0.8915452041201535
+5,proditec,tight_band,p85,NearestFeasible,resnet34,16,0.875,0.097,224,l3,1024,2,True,mean,none,0.34,0.87,0.8912539757070526

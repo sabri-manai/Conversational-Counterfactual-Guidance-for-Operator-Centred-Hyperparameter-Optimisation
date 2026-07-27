@@ -1,0 +1,106 @@
+{
+  "dataset": "mvtec",
+  "notebook": "revision_analysis",
+  "review_comment_mapping": {
+    "M1_compute_sustainability": {
+      "tables": [
+        "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_compute_cost_per_query.csv",
+        "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_compute_cost_workloads.csv"
+      ],
+      "figures": [
+        "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_compute_cost_per_query.pdf"
+      ]
+    },
+    "M2_confirmation_gap_diagnosis": {
+      "tables": [
+        "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_gap_vs_distance_correlations.csv",
+        "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_worst_gap_candidates.csv",
+        "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_degeneracy_flag_summary.csv",
+        "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_budget_sweep_summary.csv"
+      ],
+      "figures": [
+        "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_gap_vs_distance.pdf",
+        "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_gap_vs_degeneracy_flags.pdf",
+        "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_budget_sweep_f1.pdf"
+      ],
+      "captured_scores_dir": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/surrogate_pkl_cfs_metadata/mvtec_revision_analysis/captured_scores"
+    },
+    "M4_multifactual_sensitivity": {
+      "tables": [
+        "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_multifactual_anchors.csv",
+        "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_multifactual_generator_summary.csv",
+        "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_multifactual_ranking_stability.csv"
+      ],
+      "figures": [
+        "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_multifactual_generator_comparison.pdf"
+      ],
+      "candidates_csv": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/surrogate_pkl_cfs_metadata/mvtec_revision_analysis/mvtec_multifactual_candidates.csv"
+    }
+  },
+  "assumptions": {
+    "patchcore_power_w": 300.0,
+    "surrogate_power_w": 65.0,
+    "grid_kgco2_per_kwh": 0.66,
+    "paper_query": {
+      "objective": "target_band",
+      "bounds": [
+        0.75,
+        0.95
+      ],
+      "K": 8,
+      "soft_controls": "free"
+    },
+    "anchor_quantiles": [
+      0.5,
+      0.7,
+      0.85,
+      0.95
+    ],
+    "seed": 42
+  },
+  "all_saved_figures": [
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_compute_cost_per_query.pdf",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_compute_cost_per_query.svg",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_compute_cost_per_query.png",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_gap_vs_distance.pdf",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_gap_vs_distance.svg",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_gap_vs_distance.png",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_gap_vs_degeneracy_flags.pdf",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_gap_vs_degeneracy_flags.svg",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_gap_vs_degeneracy_flags.png",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_budget_sweep_f1.pdf",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_budget_sweep_f1.svg",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_budget_sweep_f1.png",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_pooled_vs_perclass_auroc.pdf",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_pooled_vs_perclass_auroc.svg",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_pooled_vs_perclass_auroc.png",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_perclass_auroc_heatmap.pdf",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_perclass_auroc_heatmap.svg",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_perclass_auroc_heatmap.png",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_multifactual_generator_comparison.pdf",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_multifactual_generator_comparison.svg",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/figures_revision/mvtec_multifactual_generator_comparison.png"
+  ],
+  "all_saved_tables": [
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_compute_cost_per_query.csv",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_compute_cost_per_query.tex",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_compute_cost_workloads.csv",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_compute_cost_workloads.tex",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_gap_vs_distance_correlations.csv",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_gap_vs_distance_correlations.tex",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_worst_gap_candidates.csv",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_worst_gap_candidates.tex",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_degeneracy_flag_summary.csv",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_degeneracy_flag_summary.tex",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_budget_sweep_summary.csv",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_budget_sweep_summary.tex",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_pooled_vs_perclass_auroc.csv",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_pooled_vs_perclass_auroc.tex",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_multifactual_anchors.csv",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_multifactual_anchors.tex",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_multifactual_generator_summary.csv",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_multifactual_generator_summary.tex",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_multifactual_ranking_stability.csv",
+    "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/tables_revision/mvtec_multifactual_ranking_stability.tex"
+  ]
+}
