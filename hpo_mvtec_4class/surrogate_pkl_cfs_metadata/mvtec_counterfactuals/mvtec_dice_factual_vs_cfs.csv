@@ -1,5 +1,0 @@
-params_backbone,params_batch_size,params_center_crop_key,params_image_size_key,params_layers_key,params_max_patches_per_image,params_pre_trained,params_reduction,params_soft_corruption_level,params_coreset_sampling_ratio,params_num_neighbors,params_soft_review_budget,params_soft_train_fraction,value,kind,cf_id,strictly_valid,distance_to_factual
-resnet18,16,0.875,224,l2,512,True,mean,mild,0.029,9,0.27,0.75,0.5521290187317024,factual,-1,True,0.0
-resnet18,16,0.875,224,l3,512,True,mean,mild,0.029,9,0.479,0.75,0.7762742609260056,counterfactual,0,True,1.422222222222222
-resnet18,16,0.875,256,l2,512,True,mean,mild,0.029,9,0.482,0.75,0.7607684663425167,counterfactual,1,True,1.4282828282828282
-resnet18,16,0.875,224,l2,512,True,mean,mild,0.027,9,0.492,0.75,0.7576210186121652,counterfactual,2,True,0.46848484848484845

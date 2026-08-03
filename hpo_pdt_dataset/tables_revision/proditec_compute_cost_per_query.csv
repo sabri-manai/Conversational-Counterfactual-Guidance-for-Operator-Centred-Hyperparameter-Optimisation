@@ -1,3 +1,0 @@
-query_mode,mean_time_s,assumed_power_W,energy_kWh_per_query,co2_kg_per_query
-Real PatchCore retraining,67.09089656670888,300.0,0.00559090804722574,0.003689999311168989
-Surrogate what-if query,0.002050430215895176,65.0,3.7021656675885125e-08,2.4434293406084185e-08

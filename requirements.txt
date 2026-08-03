@@ -1,18 +1,38 @@
-# Core ML / DL
-xgboost
-lightgbm
-catboost
-optuna
-shap
-dice-ml
-cfnow
+# CF-XHPO — pinned dependencies matching the paper's Section 4.2 "Implementation details"
+# (Python 3.11.9; PyTorch 2.10.0 with CUDA 12.8 build). Install PyTorch/torchvision from
+# https://pytorch.org/get-started/locally/ for your platform's CUDA build if the plain
+# `pip install torch` resolution does not give you a CUDA-enabled wheel.
 
-# Data processing
+# --- Core ML / HPO -----------------------------------------------------------
+torch==2.10.0
+torchvision==0.25.0
+scikit-learn==1.6.1
+catboost==1.2.8
+optuna==4.2.0
+
+# --- Counterfactual / explanation methods -------------------------------------
+dice-ml==0.12
+acfx==0.3.6            # https://github.com/sbobek/acfx
+interpret==0.7.3        # ExplainableBoostingClassifier backend used by ACFX
+
+# --- Conversational interface --------------------------------------------------
+transformers==5.1.0
+jsonschema
+accelerate
+
+# --- Data / utilities -----------------------------------------------------------
 pandas
 numpy
 scipy
-scikit-learn
+Pillow
 
-# Visualization
+# --- Visualization ---------------------------------------------------------------
 matplotlib
 
+# --- Demo app (see demo_app/requirements.txt for its own, smaller pin set) -------
+streamlit
+
+# Not part of the paper's pinned environment but present in some archived surrogate
+# benchmark cells (mvtec/03_surrogate_modeling.ipynb, proditec/03_surrogate_modeling.ipynb):
+# xgboost is optional — those cells degrade gracefully (one fewer benchmark row) if absent.
+# xgboost

@@ -1,7 +1,0 @@
-condition_label,task_label,n_comments,mean_words,median_words
-API (A),Task 1,10,25.7,23.0
-API (A),Task 2,10,21.7,15.5
-API (A),Task 3,10,23.3,12.0
-Conversational (B),Task 1,12,29.333333333333332,19.0
-Conversational (B),Task 2,12,23.166666666666668,21.5
-Conversational (B),Task 3,11,30.181818181818183,19.0

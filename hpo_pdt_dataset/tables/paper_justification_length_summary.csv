@@ -1,7 +1,0 @@
-condition_label,task_name,mean_justification_words,median_justification_words
-API (A),task_1,25.7,23.0
-API (A),task_2,21.7,15.5
-API (A),task_3,23.3,12.0
-Conversational (B),task_1,29.33,19.0
-Conversational (B),task_2,23.17,21.5
-Conversational (B),task_3,30.18,19.0
