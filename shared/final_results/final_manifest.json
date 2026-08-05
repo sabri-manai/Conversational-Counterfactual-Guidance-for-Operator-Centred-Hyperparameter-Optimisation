@@ -1,0 +1,324 @@
+{
+ "created": "2026-08-05T17:51:23",
+ "roots": {
+  "proditec": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec",
+  "mvtec": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/mvtec"
+ },
+ "gate_ok": true,
+ "missing": [],
+ "empty": [],
+ "environment": {
+  "catboost": "1.2.8",
+  "dice-ml": "0.12",
+  "torch": "2.10.0",
+  "transformers": "5.1.0",
+  "scikit-learn": "1.6.1",
+  "optuna": "4.2.0",
+  "jsonschema": "4.26.0",
+  "pandas": "1.5.3",
+  "numpy": "1.26.0"
+ },
+ "inventory": [
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/tables/MANIFEST.csv",
+   "size": 6388,
+   "modified": "2026-08-05T17:50:54",
+   "md5": "ebb8f6409c80"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/tables/baseline_confirm_candidates_proditec.csv",
+   "size": 1060,
+   "modified": "2026-08-03T21:06:41",
+   "md5": "110cdbaf4fec"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/tables/baseline_confirmation_proditec.csv",
+   "size": 2067,
+   "modified": "2026-08-05T16:15:37",
+   "md5": "61502443fd34"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/tables/baseline_vs_generator_confirmed_proditec.csv",
+   "size": 212,
+   "modified": "2026-08-05T17:51:23",
+   "md5": "c77c672eb058"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/tables/decomposition_per_candidate_proditec.csv",
+   "size": 2668,
+   "modified": "2026-08-05T17:50:05",
+   "md5": "89bf9b52df72"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/tables/decomposition_per_method_proditec.csv",
+   "size": 337,
+   "modified": "2026-08-05T17:50:05",
+   "md5": "8add4be09d85"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/tables/duplication_rate_proditec.csv",
+   "size": 81,
+   "modified": "2026-08-05T17:50:06",
+   "md5": "0663de805710"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/tables/end_to_end_latency_proditec.csv",
+   "size": 392,
+   "modified": "2026-08-05T17:51:23",
+   "md5": "0ff3de9d2d21"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/tables/gap_distance_correlations_descriptive_proditec.csv",
+   "size": 225,
+   "modified": "2026-08-05T17:50:06",
+   "md5": "d59d03a4f3ea"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/tables/query_suite_aggregate_proditec.csv",
+   "size": 2819,
+   "modified": "2026-08-05T17:50:27",
+   "md5": "760670cc9923"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/tables/query_suite_proditec.csv",
+   "size": 9050,
+   "modified": "2026-08-05T17:50:27",
+   "md5": "8da7e43d4ea4"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/tables/soft_control_regression_proditec.csv",
+   "size": 161,
+   "modified": "2026-08-05T17:50:06",
+   "md5": "1f6cfdf02422"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/tables/soft_control_spearman_proditec.csv",
+   "size": 119,
+   "modified": "2026-08-05T17:50:06",
+   "md5": "0dac8e50744f"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/tables/surrogate_split_check_proditec.csv",
+   "size": 227,
+   "modified": "2026-08-05T17:50:53",
+   "md5": "518afd04ecab"
+  },
+  {
+   "dataset": "proditec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/tables/table4_variability_proditec.csv",
+   "size": 716,
+   "modified": "2026-08-05T17:50:06",
+   "md5": "e4cc2efb2266"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/mvtec/revision_outputs/tables/MANIFEST.csv",
+   "size": 6153,
+   "modified": "2026-08-05T17:50:54",
+   "md5": "0d907956b6b0"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/mvtec/revision_outputs/tables/baseline_confirm_candidates_mvtec.csv",
+   "size": 1151,
+   "modified": "2026-08-03T21:06:40",
+   "md5": "c401f6fe0817"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/mvtec/revision_outputs/tables/baseline_confirmation_mvtec.csv",
+   "size": 2142,
+   "modified": "2026-08-03T21:06:40",
+   "md5": "bb4f076abcf3"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/mvtec/revision_outputs/tables/baseline_vs_generator_confirmed_mvtec.csv",
+   "size": 220,
+   "modified": "2026-08-05T17:51:23",
+   "md5": "29afc32fc511"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/mvtec/revision_outputs/tables/decomposition_per_candidate_mvtec.csv",
+   "size": 2664,
+   "modified": "2026-08-05T17:50:05",
+   "md5": "f110f13453a8"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/mvtec/revision_outputs/tables/decomposition_per_method_mvtec.csv",
+   "size": 331,
+   "modified": "2026-08-05T17:50:05",
+   "md5": "6c7521cf88ee"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/mvtec/revision_outputs/tables/duplication_rate_mvtec.csv",
+   "size": 82,
+   "modified": "2026-08-05T17:50:06",
+   "md5": "22a9fff9a067"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/mvtec/revision_outputs/tables/end_to_end_latency_mvtec.csv",
+   "size": 397,
+   "modified": "2026-08-05T17:51:23",
+   "md5": "9328986891b5"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/mvtec/revision_outputs/tables/gap_distance_correlations_descriptive_mvtec.csv",
+   "size": 227,
+   "modified": "2026-08-05T17:50:06",
+   "md5": "a534c6a25c62"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/mvtec/revision_outputs/tables/query_suite_aggregate_mvtec.csv",
+   "size": 2612,
+   "modified": "2026-08-05T17:50:27",
+   "md5": "6d056d40895f"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/mvtec/revision_outputs/tables/query_suite_mvtec.csv",
+   "size": 9477,
+   "modified": "2026-08-05T17:50:16",
+   "md5": "f178bd6883ef"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/mvtec/revision_outputs/tables/soft_control_regression_mvtec.csv",
+   "size": 171,
+   "modified": "2026-08-05T17:50:06",
+   "md5": "18d648b1adb2"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/mvtec/revision_outputs/tables/soft_control_spearman_mvtec.csv",
+   "size": 131,
+   "modified": "2026-08-05T17:50:06",
+   "md5": "bc9b21b9befc"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/mvtec/revision_outputs/tables/surrogate_split_check_mvtec.csv",
+   "size": 226,
+   "modified": "2026-08-05T17:50:41",
+   "md5": "739bc947e27e"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/mvtec/revision_outputs/tables/table4_variability_mvtec.csv",
+   "size": 721,
+   "modified": "2026-08-05T17:50:06",
+   "md5": "be8b6e53b763"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/mvtec/revision_outputs/tables/two_mechanisms_per_candidate_mvtec.csv",
+   "size": 1170,
+   "modified": "2026-08-05T17:50:06",
+   "md5": "1016b3415615"
+  },
+  {
+   "dataset": "mvtec",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/mvtec/revision_outputs/tables/two_mechanisms_summary_mvtec.csv",
+   "size": 268,
+   "modified": "2026-08-05T17:50:06",
+   "md5": "d1e680896340"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/parser_eval_v2_summary.csv",
+   "size": 1313,
+   "modified": "2026-08-03T21:06:41",
+   "md5": "b49118552a17"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/parser_eval_v2_per_utterance.csv",
+   "size": 25662,
+   "modified": "2026-08-03T21:06:41",
+   "md5": "17471080ca3e"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/parser_eval_v2_relative_diagnostic.csv",
+   "size": 915,
+   "modified": "2026-08-03T21:06:41",
+   "md5": "0738e3b6ed4b"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/parser_eval_v2_consistency.csv",
+   "size": 1279,
+   "modified": "2026-08-03T21:06:41",
+   "md5": "14a5adbb121f"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/parser_eval_summary.csv",
+   "size": 531,
+   "modified": "2026-08-03T21:06:41",
+   "md5": "4c2dab2d9d47"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/parser_eval_latency.json",
+   "size": 401,
+   "modified": "2026-08-03T21:06:41",
+   "md5": "afe93965bb3a"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/table9_valid_only_split.csv",
+   "size": 501,
+   "modified": "2026-08-03T21:06:41",
+   "md5": "36aeff184eac"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/whatif_validity_by_condition.csv",
+   "size": 94,
+   "modified": "2026-08-03T21:06:41",
+   "md5": "760085267636"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/interface_attempts_by_task.csv",
+   "size": 119,
+   "modified": "2026-08-03T21:06:41",
+   "md5": "3e70364fb221"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/violations_breakdown.csv",
+   "size": 562,
+   "modified": "2026-08-03T21:06:41",
+   "md5": "1e74dcb9d0f4"
+  },
+  {
+   "dataset": "shared",
+   "path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/revision_outputs/task_level_answers_export.csv",
+   "size": 5700,
+   "modified": "2026-08-03T21:06:41",
+   "md5": "45897170f74a"
+  }
+ ]
+}

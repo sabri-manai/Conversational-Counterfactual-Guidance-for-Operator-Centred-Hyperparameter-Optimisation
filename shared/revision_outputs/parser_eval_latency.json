@@ -1,0 +1,10 @@
+{
+  "model_dtype": "torch.bfloat16",
+  "parse_mean_s": 2.266059261175724,
+  "parse_sd_s": 0.7910320977822777,
+  "parse_mean_s_as_deployed": 3.138114965599925,
+  "explain_mean_s": 3.4896959082019747,
+  "n_utterances": 40,
+  "model": "Qwen2.5-3B-Instruct",
+  "note": "parse_mean_s is the revised (v2) front-end; the user study ran on the as-deployed parser \u2014 cite that figure in the study section."
+}

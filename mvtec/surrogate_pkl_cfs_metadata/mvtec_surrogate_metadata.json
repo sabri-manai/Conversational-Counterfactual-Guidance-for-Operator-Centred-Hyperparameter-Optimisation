@@ -1,5 +1,5 @@
 {
-  "dataset": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_mvtec_4class/surrogate_ready_dataset/mvtec_4class_patchcore_surrogate_dataset.csv",
+  "dataset": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/mvtec/surrogate_ready_dataset/mvtec_4class_patchcore_surrogate_dataset.csv",
   "n_rows": 9976,
   "n_train": 7980,
   "n_test": 1996,
@@ -40,7 +40,7 @@
   "rmse": 0.015052618776028481,
   "mae": 0.007954126782680787,
   "r2": 0.9955963814940785,
-  "fit_sec": 19.312010049819946,
+  "fit_sec": 19.575429439544678,
   "best_iteration": 2422,
   "seed": 42
 }

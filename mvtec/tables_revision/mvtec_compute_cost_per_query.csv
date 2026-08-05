@@ -1,0 +1,3 @@
+query_mode,mean_time_s
+Real PatchCore retraining,71.37182927131653
+Surrogate what-if query,0.0027318823523819445

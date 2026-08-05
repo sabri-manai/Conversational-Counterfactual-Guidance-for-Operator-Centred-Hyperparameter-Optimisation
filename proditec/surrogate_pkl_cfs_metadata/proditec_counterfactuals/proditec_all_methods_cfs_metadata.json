@@ -44,25 +44,30 @@
     "params_soft_review_budget",
     "params_soft_train_fraction"
   ],
-  "surrogate_model_path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/surrogate_pkl_cfs_metadata/proditec_surrogate_catboost.cbm",
-  "surrogate_metadata_path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/surrogate_pkl_cfs_metadata/proditec_surrogate_metadata.json",
-  "surrogate_dataset_path": "/home/jovyan/fast/x_peer_pdt_hyperoptxai/hpo_pdt_dataset/surrogate_ready_dataset/patchcore_surrogate_dataset_xgb.csv",
-  "factual_index": 177,
-  "factual_value_observed": 0.568075117370892,
-  "factual_value_surrogate": 0.5234312680912757,
+  "surrogate_model_path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/surrogate_pkl_cfs_metadata/proditec_surrogate_catboost.cbm",
+  "surrogate_metadata_path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/surrogate_pkl_cfs_metadata/proditec_surrogate_metadata.json",
+  "surrogate_dataset_path": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/surrogate_ready_dataset/patchcore_surrogate_dataset_xgb.csv",
+  "factual_index": 2738,
+  "factual_value_observed": 0.907563025210084,
+  "factual_value_surrogate": 0.8892685915340859,
   "objective": {
-    "type": "target_band",
-    "target_band": [
-      0.75,
-      0.95
-    ]
+    "type": "target_min",
+    "target_min": 0.75
   },
   "soft_constraints": {
     "params_soft_train_fraction": {
-      "mode": "free"
+      "mode": "range",
+      "bounds": [
+        0.5,
+        1.0
+      ]
     },
     "params_soft_review_budget": {
-      "mode": "free"
+      "mode": "range",
+      "bounds": [
+        0.1,
+        0.5
+      ]
     },
     "params_soft_corruption_level": {
       "mode": "free"
@@ -74,15 +79,15 @@
   },
   "desired_range": [
     0.75,
-    0.95
+    1.0
   ],
   "permitted_range": {
     "params_soft_train_fraction": [
-      0.2,
+      0.5,
       1.0
     ],
     "params_soft_review_budget": [
-      0.005,
+      0.1,
       0.5
     ],
     "params_soft_corruption_level": [
@@ -92,9 +97,9 @@
     ]
   },
   "method_runtime": {
-    "DiCE": 0.3366665840148926,
-    "CFNOW": 1.491987705230713,
-    "ACFX": 111.36624050140381
+    "DiCE": 0.4807415008544922,
+    "CFNOW": 1.449540615081787,
+    "ACFX": 99.94195818901062
   },
   "n_total_returned": 24,
   "n_strictly_valid_total": 24,

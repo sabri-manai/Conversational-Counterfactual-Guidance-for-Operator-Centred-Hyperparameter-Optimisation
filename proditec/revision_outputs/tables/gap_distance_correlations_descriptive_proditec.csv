@@ -1,5 +1,5 @@
 scope,n,pearson_r,pearson_p,note
-all,24,0.5733,0.0034,
-ACFX,8,0.257,0.5389,descriptive only (n<=8 per method)
-CFNOW,8,0.7415,0.0352,descriptive only (n<=8 per method)
-DiCE,8,0.6917,0.0574,descriptive only (n<=8 per method)
+all,24,-0.1084,0.6141,
+ACFX,8,0.4682,0.2419,descriptive only (n<=8 per method)
+CFNOW,8,-0.4435,0.271,descriptive only (n<=8 per method)
+DiCE,8,-0.9243,0.001,descriptive only (n<=8 per method)

@@ -1,0 +1,17 @@
+======================================================================
+FINAL EXPORT REPORT
+======================================================================
+created: 2026-08-05T17:51:23
+gate_ok: True
+
+SANITY:
+  [proditec] CFNOW dup rate = 100.0% OK
+  [proditec] confirmed comparison rows = 3
+  [proditec] e2e latency range = 141.4-241.3s, speedup 0.09-0.16x
+  [mvtec] CFNOW dup rate = 100.0% OK
+  [mvtec] confirmed comparison rows = 3
+  [mvtec] e2e latency range = 141.4-258.4s, speedup 0.19-0.35x
+  parser v2 | EXACT full-query accuracy (all): 0.600
+  parser v2 | SEMANTIC full-query accuracy (all): 0.625
+  parser v2 | SEMANTIC on relative subset: 0.000
+======================================================================

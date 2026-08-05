@@ -1,5 +1,5 @@
 control,spearman_rho,p
-train_fraction,-0.4604,0.0236
-review_budget,-0.4078,0.0479
-corruption_mild,0.618,0.0013
-corruption_strong,,
+train_fraction,0.2329,0.2733
+review_budget,-0.1799,0.4004
+corruption_mild,,
+corruption_strong,0.4159,0.0432

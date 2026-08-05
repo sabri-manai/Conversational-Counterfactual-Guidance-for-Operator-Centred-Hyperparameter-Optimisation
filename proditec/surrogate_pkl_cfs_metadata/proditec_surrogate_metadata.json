@@ -1,0 +1,46 @@
+{
+  "dataset": "surrogate_ready_dataset/patchcore_surrogate_dataset_xgb.csv",
+  "n_rows": 2999,
+  "n_train": 2399,
+  "n_test": 600,
+  "target": "value",
+  "features": [
+    "params_backbone",
+    "params_batch_size",
+    "params_center_crop_key",
+    "params_image_size_key",
+    "params_layers_key",
+    "params_max_patches_per_image",
+    "params_pre_trained",
+    "params_reduction",
+    "params_soft_corruption_level",
+    "params_coreset_sampling_ratio",
+    "params_num_neighbors",
+    "params_soft_review_budget",
+    "params_soft_train_fraction"
+  ],
+  "categorical_features": [
+    "params_backbone",
+    "params_batch_size",
+    "params_center_crop_key",
+    "params_image_size_key",
+    "params_layers_key",
+    "params_max_patches_per_image",
+    "params_pre_trained",
+    "params_reduction",
+    "params_soft_corruption_level"
+  ],
+  "numeric_features": [
+    "params_coreset_sampling_ratio",
+    "params_num_neighbors",
+    "params_soft_review_budget",
+    "params_soft_train_fraction"
+  ],
+  "final_model": "CatBoost(native)",
+  "rmse": 0.08575594133195517,
+  "mae": 0.04585261133171265,
+  "r2": 0.9361458706246975,
+  "fit_sec": 2.668245792388916,
+  "best_iteration": 233,
+  "seed": 42
+}
