@@ -66,7 +66,7 @@
   "mean_gap_fresh_surrogate_minus_method_score": -0.00035740322986597267,
   "mean_gap_test_minus_method_score": -0.006788362343736511,
   "mean_gap_test_minus_surrogate_pred": -0.007544331233692632,
-  "mean_runtime_sec": 22.61874696612358,
+  "mean_runtime_sec": 22.675868898630142,
   "paper_table_csv": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/tables_cfs_evaluation/proditec_cf_confirmation_paper_table.csv",
   "paper_table_latex": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/tables_cfs_evaluation/proditec_cf_confirmation_paper_table.tex",
   "method_summary_csv": "/home/jovyan/fast/Conversational-Counterfactual-Guidance-for-Operator-Centred-Hyperparameter-Optimisation/proditec/tables_cfs_evaluation/proditec_cf_confirmation_method_average_metrics.csv",
