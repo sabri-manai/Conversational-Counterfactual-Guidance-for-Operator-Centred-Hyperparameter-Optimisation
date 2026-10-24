@@ -1,30 +1,30 @@
 \begin{tabular}{lllrrrr}
 \toprule
-dataset & lm & method & K\_alternatives & saving\_per\_query\_s & queries\_to\_amortise\_log & hpo\_log\_cost\_gpu\_h \\
+ dataset &                                  lm &  method &  K\_alternatives &  saving\_per\_query\_s &  queries\_to\_amortise\_log &  hpo\_log\_cost\_gpu\_h \\
 \midrule
-mvtec & CPU (as measured in the paper) & LogTopK & 8 & 202.2970 & 1377.6150 & 77.4130 \\
-mvtec & CPU (as measured in the paper) & LogTopK & 20 & 791.4620 & 352.1160 & 77.4130 \\
-mvtec & CPU (as measured in the paper) & DiCE & 8 & 201.9820 & 1379.7580 & 77.4130 \\
-mvtec & CPU (as measured in the paper) & DiCE & 20 & 791.1480 & 352.2560 & 77.4130 \\
-mvtec & CPU (as measured in the paper) & ACFX & 8 & 85.2840 & 3267.7430 & 77.4130 \\
-mvtec & CPU (as measured in the paper) & ACFX & 20 & 674.4500 & 413.2060 & 77.4130 \\
-mvtec & GPU bf16 (parser\_eval\_latency.json) & LogTopK & 8 & 337.0510 & 826.8390 & 77.4130 \\
-mvtec & GPU bf16 (parser\_eval\_latency.json) & LogTopK & 20 & 926.2160 & 300.8870 & 77.4130 \\
-mvtec & GPU bf16 (parser\_eval\_latency.json) & DiCE & 8 & 336.7360 & 827.6110 & 77.4130 \\
-mvtec & GPU bf16 (parser\_eval\_latency.json) & DiCE & 20 & 925.9020 & 300.9900 & 77.4130 \\
-mvtec & GPU bf16 (parser\_eval\_latency.json) & ACFX & 8 & 220.0380 & 1266.5380 & 77.4130 \\
-mvtec & GPU bf16 (parser\_eval\_latency.json) & ACFX & 20 & 809.2040 & 344.3960 & 77.4130 \\
-proditec & CPU (as measured in the paper) & LogTopK & 8 & 17.3480 & 8636.2510 & 41.6170 \\
-proditec & CPU (as measured in the paper) & LogTopK & 20 & 289.4580 & 517.5870 & 41.6170 \\
-proditec & CPU (as measured in the paper) & DiCE & 8 & 16.8680 & 8881.6620 & 41.6170 \\
-proditec & CPU (as measured in the paper) & DiCE & 20 & 288.9790 & 518.4460 & 41.6170 \\
-proditec & CPU (as measured in the paper) & ACFX & 8 & -82.5930 & inf & 41.6170 \\
-proditec & CPU (as measured in the paper) & ACFX & 20 & 189.5180 & 790.5320 & 41.6170 \\
-proditec & GPU bf16 (parser\_eval\_latency.json) & LogTopK & 8 & 152.1020 & 984.9960 & 41.6170 \\
-proditec & GPU bf16 (parser\_eval\_latency.json) & LogTopK & 20 & 424.2120 & 353.1720 & 41.6170 \\
-proditec & GPU bf16 (parser\_eval\_latency.json) & DiCE & 8 & 151.6230 & 988.1100 & 41.6170 \\
-proditec & GPU bf16 (parser\_eval\_latency.json) & DiCE & 20 & 423.7330 & 353.5710 & 41.6170 \\
-proditec & GPU bf16 (parser\_eval\_latency.json) & ACFX & 8 & 52.1610 & 2872.2400 & 41.6170 \\
-proditec & GPU bf16 (parser\_eval\_latency.json) & ACFX & 20 & 324.2720 & 462.0190 & 41.6170 \\
+   mvtec &      CPU (as measured in the paper) & LogTopK &               8 &            202.2970 &                1377.6150 &             77.4130 \\
+   mvtec &      CPU (as measured in the paper) & LogTopK &              20 &            791.4620 &                 352.1160 &             77.4130 \\
+   mvtec &      CPU (as measured in the paper) &    DiCE &               8 &            201.9820 &                1379.7580 &             77.4130 \\
+   mvtec &      CPU (as measured in the paper) &    DiCE &              20 &            791.1480 &                 352.2560 &             77.4130 \\
+   mvtec &      CPU (as measured in the paper) &    ACFX &               8 &             85.2840 &                3267.7430 &             77.4130 \\
+   mvtec &      CPU (as measured in the paper) &    ACFX &              20 &            674.4500 &                 413.2060 &             77.4130 \\
+   mvtec & GPU bf16 (parser\_eval\_latency.json) & LogTopK &               8 &            337.0510 &                 826.8390 &             77.4130 \\
+   mvtec & GPU bf16 (parser\_eval\_latency.json) & LogTopK &              20 &            926.2160 &                 300.8870 &             77.4130 \\
+   mvtec & GPU bf16 (parser\_eval\_latency.json) &    DiCE &               8 &            336.7360 &                 827.6110 &             77.4130 \\
+   mvtec & GPU bf16 (parser\_eval\_latency.json) &    DiCE &              20 &            925.9020 &                 300.9900 &             77.4130 \\
+   mvtec & GPU bf16 (parser\_eval\_latency.json) &    ACFX &               8 &            220.0380 &                1266.5380 &             77.4130 \\
+   mvtec & GPU bf16 (parser\_eval\_latency.json) &    ACFX &              20 &            809.2040 &                 344.3960 &             77.4130 \\
+proditec &      CPU (as measured in the paper) & LogTopK &               8 &             17.3480 &                8636.2510 &             41.6170 \\
+proditec &      CPU (as measured in the paper) & LogTopK &              20 &            289.4580 &                 517.5870 &             41.6170 \\
+proditec &      CPU (as measured in the paper) &    DiCE &               8 &             16.8680 &                8881.6620 &             41.6170 \\
+proditec &      CPU (as measured in the paper) &    DiCE &              20 &            288.9790 &                 518.4460 &             41.6170 \\
+proditec &      CPU (as measured in the paper) &    ACFX &               8 &            -82.5930 &                      inf &             41.6170 \\
+proditec &      CPU (as measured in the paper) &    ACFX &              20 &            189.5180 &                 790.5320 &             41.6170 \\
+proditec & GPU bf16 (parser\_eval\_latency.json) & LogTopK &               8 &            152.1020 &                 984.9960 &             41.6170 \\
+proditec & GPU bf16 (parser\_eval\_latency.json) & LogTopK &              20 &            424.2120 &                 353.1720 &             41.6170 \\
+proditec & GPU bf16 (parser\_eval\_latency.json) &    DiCE &               8 &            151.6230 &                 988.1100 &             41.6170 \\
+proditec & GPU bf16 (parser\_eval\_latency.json) &    DiCE &              20 &            423.7330 &                 353.5710 &             41.6170 \\
+proditec & GPU bf16 (parser\_eval\_latency.json) &    ACFX &               8 &             52.1610 &                2872.2400 &             41.6170 \\
+proditec & GPU bf16 (parser\_eval\_latency.json) &    ACFX &              20 &            324.2720 &                 462.0190 &             41.6170 \\
 \bottomrule
 \end{tabular}

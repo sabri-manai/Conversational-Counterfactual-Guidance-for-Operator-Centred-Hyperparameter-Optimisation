@@ -1,0 +1,11 @@
+dataset,predictor,spearman_with_err_val,n
+mvtec,anchor_pctile,0.48101393516501706,30
+mvtec,anchor_value,0.48101393516501706,30
+mvtec,distance_to_factual,-0.04720028150204127,30
+mvtec,surrogate_pred,0.349703782538965,30
+mvtec,params_soft_review_budget,0.1609165219634147,30
+proditec,anchor_pctile,-0.00273168989671486,30
+proditec,anchor_value,-0.00273168989671486,30
+proditec,distance_to_factual,-0.08819946461230493,30
+proditec,surrogate_pred,0.10439248954246255,30
+proditec,params_soft_review_budget,-0.07690575685906681,30

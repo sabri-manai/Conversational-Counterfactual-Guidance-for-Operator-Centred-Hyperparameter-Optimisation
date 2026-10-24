@@ -1,78 +1,78 @@
-\begin{tabular}{lllrrrrrr}
+\begin{tabular}{lllrrrrll}
 \toprule
-dataset & qid & anchor & dice\_final\_valid\_n & dice\_raw\_valid\_n & recorded\_baseline\_n & recorded\_in\_band\_candidates & dice\_answers\_but\_recorded\_baseline\_does\_not & baseline\_answers\_but\_dice\_shortfall \\
+ dataset &                  qid & anchor &  dice\_final\_valid\_n &  dice\_raw\_valid\_n &  recorded\_baseline\_n &  recorded\_in\_band\_candidates &  dice\_answers\_but\_recorded\_baseline\_does\_not &  baseline\_answers\_but\_dice\_shortfall \\
 \midrule
-mvtec & broad\_band\_free & p50 & 8 & 40 & 8 & 2250 & False & False \\
-mvtec & broad\_band\_free & p85 & 8 & 40 & 8 & 2250 & False & False \\
-mvtec & broad\_band\_free & best & 8 & 40 & 8 & 2250 & False & False \\
-mvtec & tight\_band & p50 & 0 & 0 & 0 & 0 & False & False \\
-mvtec & tight\_band & p85 & 0 & 0 & 0 & 0 & False & False \\
-mvtec & tight\_band & best & 0 & 0 & 0 & 0 & False & False \\
-mvtec & target\_min\_085 & p50 & 0 & 0 & 0 & 0 & False & False \\
-mvtec & target\_min\_085 & p85 & 0 & 0 & 0 & 0 & False & False \\
-mvtec & target\_min\_085 & best & 0 & 0 & 0 & 0 & False & False \\
-mvtec & delta\_improve\_005 & p50 & 8 & 40 & 8 & 4205 & False & False \\
-mvtec & delta\_improve\_005 & p85 & 0 & 0 & 0 & 0 & False & False \\
-mvtec & delta\_improve\_005 & best & 0 & 0 & 0 & 0 & False & False \\
-mvtec & low\_budget & p50 & 0 & 0 & 0 & 0 & False & False \\
-mvtec & low\_budget & p85 & 0 & 0 & 0 & 0 & False & False \\
-mvtec & low\_budget & best & 0 & 0 & 0 & 0 & False & False \\
-mvtec & low\_train\_fraction & p50 & 1 & 1 & 8 & 35 & False & True \\
-mvtec & low\_train\_fraction & p85 & 8 & 12 & 8 & 35 & False & False \\
-mvtec & low\_train\_fraction & best & 8 & 8 & 8 & 35 & False & False \\
-mvtec & corruption\_none\_mild & p50 & 8 & 40 & 8 & 2223 & False & False \\
-mvtec & corruption\_none\_mild & p85 & 8 & 40 & 8 & 2223 & False & False \\
-mvtec & corruption\_none\_mild & best & 8 & 40 & 8 & 2223 & False & False \\
-mvtec & relative\_budget\_090 & p50 & 0 & 0 & 0 & 0 & False & False \\
-mvtec & relative\_budget\_090 & p85 & 0 & 0 & 0 & 0 & False & False \\
-mvtec & relative\_budget\_090 & best & 0 & 0 & 0 & 0 & False & False \\
-mvtec & combo\_tight & p50 & 0 & 0 & 0 & 0 & False & False \\
-mvtec & combo\_tight & p85 & 0 & 0 & 0 & 0 & False & False \\
-mvtec & combo\_tight & best & 0 & 0 & 0 & 0 & False & False \\
-mvtec & infeasible\_high & p50 & 0 & 0 & 0 & 0 & False & False \\
-mvtec & infeasible\_high & p85 & 0 & 0 & 0 & 0 & False & False \\
-mvtec & infeasible\_high & best & 0 & 0 & 0 & 0 & False & False \\
-mvtec & tight\_band\_q & p50 & 8 & 16 & 8 & 1750 & False & False \\
-mvtec & tight\_band\_q & p85 & 8 & 40 & 8 & 1750 & False & False \\
-mvtec & tight\_band\_q & best & 8 & 40 & 8 & 1750 & False & False \\
-mvtec & combo\_q & p50 & 0 & 0 & 0 & 0 & False & False \\
-mvtec & combo\_q & p85 & 0 & 0 & 0 & 0 & False & False \\
-mvtec & combo\_q & best & 0 & 0 & 0 & 0 & False & False \\
-proditec & broad\_band\_free & p50 & 8 & 40 & 8 & 1290 & False & False \\
-proditec & broad\_band\_free & p85 & 8 & 40 & 8 & 1290 & False & False \\
-proditec & broad\_band\_free & best & 8 & 40 & 8 & 1290 & False & False \\
-proditec & tight\_band & p50 & 1 & 1 & 8 & 399 & False & True \\
-proditec & tight\_band & p85 & 8 & 40 & 8 & 399 & False & False \\
-proditec & tight\_band & best & 8 & 40 & 8 & 399 & False & False \\
-proditec & target\_min\_085 & p50 & 2 & 2 & 8 & 532 & False & True \\
-proditec & target\_min\_085 & p85 & 8 & 40 & 8 & 532 & False & False \\
-proditec & target\_min\_085 & best & 8 & 40 & 8 & 532 & False & False \\
-proditec & delta\_improve\_005 & p50 & 8 & 40 & 8 & 1435 & False & False \\
-proditec & delta\_improve\_005 & p85 & 0 & 0 & 0 & 0 & False & False \\
-proditec & delta\_improve\_005 & best & 0 & 0 & 0 & 0 & False & False \\
-proditec & low\_budget & p50 & 8 & 31 & 8 & 134 & False & False \\
-proditec & low\_budget & p85 & 5 & 5 & 8 & 134 & False & True \\
-proditec & low\_budget & best & 3 & 3 & 8 & 134 & False & True \\
-proditec & low\_train\_fraction & p50 & 0 & 0 & 8 & 12 & False & True \\
-proditec & low\_train\_fraction & p85 & 8 & 12 & 8 & 12 & False & False \\
-proditec & low\_train\_fraction & best & 8 & 18 & 8 & 12 & False & False \\
-proditec & corruption\_none\_mild & p50 & 0 & 0 & 8 & 647 & False & True \\
-proditec & corruption\_none\_mild & p85 & 8 & 40 & 8 & 647 & False & False \\
-proditec & corruption\_none\_mild & best & 8 & 40 & 8 & 647 & False & False \\
-proditec & relative\_budget\_090 & p50 & 0 & 0 & 0 & 0 & False & False \\
-proditec & relative\_budget\_090 & p85 & 0 & 0 & 0 & 0 & False & False \\
-proditec & relative\_budget\_090 & best & 0 & 0 & 0 & 0 & False & False \\
-proditec & combo\_tight & p50 & 0 & 0 & 0 & 0 & False & False \\
-proditec & combo\_tight & p85 & 0 & 0 & 0 & 0 & False & False \\
-proditec & combo\_tight & best & 0 & 0 & 0 & 0 & False & False \\
-proditec & infeasible\_high & p50 & 0 & 0 & 0 & 0 & False & False \\
-proditec & infeasible\_high & p85 & 0 & 0 & 0 & 0 & False & False \\
-proditec & infeasible\_high & best & 0 & 0 & 0 & 0 & False & False \\
-proditec & tight\_band\_q & p50 & 3 & 3 & 8 & 468 & False & True \\
-proditec & tight\_band\_q & p85 & 8 & 39 & 8 & 468 & False & False \\
-proditec & tight\_band\_q & best & 8 & 40 & 8 & 468 & False & False \\
-proditec & combo\_q & p50 & 0 & 0 & 0 & 0 & False & False \\
-proditec & combo\_q & p85 & 0 & 0 & 0 & 0 & False & False \\
-proditec & combo\_q & best & 0 & 0 & 0 & 0 & False & False \\
+   mvtec &      broad\_band\_free &    p50 &                   8 &                40 &                    8 &                         2250 &                                        False &                                False \\
+   mvtec &      broad\_band\_free &    p85 &                   8 &                40 &                    8 &                         2250 &                                        False &                                False \\
+   mvtec &      broad\_band\_free &   best &                   8 &                40 &                    8 &                         2250 &                                        False &                                False \\
+   mvtec &           tight\_band &    p50 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &           tight\_band &    p85 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &           tight\_band &   best &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &       target\_min\_085 &    p50 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &       target\_min\_085 &    p85 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &       target\_min\_085 &   best &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &    delta\_improve\_005 &    p50 &                   8 &                40 &                    8 &                         4205 &                                        False &                                False \\
+   mvtec &    delta\_improve\_005 &    p85 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &    delta\_improve\_005 &   best &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &           low\_budget &    p50 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &           low\_budget &    p85 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &           low\_budget &   best &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &   low\_train\_fraction &    p50 &                   1 &                 1 &                    8 &                           35 &                                        False &                                 True \\
+   mvtec &   low\_train\_fraction &    p85 &                   8 &                12 &                    8 &                           35 &                                        False &                                False \\
+   mvtec &   low\_train\_fraction &   best &                   8 &                 8 &                    8 &                           35 &                                        False &                                False \\
+   mvtec & corruption\_none\_mild &    p50 &                   8 &                40 &                    8 &                         2223 &                                        False &                                False \\
+   mvtec & corruption\_none\_mild &    p85 &                   8 &                40 &                    8 &                         2223 &                                        False &                                False \\
+   mvtec & corruption\_none\_mild &   best &                   8 &                40 &                    8 &                         2223 &                                        False &                                False \\
+   mvtec &  relative\_budget\_090 &    p50 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &  relative\_budget\_090 &    p85 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &  relative\_budget\_090 &   best &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &          combo\_tight &    p50 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &          combo\_tight &    p85 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &          combo\_tight &   best &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &      infeasible\_high &    p50 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &      infeasible\_high &    p85 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &      infeasible\_high &   best &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &         tight\_band\_q &    p50 &                   8 &                16 &                    8 &                         1750 &                                        False &                                False \\
+   mvtec &         tight\_band\_q &    p85 &                   8 &                40 &                    8 &                         1750 &                                        False &                                False \\
+   mvtec &         tight\_band\_q &   best &                   8 &                40 &                    8 &                         1750 &                                        False &                                False \\
+   mvtec &              combo\_q &    p50 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &              combo\_q &    p85 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+   mvtec &              combo\_q &   best &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+proditec &      broad\_band\_free &    p50 &                   8 &                40 &                    8 &                         1290 &                                        False &                                False \\
+proditec &      broad\_band\_free &    p85 &                   8 &                40 &                    8 &                         1290 &                                        False &                                False \\
+proditec &      broad\_band\_free &   best &                   8 &                40 &                    8 &                         1290 &                                        False &                                False \\
+proditec &           tight\_band &    p50 &                   1 &                 1 &                    8 &                          399 &                                        False &                                 True \\
+proditec &           tight\_band &    p85 &                   8 &                40 &                    8 &                          399 &                                        False &                                False \\
+proditec &           tight\_band &   best &                   8 &                40 &                    8 &                          399 &                                        False &                                False \\
+proditec &       target\_min\_085 &    p50 &                   2 &                 2 &                    8 &                          532 &                                        False &                                 True \\
+proditec &       target\_min\_085 &    p85 &                   8 &                40 &                    8 &                          532 &                                        False &                                False \\
+proditec &       target\_min\_085 &   best &                   8 &                40 &                    8 &                          532 &                                        False &                                False \\
+proditec &    delta\_improve\_005 &    p50 &                   8 &                40 &                    8 &                         1435 &                                        False &                                False \\
+proditec &    delta\_improve\_005 &    p85 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+proditec &    delta\_improve\_005 &   best &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+proditec &           low\_budget &    p50 &                   8 &                31 &                    8 &                          134 &                                        False &                                False \\
+proditec &           low\_budget &    p85 &                   5 &                 5 &                    8 &                          134 &                                        False &                                 True \\
+proditec &           low\_budget &   best &                   3 &                 3 &                    8 &                          134 &                                        False &                                 True \\
+proditec &   low\_train\_fraction &    p50 &                   0 &                 0 &                    8 &                           12 &                                        False &                                 True \\
+proditec &   low\_train\_fraction &    p85 &                   8 &                12 &                    8 &                           12 &                                        False &                                False \\
+proditec &   low\_train\_fraction &   best &                   8 &                18 &                    8 &                           12 &                                        False &                                False \\
+proditec & corruption\_none\_mild &    p50 &                   0 &                 0 &                    8 &                          647 &                                        False &                                 True \\
+proditec & corruption\_none\_mild &    p85 &                   8 &                40 &                    8 &                          647 &                                        False &                                False \\
+proditec & corruption\_none\_mild &   best &                   8 &                40 &                    8 &                          647 &                                        False &                                False \\
+proditec &  relative\_budget\_090 &    p50 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+proditec &  relative\_budget\_090 &    p85 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+proditec &  relative\_budget\_090 &   best &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+proditec &          combo\_tight &    p50 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+proditec &          combo\_tight &    p85 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+proditec &          combo\_tight &   best &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+proditec &      infeasible\_high &    p50 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+proditec &      infeasible\_high &    p85 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+proditec &      infeasible\_high &   best &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+proditec &         tight\_band\_q &    p50 &                   3 &                 3 &                    8 &                          468 &                                        False &                                 True \\
+proditec &         tight\_band\_q &    p85 &                   8 &                39 &                    8 &                          468 &                                        False &                                False \\
+proditec &         tight\_band\_q &   best &                   8 &                40 &                    8 &                          468 &                                        False &                                False \\
+proditec &              combo\_q &    p50 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+proditec &              combo\_q &    p85 &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
+proditec &              combo\_q &   best &                   0 &                 0 &                    0 &                            0 &                                        False &                                False \\
 \bottomrule
 \end{tabular}

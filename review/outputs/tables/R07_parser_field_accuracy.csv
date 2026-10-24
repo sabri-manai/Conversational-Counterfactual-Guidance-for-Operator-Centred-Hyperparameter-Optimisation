@@ -1,2 +1,4 @@
 variant,obj,tf,rb,corr,k
 regex-only (LLM off),0.175,0.8,0.7,1.0,0.875
+"deployed parser, qwen-2.5-7b-instruct",0.5,0.725,0.5,1.0,0.5
+"deployed + relative overlay, qwen-2.5-7b-instruct",0.5,0.725,0.6,1.0,0.5

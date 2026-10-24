@@ -1,12 +1,24 @@
 \begin{tabular}{llrrrrrrrrrr}
 \toprule
-variant & subset & n & fallback\_rate & strict\_acc & semantic\_acc & semantic\_ci\_lo & semantic\_ci\_hi & accepted\_n & semantic\_acc\_among\_accepted & accepted\_but\_wrong & accepted\_but\_wrong\_share\_of\_all\_errors \\
+                                          variant &                     subset &  n &  fallback\_rate &  strict\_acc &  semantic\_acc &  semantic\_ci\_lo &  semantic\_ci\_hi &  accepted\_n &  semantic\_acc\_among\_accepted &  accepted\_but\_wrong &  accepted\_but\_wrong\_share\_of\_all\_errors \\
 \midrule
-regex-only (LLM off) & all 40 & 40 & 1.0000 & 0.0750 & 0.0750 & 0.0258 & 0.1986 & 0 & NaN & 0 & 0.0000 \\
-regex-only (LLM off) & relative-constraint & 5 & 1.0000 & 0.0000 & 0.0000 & 0.0000 & 0.4345 & 0 & NaN & 0 & 0.0000 \\
-regex-only (LLM off) & needs repair/out-of-domain & 4 & 1.0000 & 0.2500 & 0.2500 & 0.0456 & 0.6994 & 0 & NaN & 0 & 0.0000 \\
-regex-only (LLM off) & decoy numbers & 3 & 1.0000 & 0.0000 & 0.0000 & 0.0000 & 0.5615 & 0 & NaN & 0 & 0.0000 \\
-regex-only (LLM off) & paraphrases & 6 & 1.0000 & 0.1667 & 0.1667 & 0.0301 & 0.5635 & 0 & NaN & 0 & 0.0000 \\
-regex-only (LLM off) & all others & 24 & 1.0000 & 0.0417 & 0.0417 & 0.0074 & 0.2024 & 0 & NaN & 0 & 0.0000 \\
+                             regex-only (LLM off) &                     all 40 & 40 &         1.0000 &      0.0750 &        0.0750 &          0.0258 &          0.1986 &           0 &                          NaN &                   0 &                                  0.0000 \\
+                             regex-only (LLM off) &        relative-constraint &  5 &         1.0000 &      0.0000 &        0.0000 &          0.0000 &          0.4345 &           0 &                          NaN &                   0 &                                  0.0000 \\
+                             regex-only (LLM off) & needs repair/out-of-domain &  4 &         1.0000 &      0.2500 &        0.2500 &          0.0456 &          0.6994 &           0 &                          NaN &                   0 &                                  0.0000 \\
+                             regex-only (LLM off) &              decoy numbers &  3 &         1.0000 &      0.0000 &        0.0000 &          0.0000 &          0.5615 &           0 &                          NaN &                   0 &                                  0.0000 \\
+                             regex-only (LLM off) &                paraphrases &  6 &         1.0000 &      0.1667 &        0.1667 &          0.0301 &          0.5635 &           0 &                          NaN &                   0 &                                  0.0000 \\
+                             regex-only (LLM off) &                 all others & 24 &         1.0000 &      0.0417 &        0.0417 &          0.0074 &          0.2024 &           0 &                          NaN &                   0 &                                  0.0000 \\
+            deployed parser, qwen-2.5-7b-instruct &                     all 40 & 40 &         0.5500 &      0.0750 &        0.0750 &          0.0258 &          0.1986 &          18 &                       0.0556 &                  17 &                                  0.4595 \\
+            deployed parser, qwen-2.5-7b-instruct &        relative-constraint &  5 &         0.8000 &      0.0000 &        0.0000 &          0.0000 &          0.4345 &           1 &                       0.0000 &                   1 &                                  0.2000 \\
+            deployed parser, qwen-2.5-7b-instruct & needs repair/out-of-domain &  4 &         1.0000 &      0.2500 &        0.2500 &          0.0456 &          0.6994 &           0 &                          NaN &                   0 &                                  0.0000 \\
+            deployed parser, qwen-2.5-7b-instruct &              decoy numbers &  3 &         0.3333 &      0.3333 &        0.3333 &          0.0615 &          0.7923 &           2 &                       0.5000 &                   1 &                                  0.5000 \\
+            deployed parser, qwen-2.5-7b-instruct &                paraphrases &  6 &         0.5000 &      0.1667 &        0.1667 &          0.0301 &          0.5635 &           3 &                       0.0000 &                   3 &                                  0.6000 \\
+            deployed parser, qwen-2.5-7b-instruct &                 all others & 24 &         0.5000 &      0.0000 &        0.0000 &          0.0000 &          0.1380 &          12 &                       0.0000 &                  12 &                                  0.5000 \\
+deployed + relative overlay, qwen-2.5-7b-instruct &                     all 40 & 40 &         0.5500 &      0.0750 &        0.0750 &          0.0258 &          0.1986 &          18 &                       0.0556 &                  17 &                                  0.4595 \\
+deployed + relative overlay, qwen-2.5-7b-instruct &        relative-constraint &  5 &         0.8000 &      0.0000 &        0.0000 &          0.0000 &          0.4345 &           1 &                       0.0000 &                   1 &                                  0.2000 \\
+deployed + relative overlay, qwen-2.5-7b-instruct & needs repair/out-of-domain &  4 &         1.0000 &      0.2500 &        0.2500 &          0.0456 &          0.6994 &           0 &                          NaN &                   0 &                                  0.0000 \\
+deployed + relative overlay, qwen-2.5-7b-instruct &              decoy numbers &  3 &         0.3333 &      0.3333 &        0.3333 &          0.0615 &          0.7923 &           2 &                       0.5000 &                   1 &                                  0.5000 \\
+deployed + relative overlay, qwen-2.5-7b-instruct &                paraphrases &  6 &         0.5000 &      0.1667 &        0.1667 &          0.0301 &          0.5635 &           3 &                       0.0000 &                   3 &                                  0.6000 \\
+deployed + relative overlay, qwen-2.5-7b-instruct &                 all others & 24 &         0.5000 &      0.0000 &        0.0000 &          0.0000 &          0.1380 &          12 &                       0.0000 &                  12 &                                  0.5000 \\
 \bottomrule
 \end{tabular}

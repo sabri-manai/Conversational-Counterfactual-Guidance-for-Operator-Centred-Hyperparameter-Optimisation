@@ -1,0 +1,12 @@
+quantity,value
+mean surrogate prediction (candidates),0.8099514662983475
+mean re-measured validation F1 (per-category protocol),0.8096408799533799
+mean held-out final F1 (per-category protocol),0.7850121277427434
+"mean held-out final F1, pooled protocol (paper)",0.5702799526807285
+surrogate error under the surrogate's own protocol (val - pred),-0.0003105863449675746
+"generalisation shift (final - val), per-category",-0.02462875221063657
+"protocol effect on F1 (pooled - per-category, same models)",-0.2147321750620149
+"Spearman(surrogate, val F1) over the 24 candidates",0.7352464192062067
+"Spearman(surrogate, final F1) over the 24 candidates",-0.24701022545222348
+range of re-measured val F1 over candidates (max-min),0.023538961038961026
+range of review budgets over candidates (max-min),0.0050000000000000044

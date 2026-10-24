@@ -1,0 +1,3 @@
+dataset,primary_anchor_index,observed_F1,surrogate_F1_at_anchor,log_max,is_best_logged_trial,percentile_in_log,n_log,anchor_review_budget,anchor_train_fraction
+mvtec,4523,0.8202491952491952,0.8049373783696644,0.8202491952491952,True,99.96992782678427,9976,0.495,0.9
+proditec,2738,0.907563025210084,0.8892685915340859,0.907563025210084,True,99.96665555185061,2999,0.34,0.9
