@@ -1,0 +1,41 @@
+dataset,lm,method,confirm_top,interaction_s,break_even_K_candidates,speedup_vs_K8_sequential,speedup_vs_K20_sequential
+mvtec,CPU (as measured in the paper),LogTopK,0,141.383,2.88,2.778,6.945
+mvtec,CPU (as measured in the paper),LogTopK,1,190.48,3.88,2.062,5.155
+mvtec,CPU (as measured in the paper),NearestFeasible,0,141.384,2.88,2.778,6.945
+mvtec,CPU (as measured in the paper),NearestFeasible,1,190.481,3.88,2.062,5.155
+mvtec,CPU (as measured in the paper),DiCE,0,141.698,2.886,2.772,6.93
+mvtec,CPU (as measured in the paper),DiCE,1,190.795,3.886,2.059,5.147
+mvtec,CPU (as measured in the paper),CFNOW,0,147.001,2.994,2.672,6.68
+mvtec,CPU (as measured in the paper),CFNOW,1,196.098,3.994,2.003,5.007
+mvtec,CPU (as measured in the paper),ACFX,0,258.396,5.263,1.52,3.8
+mvtec,CPU (as measured in the paper),ACFX,1,307.493,6.263,1.277,3.193
+mvtec,GPU bf16 (parser_eval_latency.json),LogTopK,0,6.629,0.135,59.249,148.124
+mvtec,GPU bf16 (parser_eval_latency.json),LogTopK,1,55.726,1.135,7.048,17.621
+mvtec,GPU bf16 (parser_eval_latency.json),NearestFeasible,0,6.63,0.135,59.245,148.112
+mvtec,GPU bf16 (parser_eval_latency.json),NearestFeasible,1,55.727,1.135,7.048,17.621
+mvtec,GPU bf16 (parser_eval_latency.json),DiCE,0,6.944,0.141,56.567,141.419
+mvtec,GPU bf16 (parser_eval_latency.json),DiCE,1,56.041,1.141,7.009,17.522
+mvtec,GPU bf16 (parser_eval_latency.json),CFNOW,0,12.247,0.249,32.071,80.176
+mvtec,GPU bf16 (parser_eval_latency.json),CFNOW,1,61.344,1.249,6.403,16.007
+mvtec,GPU bf16 (parser_eval_latency.json),ACFX,0,123.642,2.518,3.177,7.942
+mvtec,GPU bf16 (parser_eval_latency.json),ACFX,1,172.739,3.518,2.274,5.685
+proditec,CPU (as measured in the paper),LogTopK,0,141.383,6.235,1.283,3.208
+proditec,CPU (as measured in the paper),LogTopK,1,164.059,7.235,1.106,2.764
+proditec,CPU (as measured in the paper),NearestFeasible,0,141.384,6.235,1.283,3.208
+proditec,CPU (as measured in the paper),NearestFeasible,1,164.06,7.235,1.106,2.764
+proditec,CPU (as measured in the paper),DiCE,0,141.863,6.256,1.279,3.197
+proditec,CPU (as measured in the paper),DiCE,1,164.539,7.256,1.103,2.756
+proditec,CPU (as measured in the paper),CFNOW,0,142.831,6.299,1.27,3.175
+proditec,CPU (as measured in the paper),CFNOW,1,165.507,7.299,1.096,2.74
+proditec,CPU (as measured in the paper),ACFX,0,241.324,10.642,0.752,1.879
+proditec,CPU (as measured in the paper),ACFX,1,264.0,11.642,0.687,1.718
+proditec,GPU bf16 (parser_eval_latency.json),LogTopK,0,6.629,0.292,27.365,68.412
+proditec,GPU bf16 (parser_eval_latency.json),LogTopK,1,29.305,1.292,6.19,15.476
+proditec,GPU bf16 (parser_eval_latency.json),NearestFeasible,0,6.63,0.292,27.363,68.407
+proditec,GPU bf16 (parser_eval_latency.json),NearestFeasible,1,29.306,1.292,6.19,15.475
+proditec,GPU bf16 (parser_eval_latency.json),DiCE,0,7.109,0.313,25.52,63.799
+proditec,GPU bf16 (parser_eval_latency.json),DiCE,1,29.784,1.313,6.091,15.227
+proditec,GPU bf16 (parser_eval_latency.json),CFNOW,0,8.077,0.356,22.459,56.147
+proditec,GPU bf16 (parser_eval_latency.json),CFNOW,1,30.753,1.356,5.899,14.747
+proditec,GPU bf16 (parser_eval_latency.json),ACFX,0,106.57,4.7,1.702,4.256
+proditec,GPU bf16 (parser_eval_latency.json),ACFX,1,129.246,5.7,1.404,3.509

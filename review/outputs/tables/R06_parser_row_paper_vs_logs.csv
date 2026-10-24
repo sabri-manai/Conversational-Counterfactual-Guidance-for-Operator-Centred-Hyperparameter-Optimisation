@@ -1,0 +1,3 @@
+source,model,fallback_pct,exact_pct
+"paper Table 8, 'study-time' row",3B (local),87.5,5.0
+study logs (this notebook),qwen/qwen-2.5-7b-instruct,0.0,

@@ -27,3 +27,11 @@ build/
 .idea/
 
 cf-hpo-space-demo/
+
+# ---- macOS ----
+.DS_Store
+
+# ---- Revision runs (review/): caches, plumbing-test output and executed copies are regenerated, not versioned ----
+review/outputs/cache/
+review/outputs/smoke/
+review/outputs/executed_notebooks/

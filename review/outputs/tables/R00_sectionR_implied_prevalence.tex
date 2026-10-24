@@ -1,0 +1,18 @@
+\begin{tabular}{llllrrrrrrrrr}
+\toprule
+dataset & qid & anchor & method & params\_soft\_review\_budget & precision\_test & recall\_test & f1\_test & auroc\_test & wall\_s & implied\_prevalence & true\_test\_prevalence & prevalence\_consistent \\
+\midrule
+mvtec & tight\_band\_q & p85 & DiCE & 0.4900 & 0.6606 & 0.9766 & 0.7881 & 0.9802 & 1153.9189 & 0.3315 & 0.7017 & False \\
+mvtec & tight\_band\_q & p85 & DiCE & 0.4900 & 0.6744 & 0.9766 & 0.7978 & 0.9774 & 693.2691 & 0.3384 & 0.7017 & False \\
+mvtec & tight\_band\_q & p85 & LogTopK & 0.4950 & 0.6713 & 0.9766 & 0.7956 & 0.9776 & 487.2693 & 0.3402 & 0.7017 & False \\
+mvtec & tight\_band\_q & p85 & LogTopK & 0.4950 & 0.6651 & 0.9766 & 0.7913 & 0.9778 & 507.6404 & 0.3371 & 0.7017 & False \\
+mvtec & tight\_band\_q & p85 & NearestFeasible & 0.4950 & 0.6752 & 0.9732 & 0.7973 & 0.9693 & 343.7939 & 0.3434 & 0.7017 & False \\
+mvtec & tight\_band\_q & p85 & NearestFeasible & 0.4900 & 0.6847 & 0.9732 & 0.8039 & 0.9694 & 344.5265 & 0.3447 & 0.7017 & False \\
+proditec & tight\_band & p85 & DiCE & 0.3250 & 0.8989 & 0.8328 & 0.8646 & 0.9685 & 60.9181 & 0.3508 & 0.3449 & True \\
+proditec & tight\_band & p85 & DiCE & 0.3250 & 0.9209 & 0.8562 & 0.8873 & 0.9724 & 63.2508 & 0.3496 & 0.3449 & True \\
+proditec & tight\_band & p85 & LogTopK & 0.3450 & 0.8779 & 0.8896 & 0.8837 & 0.9774 & 23.7355 & 0.3404 & 0.3449 & True \\
+proditec & tight\_band & p85 & LogTopK & 0.3450 & 0.8874 & 0.8963 & 0.8918 & 0.9767 & 23.9089 & 0.3416 & 0.3449 & True \\
+proditec & tight\_band & p85 & NearestFeasible & 0.3400 & 0.8908 & 0.8729 & 0.8818 & 0.9755 & 26.5252 & 0.3470 & 0.3449 & True \\
+proditec & tight\_band & p85 & NearestFeasible & 0.3400 & 0.8855 & 0.8796 & 0.8826 & 0.9750 & 26.8294 & 0.3423 & 0.3449 & True \\
+\bottomrule
+\end{tabular}

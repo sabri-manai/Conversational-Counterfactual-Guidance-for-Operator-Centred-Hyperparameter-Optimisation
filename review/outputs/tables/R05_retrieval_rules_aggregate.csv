@@ -1,0 +1,9 @@
+dataset,rule,cells_answered,mean_returned,mean_recorded,mean_surrogate,mean_abs_err,mean_distance,frac_recorded_in_band,frac_surrogate_in_band,cells_total
+mvtec,LogTopK,13,8.0,0.809,0.8084,0.0044,3.3894,0.8846,1.0,36
+mvtec,NearestFeasible,13,8.0,0.7799,0.7805,0.0058,1.9877,0.875,1.0,36
+mvtec,RecordedNearest,13,8.0,0.7847,0.7841,0.0059,2.0789,1.0,0.9615,36
+mvtec,RecordedTopK,13,8.0,0.8121,0.8051,0.0079,3.2374,1.0,1.0,36
+proditec,LogTopK,23,6.913,0.8736,0.8641,0.0144,2.1015,0.8913,1.0,36
+proditec,NearestFeasible,23,6.913,0.8456,0.8367,0.0204,1.5214,0.8315,1.0,36
+proditec,RecordedNearest,22,8.0,0.8508,0.8213,0.0378,1.1097,1.0,0.7443,36
+proditec,RecordedTopK,22,8.0,0.8876,0.8487,0.0407,2.0974,1.0,0.8807,36

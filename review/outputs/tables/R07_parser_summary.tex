@@ -1,0 +1,12 @@
+\begin{tabular}{llrrrrrrrrrr}
+\toprule
+variant & subset & n & fallback\_rate & strict\_acc & semantic\_acc & semantic\_ci\_lo & semantic\_ci\_hi & accepted\_n & semantic\_acc\_among\_accepted & accepted\_but\_wrong & accepted\_but\_wrong\_share\_of\_all\_errors \\
+\midrule
+regex-only (LLM off) & all 40 & 40 & 1.0000 & 0.0750 & 0.0750 & 0.0258 & 0.1986 & 0 & NaN & 0 & 0.0000 \\
+regex-only (LLM off) & relative-constraint & 5 & 1.0000 & 0.0000 & 0.0000 & 0.0000 & 0.4345 & 0 & NaN & 0 & 0.0000 \\
+regex-only (LLM off) & needs repair/out-of-domain & 4 & 1.0000 & 0.2500 & 0.2500 & 0.0456 & 0.6994 & 0 & NaN & 0 & 0.0000 \\
+regex-only (LLM off) & decoy numbers & 3 & 1.0000 & 0.0000 & 0.0000 & 0.0000 & 0.5615 & 0 & NaN & 0 & 0.0000 \\
+regex-only (LLM off) & paraphrases & 6 & 1.0000 & 0.1667 & 0.1667 & 0.0301 & 0.5635 & 0 & NaN & 0 & 0.0000 \\
+regex-only (LLM off) & all others & 24 & 1.0000 & 0.0417 & 0.0417 & 0.0074 & 0.2024 & 0 & NaN & 0 & 0.0000 \\
+\bottomrule
+\end{tabular}

@@ -1,0 +1,7 @@
+variant,subset,n,fallback_rate,strict_acc,semantic_acc,semantic_ci_lo,semantic_ci_hi,accepted_n,semantic_acc_among_accepted,accepted_but_wrong,accepted_but_wrong_share_of_all_errors
+regex-only (LLM off),all 40,40,1.0,0.075,0.075,0.025836025774588198,0.19864233524310543,0,,0,0.0
+regex-only (LLM off),relative-constraint,5,1.0,0.0,0.0,0.0,0.43448246478317476,0,,0,0.0
+regex-only (LLM off),needs repair/out-of-domain,4,1.0,0.25,0.25,0.04558726080970055,0.6993581574175981,0,,0,0.0
+regex-only (LLM off),decoy numbers,3,1.0,0.0,0.0,0.0,0.5614970317550454,0,,0,0.0
+regex-only (LLM off),paraphrases,6,1.0,0.16666666666666666,0.16666666666666666,0.03005336974830669,0.5635028221864702,0,,0,0.0
+regex-only (LLM off),all others,24,1.0,0.041666666666666664,0.041666666666666664,0.0073934561655057685,0.2024180647865594,0,,0,0.0

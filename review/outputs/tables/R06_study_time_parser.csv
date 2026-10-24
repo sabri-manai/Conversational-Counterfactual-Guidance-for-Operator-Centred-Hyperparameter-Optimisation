@@ -1,0 +1,2 @@
+provider,model,parser,app_version,attempts,sessions,fallback_rate_pct,mean_repair_attempts
+OpenRouter,qwen/qwen-2.5-7b-instruct,llm_only_with_repair,2026-05-06-parser-valid-only-v2,72,12,0.0,1.0

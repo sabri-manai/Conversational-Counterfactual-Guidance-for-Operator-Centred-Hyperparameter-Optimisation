@@ -1,0 +1,32 @@
+\begin{tabular}{llrrrrrrl}
+\toprule
+feature & dataset & mean\_abs\_shap\_full & perm\_R2drop\_full & mean\_abs\_shap\_without\_budget & perm\_R2drop\_without\_budget & share\_shap\_full & share\_shap\_without\_budget & kind \\
+\midrule
+params\_soft\_review\_budget & mvtec & 0.1846 & 1.8623 & NaN & NaN & 0.7534 & NaN & soft (operator-facing) \\
+params\_pre\_trained & mvtec & 0.0165 & 0.0274 & 0.0150 & 0.0181 & 0.0673 & 0.1507 & hard (model) \\
+params\_reduction & mvtec & 0.0106 & 0.0069 & 0.0065 & 0.0052 & 0.0432 & 0.0653 & hard (model) \\
+params\_num\_neighbors & mvtec & 0.0075 & 0.0037 & 0.0146 & 0.0291 & 0.0307 & 0.1468 & hard (model) \\
+params\_soft\_train\_fraction & mvtec & 0.0066 & 0.0010 & 0.0107 & 0.0289 & 0.0271 & 0.1069 & soft (operator-facing) \\
+params\_soft\_corruption\_level & mvtec & 0.0049 & 0.0006 & 0.0113 & 0.0099 & 0.0202 & 0.1131 & soft (operator-facing) \\
+params\_layers\_key & mvtec & 0.0043 & 0.0012 & 0.0067 & 0.0083 & 0.0176 & 0.0672 & hard (model) \\
+params\_coreset\_sampling\_ratio & mvtec & 0.0031 & 0.0030 & 0.0088 & 0.0138 & 0.0127 & 0.0878 & hard (model) \\
+params\_image\_size\_key & mvtec & 0.0023 & 0.0002 & 0.0031 & 0.0053 & 0.0093 & 0.0307 & hard (model) \\
+params\_center\_crop\_key & mvtec & 0.0021 & 0.0003 & 0.0011 & 0.0013 & 0.0084 & 0.0115 & hard (model) \\
+params\_max\_patches\_per\_image & mvtec & 0.0014 & 0.0004 & 0.0057 & 0.0101 & 0.0057 & 0.0570 & hard (model) \\
+params\_backbone & mvtec & 0.0009 & 0.0004 & 0.0102 & 0.0087 & 0.0037 & 0.1026 & hard (model) \\
+params\_batch\_size & mvtec & 0.0002 & 0.0000 & 0.0060 & 0.0026 & 0.0007 & 0.0607 & hard (model) \\
+params\_soft\_review\_budget & proditec & 0.1052 & 0.4224 & NaN & NaN & 0.2299 & NaN & soft (operator-facing) \\
+params\_layers\_key & proditec & 0.0995 & 0.3616 & 0.1104 & 0.3446 & 0.2174 & 0.3018 & hard (model) \\
+params\_pre\_trained & proditec & 0.0645 & 0.2185 & 0.0662 & 0.2368 & 0.1409 & 0.1808 & hard (model) \\
+params\_backbone & proditec & 0.0423 & 0.0230 & 0.0184 & 0.0143 & 0.0923 & 0.0502 & hard (model) \\
+params\_num\_neighbors & proditec & 0.0372 & 0.0429 & 0.0451 & 0.0628 & 0.0813 & 0.1233 & hard (model) \\
+params\_image\_size\_key & proditec & 0.0250 & 0.0222 & 0.0333 & 0.0612 & 0.0545 & 0.0911 & hard (model) \\
+params\_reduction & proditec & 0.0225 & 0.0199 & 0.0136 & 0.0095 & 0.0491 & 0.0372 & hard (model) \\
+params\_coreset\_sampling\_ratio & proditec & 0.0215 & 0.0257 & 0.0234 & 0.0268 & 0.0471 & 0.0639 & hard (model) \\
+params\_soft\_train\_fraction & proditec & 0.0149 & 0.0023 & 0.0167 & 0.0097 & 0.0326 & 0.0457 & soft (operator-facing) \\
+params\_center\_crop\_key & proditec & 0.0111 & 0.0045 & 0.0071 & 0.0029 & 0.0242 & 0.0193 & hard (model) \\
+params\_max\_patches\_per\_image & proditec & 0.0088 & 0.0053 & 0.0159 & 0.0065 & 0.0192 & 0.0436 & hard (model) \\
+params\_soft\_corruption\_level & proditec & 0.0036 & 0.0001 & 0.0120 & 0.0375 & 0.0078 & 0.0329 & soft (operator-facing) \\
+params\_batch\_size & proditec & 0.0016 & -0.0004 & 0.0037 & 0.0008 & 0.0036 & 0.0102 & hard (model) \\
+\bottomrule
+\end{tabular}

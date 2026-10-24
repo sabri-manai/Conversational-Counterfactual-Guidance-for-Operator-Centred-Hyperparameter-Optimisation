@@ -20,6 +20,8 @@ proditec/     Proditec production use case
 shared/       Analyses that operate on both datasets together, and the conversational interface
 user_study/   Section 5 human-participant study: raw anonymised logs + analysis notebook
 demo_app/     Streamlit source for the live HF Spaces demo (deployed separately)
+paper/        Submitted manuscript, decision letter with the reviews, revision plan, LaTeX source
+review/       Revision (FGCS-D-26-04298): audit + re-run notebooks R00-R07, outputs and run script (see review/README.md)
 ```
 
 Each of `mvtec/` and `proditec/` is self-contained: the notebooks and their data artifacts

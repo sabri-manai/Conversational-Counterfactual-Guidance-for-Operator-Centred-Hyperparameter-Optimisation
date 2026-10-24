@@ -1,0 +1,8 @@
+quantity,value
+HPO objective = mean over 4 categories of val F1 (per-category model + threshold),see log: mean_f1_val_at_budget
+"best config, per-category FINAL F1 (HPO protocol)",0.800672047174975
+pooled test prevalence (confirmation protocol),0.7016806722689075
+F1 of a PERFECT ranker at the best budget on the pooled set,0.827288367683719
+F1 of a RANDOM ranker at the best budget on the pooled set,0.5804922579965591
+Proditec test prevalence,0.34486735870818913
+F1 of a RANDOM ranker at budget 0.345 on Proditec,0.34493366660257635

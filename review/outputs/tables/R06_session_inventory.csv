@@ -1,0 +1,26 @@
+participant,condition,file,start,elapsed_min,n_final_answers,n_attempts,status
+P-E20F59,A (notebook/API),P-E20F59_condition_a_answers.json,2026-05-13 11:07:50,15.859,3,3,complete
+P-0D65E0,A (notebook/API),P-0D65E0_condition_a_answers.json,2026-05-13 11:11:02,40.36233333333333,3,7,complete
+P-FAD1DE,A (notebook/API),P-FAD1DE_condition_a_answers.json,2026-05-13 11:11:10,21.392,3,5,complete
+P-195051,A (notebook/API),P-195051_condition_a_answers.json,2026-05-13 11:14:20,14.913333333333332,3,3,complete
+P-F4E531,A (notebook/API),P-F4E531_condition_a_answers.json,2026-05-13 11:18:56,11.757166666666667,3,3,complete
+P-D166E1,A (notebook/API),P-D166E1_condition_a_answers.json,2026-05-13 11:21:05,23.778000000000002,3,6,duplicate-of-P-D2166E1
+P-D2166E1,A (notebook/API),P-D2166E1_condition_a_answers.json,2026-05-13 11:21:05,23.778000000000002,3,6,duplicate-of-P-D166E1
+P-690100,A (notebook/API),P-690100_condition_a_answers.json,2026-05-13 11:23:20,58.43083333333333,3,4,complete
+P-31837D,A (notebook/API),P-31837D_condition_a_answers.json,2026-05-13 11:25:53,13.502,3,3,complete
+P-8AB788,A (notebook/API),P-8AB788_condition_a_answers.json,2026-05-27 11:15:39,15.002999999999998,3,3,complete
+P-FB95A8,A (notebook/API),P-FB95A8_condition_a_answers.json,2026-05-27 11:22:50,23.1125,3,3,complete
+P-153315,B (conversational),P-153315_20260513_092353_interface_session.json,2026-05-13 09:23:53,18.1805,3,9,complete
+P-30C813,B (conversational),P-30C813_20260513_092413_interface_session.json,2026-05-13 09:24:13,16.056166666666666,2,5,complete
+P-E13296,B (conversational),P-E13296_20260513_092533_interface_session.json,2026-05-13 09:25:33,33.324666666666666,3,7,complete
+P-58AFCB,B (conversational),P-58AFCB_20260513_092539_interface_session.json,2026-05-13 09:25:39,22.593833333333336,3,5,complete
+P-F283B6,B (conversational),P-F283B6_20260513_092618_interface_session.json,2026-05-13 09:26:18,21.726666666666667,3,5,complete
+P-C519E1,B (conversational),P-C519E1_20260513_092641_interface_session.json,2026-05-13 09:26:41,14.008833333333333,3,7,complete
+P-532DC7,B (conversational),P-532DC7_20260513_092644_interface_session.json,2026-05-13 09:26:44,46.258500000000005,3,11,complete
+P-DDBAAB,B (conversational),P-DDBAAB_20260513_092647_interface_session.json,2026-05-13 09:26:47,24.290666666666667,3,3,complete
+P-1F7053,B (conversational),P-1F7053_20260513_092710_interface_session.json,2026-05-13 09:27:10,17.990666666666666,3,6,complete
+P-238CF3,B (conversational),P-238CF3_20260513_092848_interface_session.json,2026-05-13 09:28:48,23.502,3,5,complete
+P-C0C645,B (conversational),P-C0C645_20260513_092916_interface_session.json,2026-05-13 09:29:16,16.764333333333333,3,4,complete
+P-3FA4E7,B (conversational),P-3FA4E7_20260513_093053_interface_session.json,2026-05-13 09:30:53,28.520166666666668,4,5,complete
+P-EBFFEA,B (conversational),P-EBFFEA_events.jsonl only,2026-05-13 09:42:53,0.0006666666666666666,0,0,"stub (2 events, no task)"
+P-8C0BB4,B (conversational),P-8C0BB4_events.jsonl only,2026-05-13 17:42:53,0.006833333333333333,0,0,"stub (2 events, no task)"

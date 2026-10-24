@@ -26,6 +26,10 @@ numpy
 scipy
 Pillow
 
+# --- Revision notebooks (review/) -------------------------------------------------
+requests               # review/R07 (OpenRouter client)
+nbconvert              # review/run_all.sh
+
 # --- Visualization ---------------------------------------------------------------
 matplotlib
 

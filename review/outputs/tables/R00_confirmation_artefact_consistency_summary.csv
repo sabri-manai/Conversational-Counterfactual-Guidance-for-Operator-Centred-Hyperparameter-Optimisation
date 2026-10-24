@@ -1,0 +1,3 @@
+dataset,max_abs_f1_diff,mean_abs_f1_diff,n_diff_gt_002,n_budget_differs,n_thr_above_all_val_scores
+mvtec,0.0705,0.0318,15,14,16
+proditec,0.1532,0.0637,15,13,0

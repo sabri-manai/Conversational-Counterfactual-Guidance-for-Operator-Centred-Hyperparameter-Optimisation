@@ -1,0 +1,11 @@
+\begin{tabular}{llrrrrll}
+\toprule
+variant & utterance & used\_fallback & rb\_sem & obj\_sem & all\_sem & got & expected \\
+\midrule
+regex-only (LLM off) & I want 10\% less review effort at similar quality. & True & False & False & False & \{'obj': ('delta\_improve', 0.02), 'tf': ('free',), 'rb': ('free',), 'corr': ('free',), 'k': 5\} & \{'obj': ('delta\_improve', 0.0), 'tf': ('free',), 'rb': ('range', 0.005, 0.27), 'corr': ('free',), 'k': 5\} \\
+regex-only (LLM off) & Same quality but cut the review budget by 20\%. & True & False & False & False & \{'obj': ('delta\_improve', 0.02), 'tf': ('free',), 'rb': ('free',), 'corr': ('free',), 'k': 5\} & \{'obj': ('delta\_improve', 0.0), 'tf': ('free',), 'rb': ('range', 0.005, 0.24), 'corr': ('free',), 'k': 5\} \\
+regex-only (LLM off) & Slightly better than now, and don't increase the review budget. & True & False & False & False & \{'obj': ('delta\_improve', 0.02), 'tf': ('free',), 'rb': ('free',), 'corr': ('free',), 'k': 5\} & \{'obj': ('delta\_improve', 0.0), 'tf': ('free',), 'rb': ('range', 0.005, 0.3), 'corr': ('free',), 'k': 5\} \\
+regex-only (LLM off) & Shave 10\% off the review effort, hold quality. & True & False & False & False & \{'obj': ('delta\_improve', 0.02), 'tf': ('free',), 'rb': ('free',), 'corr': ('free',), 'k': 5\} & \{'obj': ('delta\_improve', 0.0), 'tf': ('free',), 'rb': ('range', 0.005, 0.27), 'corr': ('free',), 'k': 5\} \\
+regex-only (LLM off) & Reduce reviewing by a tenth without losing quality. & True & False & False & False & \{'obj': ('delta\_improve', 0.02), 'tf': ('free',), 'rb': ('free',), 'corr': ('free',), 'k': 5\} & \{'obj': ('delta\_improve', 0.0), 'tf': ('free',), 'rb': ('range', 0.005, 0.27), 'corr': ('free',), 'k': 5\} \\
+\bottomrule
+\end{tabular}

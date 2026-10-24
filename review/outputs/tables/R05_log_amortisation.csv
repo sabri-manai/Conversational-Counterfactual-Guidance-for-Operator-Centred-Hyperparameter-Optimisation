@@ -1,0 +1,25 @@
+dataset,lm,method,K_alternatives,saving_per_query_s,queries_to_amortise_log,hpo_log_cost_gpu_h
+mvtec,CPU (as measured in the paper),LogTopK,8,202.297,1377.615,77.413
+mvtec,CPU (as measured in the paper),LogTopK,20,791.462,352.116,77.413
+mvtec,CPU (as measured in the paper),DiCE,8,201.982,1379.758,77.413
+mvtec,CPU (as measured in the paper),DiCE,20,791.148,352.256,77.413
+mvtec,CPU (as measured in the paper),ACFX,8,85.284,3267.743,77.413
+mvtec,CPU (as measured in the paper),ACFX,20,674.45,413.206,77.413
+mvtec,GPU bf16 (parser_eval_latency.json),LogTopK,8,337.051,826.839,77.413
+mvtec,GPU bf16 (parser_eval_latency.json),LogTopK,20,926.216,300.887,77.413
+mvtec,GPU bf16 (parser_eval_latency.json),DiCE,8,336.736,827.611,77.413
+mvtec,GPU bf16 (parser_eval_latency.json),DiCE,20,925.902,300.99,77.413
+mvtec,GPU bf16 (parser_eval_latency.json),ACFX,8,220.038,1266.538,77.413
+mvtec,GPU bf16 (parser_eval_latency.json),ACFX,20,809.204,344.396,77.413
+proditec,CPU (as measured in the paper),LogTopK,8,17.348,8636.251,41.617
+proditec,CPU (as measured in the paper),LogTopK,20,289.458,517.587,41.617
+proditec,CPU (as measured in the paper),DiCE,8,16.868,8881.662,41.617
+proditec,CPU (as measured in the paper),DiCE,20,288.979,518.446,41.617
+proditec,CPU (as measured in the paper),ACFX,8,-82.593,inf,41.617
+proditec,CPU (as measured in the paper),ACFX,20,189.518,790.532,41.617
+proditec,GPU bf16 (parser_eval_latency.json),LogTopK,8,152.102,984.996,41.617
+proditec,GPU bf16 (parser_eval_latency.json),LogTopK,20,424.212,353.172,41.617
+proditec,GPU bf16 (parser_eval_latency.json),DiCE,8,151.623,988.11,41.617
+proditec,GPU bf16 (parser_eval_latency.json),DiCE,20,423.733,353.571,41.617
+proditec,GPU bf16 (parser_eval_latency.json),ACFX,8,52.161,2872.24,41.617
+proditec,GPU bf16 (parser_eval_latency.json),ACFX,20,324.272,462.019,41.617

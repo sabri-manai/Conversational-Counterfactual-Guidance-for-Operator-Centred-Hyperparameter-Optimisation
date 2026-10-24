@@ -1,0 +1,11 @@
+dataset,model,n_features,R2,RMSE,MAE,rRMSE_mean,partial_R2_beyond_budget
+mvtec,full (13 features),13,0.99493,0.01616,0.00882,0.03071,0.86283
+mvtec,without review budget,12,0.09762,0.21548,0.18167,0.40954,0.86283
+mvtec,hard hyper-parameters only,10,0.08615,0.21684,0.18399,0.41214,0.86283
+mvtec,review budget only,1,0.96301,0.04362,0.02919,0.08291,0.86283
+mvtec,soft parameters only,3,0.98108,0.0312,0.0167,0.0593,0.86283
+proditec,full (13 features),13,0.94451,0.07994,0.04115,0.15818,0.89384
+proditec,without review budget,12,0.74939,0.16989,0.11953,0.33616,0.89384
+proditec,hard hyper-parameters only,10,0.75276,0.16874,0.12146,0.33389,0.89384
+proditec,review budget only,1,0.47731,0.24535,0.19912,0.48548,0.89384
+proditec,soft parameters only,3,0.69872,0.18627,0.11804,0.36858,0.89384

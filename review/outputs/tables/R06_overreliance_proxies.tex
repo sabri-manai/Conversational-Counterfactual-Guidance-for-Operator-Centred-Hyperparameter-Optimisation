@@ -1,0 +1,13 @@
+\begin{tabular}{lrrr}
+\toprule
+metric & k & n & rate\_pct \\
+\midrule
+B: selections following the interface's 'balanced' recommendation & 16 & 32 & 50.0000 \\
+B: selected option is the top-quality displayed option & 18 & 35 & 51.4286 \\
+B: selected option is the lowest-budget displayed option & 20 & 35 & 57.1429 \\
+B: final-answer query equals the task gold constraints & 22 & 35 & 62.8571 \\
+B: invalid selections although the interface said all options met the constraints & 4 & 4 & 100.0000 \\
+B: all selections come from retrieval (dataset\_filter), none from generation & 35 & 35 & 100.0000 \\
+A: median quality rank of the selected run among a list of \textasciitilde 11 (rank 1 = best) & 9 & 11 & NaN \\
+\bottomrule
+\end{tabular}

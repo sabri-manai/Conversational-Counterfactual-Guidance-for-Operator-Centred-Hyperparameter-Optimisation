@@ -1,0 +1,5 @@
+task,attempts,fallback,numerically_unfaithful,not_fully_captured,zero_options,relative_phrased,sentinel_budget_0p5,task_gold_exact
+task_1,21,0,0,5,5,0,0,8
+task_2,17,0,0,0,1,0,0,10
+task_3,34,0,19,20,15,20,16,8
+all,72,0,19,25,21,20,16,26

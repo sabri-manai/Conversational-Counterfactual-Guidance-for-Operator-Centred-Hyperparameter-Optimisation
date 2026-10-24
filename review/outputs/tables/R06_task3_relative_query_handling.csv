@@ -1,0 +1,12 @@
+participant,task3_attempts,relative_phrased_attempts,relative_attempts_with_0_options,final_query_type,final_query_budget_upper,final_query_absolute_equivalent,final_selection_valid,system_said_all_constraints_met
+P-153315,7,5,5,target_min,0.37,False,True,True
+P-1F7053,3,0,0,target_min,0.35,True,True,True
+P-238CF3,2,2,1,delta_improve,0.5,False,False,True
+P-3FA4E7,2,2,1,target_min,0.375,False,True,True
+P-532DC7,2,0,0,target_min,0.35,True,True,True
+P-58AFCB,3,0,0,target_band,0.355,True,True,True
+P-C0C645,2,1,1,target_min,0.355,True,True,True
+P-C519E1,5,5,3,target_min,0.375,False,True,True
+P-DDBAAB,1,1,0,target_min,0.375,False,False,True
+P-E13296,5,4,4,target_min,,False,True,True
+P-F283B6,2,0,0,target_min,0.37,False,True,True

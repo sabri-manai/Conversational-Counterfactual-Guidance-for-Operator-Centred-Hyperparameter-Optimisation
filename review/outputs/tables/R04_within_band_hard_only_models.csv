@@ -1,0 +1,21 @@
+dataset,band,n_train,n_test,features,R2_within_band,spearman,y_sd
+mvtec,"[0.005, 0.125]",1594,400,hard only,0.0163,0.1135,0.0784
+mvtec,"[0.005, 0.125]",1594,400,hard + other soft (no budget),0.0252,0.1429,0.0784
+mvtec,"[0.125, 0.240]",1578,391,hard only,0.1606,0.3492,0.0625
+mvtec,"[0.125, 0.240]",1578,391,hard + other soft (no budget),0.1663,0.3404,0.0625
+mvtec,"[0.240, 0.360]",1624,398,hard only,0.475,0.5642,0.0655
+mvtec,"[0.240, 0.360]",1624,398,hard + other soft (no budget),0.4789,0.5747,0.0655
+mvtec,"[0.360, 0.480]",1575,414,hard only,0.6727,0.7296,0.073
+mvtec,"[0.360, 0.480]",1575,414,hard + other soft (no budget),0.6769,0.724,0.073
+mvtec,"[0.480, 0.500]",1609,393,hard only,0.8918,0.444,0.0423
+mvtec,"[0.480, 0.500]",1609,393,hard + other soft (no budget),0.8755,0.4116,0.0423
+proditec,"[0.005, 0.140]",473,110,hard only,0.3972,0.6779,0.1617
+proditec,"[0.005, 0.140]",473,110,hard + other soft (no budget),0.3851,0.6483,0.1617
+proditec,"[0.140, 0.275]",500,109,hard only,0.8124,0.8292,0.2873
+proditec,"[0.140, 0.275]",500,109,hard + other soft (no budget),0.8061,0.8343,0.2873
+proditec,"[0.275, 0.355]",462,130,hard only,0.8636,0.8982,0.3406
+proditec,"[0.275, 0.355]",462,130,hard + other soft (no budget),0.8822,0.8822,0.3406
+proditec,"[0.355, 0.385]",459,119,hard only,0.7672,0.8589,0.1906
+proditec,"[0.355, 0.385]",459,119,hard + other soft (no budget),0.7766,0.8524,0.1906
+proditec,"[0.385, 0.500]",505,132,hard only,0.8837,0.9036,0.3057
+proditec,"[0.385, 0.500]",505,132,hard + other soft (no budget),0.8735,0.8959,0.3057
