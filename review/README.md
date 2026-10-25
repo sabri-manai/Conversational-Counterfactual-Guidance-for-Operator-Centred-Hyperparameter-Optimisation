@@ -1,13 +1,30 @@
-# `review/` — stand-alone material for the FGCS-D-26-04298 major revision
+# `review/` — reproduction notebooks and frozen results behind the paper's numbers
 
-Manuscript, decision letter with the reviews and the revision plan are in [`../paper/`](../paper/).
+Every number in the paper is taken from `outputs/frozen_numbers.json` and `outputs/tables/`, produced by the notebooks in
+this folder. They read the committed artefacts of the repository (logs, surrogates, the 24-row candidate files) and
+re-run every confirmation the paper reports; nothing outside `review/` is modified. Notebooks follow the repository style
+(markdown intro, `# ====` banner cells, `save_table` / `save_fig`, `SEED = 42`). Launch Jupyter from the repo root or
+from `review/` (kernel `pdt_hpo_xai_patchcore`, i.e. the pins in `requirements.txt`).
 
-Everything here is new and independent of the existing notebooks: nothing outside `review/` is modified, and every
-notebook reads the committed artefacts of the repository. Notebooks follow the repository style (markdown intro, `# ====`
-banner cells, `save_table` / `save_fig`, `SEED = 42`). Launch Jupyter from the repo root or from `review/` (kernel
-`pdt_hpo_xai_patchcore`, i.e. the pins in `requirements.txt`).
+The notebooks were written during the journal revision, so their markdown cells refer to reviewer points (e.g. "R2.3")
+and to table numbers of the originally submitted manuscript. The table below maps them to the final paper.
 
-## Why these notebooks exist (audit findings that drive the reruns)
+| Notebook | Final paper |
+|---|---|
+| `R00_audit_repo_vs_paper` | consistency audit behind the corrections; Table 3 distances |
+| `R01_mvtec_per_category_confirmation` | Table 4, Table 5, Figure 3; §4.7 (no-HPO reference, F1 bounds, prevalence-matched F1) |
+| `R02_frozen_table_rerun` | §4.2 (three seeds, noise floor, 96 logged trials re-run), Table 3, Figure 2 |
+| `R03_anchors_and_baseline_confirmation` | §4.8 anchor sweep, Table 6 |
+| `R04_surrogate_diagnostics` | Table 2, §4.3 |
+| `R05_filter_sort_baseline_density_cost` | §4.9 (RecordedTopK, log density), Table 7 |
+| `R06_user_study_audit` | §4.11 live parse audit, §5.3 over-reliance proxies, Table 9 attempt counts |
+| `R07_parser_eval_7b` | Table 8 (study-time column), §4.11 overlay |
+| `audit_explanations.py` | §6.3 numeric audit of the 51 study-time explanations |
+| `make_paper_figures.py` | Figures 2–4 as typeset |
+
+## Why these notebooks exist (audit findings on the submitted manuscript)
+
+Table numbers in this section refer to the originally submitted manuscript, not to the final paper.
 
 | # | Finding (from `R00` / `R06`) | Consequence for the paper |
 |---|---|---|
@@ -84,20 +101,14 @@ are written to `outputs/`. The first PatchCore run downloads the torchvision bac
 
 ## Status of the outputs shipped in this folder
 
-* `R00`, `R04`, `R06` and the offline part of `R07` were executed on the real repository data.
-* `R05` was executed in full (fractions 0.5 / 0.25 / 0.1 / 0.05, 3 repetitions).
-* `R07` LLM variants have **not** been run (no API key available when the notebook was written); run it with the key to
-  produce the 7B numbers. The relative-constraint overlay in R07 was designed after seeing the benchmark, so its score on the
-  40 utterances is not held-out evidence; use a fresh held-out set before claiming it.
-* `R01`, `R02`, `R03` were only plumbing-tested on synthetic images (they need the datasets and a GPU). No result of these
-  notebooks exists yet. **Do not cite anything from `outputs/smoke/`.**
-
-## Turning results into paper numbers
-
-1. Run the notebooks; check `outputs/frozen_numbers.json` for every section.
-2. Replace the manuscript numbers by the values in the `.tex`/`.csv` tables (Table 4/5 → `R00` + `R02`/`R03`; Table 8 →
-   `R06` + `R07`; Table 10 → `R06_table10_recomputed`).
-3. Re-state claims that the audit did not support (§4.7/§4.9/Table 6 on the baseline confirmation, the 0.019 rerun
-   tolerance, "randomly assigned", the over-reliance wording) according to what the new tables show.
-4. Note for R2.5: MVTec test prevalence is 0.70 and Proditec's 0.345, so raw cross-dataset F1 is confounded; use the
-   prevalence-matched F1 and the no-HPO comparison from `R01`.
+* All notebooks (`R00`–`R07`) were executed on the real repository data on the study server; `R01`–`R03` ran
+  on the GPU with the original images, `R07` ran the 7B LLM variants through OpenRouter. Their tables, figures and
+  `frozen_numbers.json` are committed. The relative-constraint overlay in R07 was designed after seeing the benchmark,
+  so its score is not held-out evidence.
+* `make_paper_figures.py` regenerates the paper's Figure 2 (surrogate vs confirmed, both datasets), Figure 3
+  (pooled vs per-category AUROC) and Figure 4 (Task-3 trade-off) from `outputs/tables` and the user-study export:
+  `python make_paper_figures.py <repo-root> <output-dir>`.
+* `audit_explanations.py` compares the numbers in the template and the language-model-polished explanation of every
+  study-time attempt and writes `outputs/tables/R06_explanation_numeric_audit.csv` (51 audited, 49 exact):
+  `python review/audit_explanations.py`.
+* **Do not cite anything from `outputs/smoke/`.**

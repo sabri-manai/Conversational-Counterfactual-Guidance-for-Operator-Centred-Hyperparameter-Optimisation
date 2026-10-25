@@ -40,7 +40,7 @@
 \setlength{\dbltextfloatsep}{9pt plus 2pt minus 3pt}
 \setlength{\abovecaptionskip}{4pt}
 \setlength{\belowcaptionskip}{2pt}
-\AtBeginDocument{\ifdefined\bibsep\setlength{\bibsep}{3pt plus 0.3ex}\fi}
+\AtBeginDocument{\ifdefined\bibsep\setlength{\bibsep}{1pt plus 0.2ex}\fi}
 
 \begin{document}
 
@@ -56,41 +56,11 @@ Hyperparameter Optimisation in Industrial Anomaly Detection}
 %% ---------------------------------------------------------------
 
 \begin{abstract}
-Hyperparameter optimisation is essential for high-performing
-machine-learning systems, yet its logs are rarely reused for
-interpretation. In industrial visual anomaly detection, configuration
-must balance detection quality against training-data availability,
-review effort, and data quality. Optimisation tools expose
-scores or rankings, but rarely show how a configuration should change
-to satisfy operator needs. We present
-Counterfactual Explainable Hyperparameter Optimisation (CF-XHPO), which
-reuses trials to train a surrogate and generate constrained
-what-if recommendations through a schema-constrained conversational
-interface. We separate surrogate-level query satisfaction from
-main-model confirmation by retraining PatchCore for 24 recommendations
-each on the MVTec Anomaly Detection benchmark and the Proditec
-production dataset. All 48 satisfy their surrogate queries. On
-Proditec, all 24 meet the target under the per-category protocol, with
-mean confirmed F1 of 0.879, mean surrogate-to-model gap of $-0.007$,
-and test AUROC of 0.976. On MVTec, using the per-category protocol
-that matches how HPO was run (one model and threshold per category),
-22/24 reach the target with mean confirmed F1 0.787 and gap $-0.023$;
-an earlier pooled evaluation had produced an apparent gap of $-0.217$
-that dissolves under the correct protocol. Pooling categories with
-incommensurable anomaly-score scales reduces per-category AUROC from
-0.912 to a pooled 0.527 and makes one pooled threshold unsuitable for
-heterogeneous deployments. These findings motivate category-specific
-calibration, query-region confirmation, and matching the confirmation
-protocol to the HPO objective. On these logs, constrained retrieval
-matches off-log generation, supporting a retrieve-first policy when
-coverage is adequate. A 22-participant study finds high task validity
-in both workflows; conversational participants report greater perceived
-ease of option comparison (descriptive, no questionnaire item survives
-Holm correction). Parser evaluation on \texttt{qwen-2.5-7b-instruct}
-finds 7.5\% exact accuracy and 55\% fallback for the study-time
-front-end; the study results therefore reflect the complete repair-and-iteration
-workflow, not one-shot parsing. Deterministic resolution of relative
-constraints is the immediate remaining interface requirement.
+Hyperparameter optimisation (HPO) logs are rarely reused for interpretation, although industrial anomaly detection trades detection quality against training data, review effort, and data quality. Counterfactual Explainable HPO (CF-XHPO) reuses trials to train a surrogate and generate constrained what-if recommendations through a schema-constrained conversational interface. We separate surrogate-level query satisfaction from main-model confirmation by retraining PatchCore under three seeds for 24 recommendations each on the MVTec Anomaly Detection benchmark and the Proditec production dataset. All 48 satisfy their surrogate queries and meet their targets after retraining when confirmation follows the per-category
+protocol of the optimisation objective (mean confirmed F1 0.879 on
+Proditec, gap $-0.007$; 0.787 on MVTec, gap $-0.023$). The MVTec result validates the protocol, not the recommendations: its objective is degenerate at the HPO budget (validation F1 0.58 for a random and 0.83 for a perfect ranker, top tenth of the log within 0.80--0.82), an untuned PatchCore reference beats the HPO optimum (0.867 vs 0.786, one seed), and pooling heterogeneous categories drives AUROC from 0.91 to 0.53.
+Constrained retrieval matches off-log generation and a filter-and-sort
+baseline, so dense logs need no surrogate for retrieval. A 22-participant study finds high task validity in both workflows; questionnaire differences are descriptive. The study-time parser parsed 15\% of benchmark utterances exactly on the fields the interface uses, and 25 of 72 live parses were incomplete or unfaithful, 8 shown as fluent lists; the study thus evaluates the repair-and-iteration workflow; deterministic resolution of relative constraints is the immediate requirement.
 \end{abstract}
 
 \begin{keyword}
@@ -123,22 +93,16 @@ optimisation (HPO) is therefore not only a technical search problem,
 but also a decision-support problem in which different configurations
 represent different operational trade-offs.
 
-Automated HPO frameworks are effective at exploring large configuration
-spaces and identifying high-performing trials, as illustrated by tools
-such as Optuna and broader work on HPO benchmarking and multi-fidelity
-evaluation
-\cite{10.1145/3292500.3330701,eggensperger_hpobench_2021,pfisterer_yahpo_2021}.
-Yet, their outputs are usually presented as ranked configurations,
-optimisation traces, visual analytics views, or parameter-importance
-summaries \cite{NEURIPS2021_12ced2db,zoller_xautoml_2023,mu_shrinkhpo_2024}.
-These outputs help users understand which configurations performed
-well, but they provide limited support for actionable what-if
-questions: what should change if the operator wants similar quality
-with less review effort, a lower training fraction, or better
-robustness to data corruption? This limitation is particularly relevant
-in industrial contexts, where users often reason in terms of
-constraints and preferences rather than low-level model
-hyperparameters.
+Automated HPO frameworks explore large configuration spaces
+effectively \cite{10.1145/3292500.3330701,eggensperger_hpobench_2021},
+but their outputs are ranked configurations, optimisation traces,
+visual analytics, or importance summaries
+\cite{NEURIPS2021_12ced2db,zoller_xautoml_2023,mu_shrinkhpo_2024}. These
+show which configurations performed well, not what should change if the
+operator wants similar quality with less review effort, a lower
+training fraction, or better robustness to data corruption, which is
+how industrial users reason: in constraints and preferences rather
+than low-level hyperparameters.
 
 This paper addresses this problem by proposing Counterfactual Explainable
 Hyperparameter Optimisation (CF-XHPO), a framework that turns HPO logs
@@ -165,34 +129,33 @@ which operators can state goals in plain language, compare ranked
 alternatives, and receive concise explanations of the main
 trade-offs.
 
-We evaluate the framework on the MVTec visual anomaly-detection
-benchmark and the Proditec industrial inspection use case. Both use the
-same PatchCore pipeline and configuration space, and every primary
-recommendation is retrained with the underlying model. This design lets
-us distinguish whether a recommendation satisfies its structured query
-under the surrogate from whether its predicted quality survives
-main-model confirmation. We further examine the reliability of the
-query-selected region, compare off-log generation with constrained
-retrieval, measure complete-interaction cost, and conduct a user study
-of the conversational workflow.
+
+
+We evaluate the framework on the MVTec benchmark and the Proditec
+industrial inspection use case with the same PatchCore pipeline and
+configuration space, retraining every primary recommendation with the
+underlying model so that query satisfaction under the surrogate can be
+separated from confirmed quality.
 
 Manai et al.\ \cite{manai_cfhpo_conference} demonstrated
 soft-control-constrained counterfactual guidance on tabular
 classification benchmarks. The present paper extends that work,
 retaining its hard/soft control separation and log-reuse idea and
-rebuilding the remainder for industrial visual anomaly detection. Its
-main contributions are a
-two-dataset industrial evaluation with main-model confirmation of 60
-configurations and score-level diagnosis of the 48 primary
-recommendations; evidence that global surrogate fidelity does not
-guarantee reliability in query-selected regions, including a
-selection-conditioned gap and pooled category score-scale failure; and
-a schema-constrained conversational layer with workflow evaluation
+rebuilding the remainder for industrial visual anomaly detection. Its main contributions are a two-dataset industrial evaluation with over 500 PatchCore retrainings: the 48 primary recommendations under three seeds, a five-anchor sweep, a retrieval baseline, 96 logged trials, and a no-HPO reference; a protocol-level analysis showing that confirmation must follow the optimisation objective (per-category models and thresholds), that pooling heterogeneous categories destroys the score ranking, and that the MVTec review-budget objective is degenerate at the HPO budget, so that MVTec supports protocol and objective lessons rather than a claim of recommendation value; and a
+schema-constrained conversational layer with workflow evaluation
 covering factual-anchor sensitivity, constrained retrieval,
-multi-alternative runtime, a labelled parser test, and a
-22-participant study
-(Sections~\ref{subsec:gap-diagnosis}--\ref{sec:user-study}).
+multi-alternative runtime, a labelled parser test, and a 22-participant
+study (Sections~\ref{subsec:gap-diagnosis}--\ref{sec:user-study}).
 Section~\ref{subsec:rw-conference} sets out the comparison in full.
+
+The evaluation asks three questions: (Q1)~whether a recommendation
+that satisfies its query under the surrogate also meets the target
+when the underlying model is retrained, and under which confirmation
+protocol; (Q2)~when retrieval from the existing log suffices and when
+generation beyond it adds coverage or confirmed quality; and
+(Q3)~whether technically literate users can act on the alternatives
+through the conversational workflow, and how much of that outcome is
+due to the parser rather than to repair and iteration.
 
 % =======================================================================
 \section{Related Work}
@@ -208,272 +171,153 @@ thread and explains how they combine in our work.
 \label{subsec:rw-xhpo}
 
 Hyperparameter optimisation (HPO) is central to modern
-machine-learning workflows. Frameworks such as Optuna provide flexible
-black-box search over large spaces while recording trial-level results
-\cite{10.1145/3292500.3330701}, and surveys cover strategies from grid
-and random search to Bayesian, evolutionary, and learning-based
-approaches \cite{a_ilemobayo_hyperparameter_2024,pr11020349}. Their
+machine-learning workflows. Frameworks such as Optuna provide flexible black-box search over large spaces while recording trial-level results \cite{10.1145/3292500.3330701}. Their
 outputs, however, are optimisation traces, best-trial summaries, or
 ranked configurations: dashboards and visual-analytics tools such as
 XAutoML \cite{zoller_xautoml_2023} show \emph{which} configurations
 performed well, not \emph{how} a configuration should change to meet a
 new operator constraint, and surrogate-based importance analysis
 \cite{theodorakopoulos_hyperparameter_2024} serves benchmarking rather
-than user-facing recommendation.
+than user-facing recommendation. Shapley-based hyperparameter importance
+has recently been extended to feature interactions
+\cite{wever2025hypershap}, and large language models are being used to
+drive or explain AutoML and HPO
+\cite{tornede2024automl,liu2024llambo,zhang2024llmhpo}; these works
+explain or automate the search itself, whereas we reuse its finished
+log for post-hoc operator guidance.
 
 A parallel effort makes HPO and automated machine learning (AutoML)
 more transparent: partial
 dependence plots explain hyperparameter effects across the explored
 space \cite{NEURIPS2021_12ced2db}, ShrinkHPO exposes and prunes less
-promising search regions \cite{mu_shrinkhpo_2024}, explainable Bayesian
-optimisation targets users who need to understand the search process
-itself \cite{10.1007/978-3-032-08324-1_3}, and related work argues for
-opening optimisation procedures to inspection and human interpretation
-\cite{yates_explainable_2025,van_stein_explainable_2025}.
+promising search regions \cite{mu_shrinkhpo_2024}, and explainable Bayesian optimisation targets users who need to understand the search process itself \cite{10.1007/978-3-032-08324-1_3}.
 
 Together, these works establish that transparency, interaction, and
 surrogate modelling matter in HPO and AutoML, but they mainly support
 optimisation analysis, benchmarking, or visual inspection rather than
 post-hoc configuration guidance under user-defined practical
-constraints.
+constraints. Surrogate modelling of nonlinear response surfaces itself
+draws on a broad applied literature in which Gaussian-process
+regression, graphical and causal models, neural networks, and
+composite forecasts are used to capture complicated nonlinear patterns
+across application domains
+\cite{jin2024gpr,jin2026dag,jin2025nn,xu2021composite};
+Section~\ref{subsec:surrogate-fidelity} compares our gradient-boosted
+surrogate with a Gaussian-process alternative and reports
+scale-normalised error \cite{jin2024officegpr} so that the two datasets
+can be compared.
 
-Green artificial intelligence (Green AI) treats efficiency as an
-evaluation criterion and tracks model-development energy and carbon
-costs \cite{strubell2019energy,schwartz2020green,
-henderson2020towards,patterson2021carbon}. Because HPO multiplies
-training costs, we report component and complete-interaction latency for
-log reuse; energy or carbon claims require power telemetry.
+
 
 \subsection{Counterfactual Explanations for Configuration Guidance}
 \label{subsec:rw-cf}
 
 Counterfactual explanations describe how an input would need to change
-to obtain a desired model output \cite{wachter_counterfactual_2017}.
-They are widely studied in explainable artificial intelligence because they are
-contrastive, actionable, and often easier for users to interpret than
-global feature-importance summaries \cite{verma_counterfactual_2024}.
-Diverse Counterfactual Explanations (DiCE) introduced a model-agnostic
-framework for generating diverse counterfactual explanations,
-emphasising multiple plausible alternatives rather than a single
-nearest change \cite{10.1145/3351095.3372850}, and multi-objective
-methods show that validity, proximity, sparsity, and diversity can be
-treated as competing objectives \cite{dandl_multiobjective_2020}.
-Broader reviews organise this literature around validity, proximity,
-sparsity, diversity, feasibility, and actionability
-\cite{verma_counterfactual_2024}, distinguishing counterfactual
-explanations as target states from recourse as feasible interventions
-\cite{karimi_algorithmic_2021} and requiring that proposed changes be
-controllable and realistic for the user \cite{ustun_actionable_2019}.
-
-Feasibility has also been studied through data-supported counterfactual
-paths: Feasible and Actionable Counterfactual Explanations (FACE)
-argues that nearest counterfactuals may be unrealistic
-outside plausible regions of the data distribution and constructs
-paths supported by observed data \cite{poyiadzi_face_2020}, while CFNOW
-uses tabu search for model-agnostic counterfactual generation on
-tabular, image, and text data \cite{DEOLIVEIRA2023}. These approaches
+to obtain a desired model output \cite{wachter_counterfactual_2017} and
+are valued in explainable artificial intelligence for being contrastive
+and actionable \cite{verma_counterfactual_2024}. Diverse Counterfactual
+Explanations (DiCE) generates several plausible alternatives rather than
+a single nearest change \cite{10.1145/3351095.3372850}, multi-objective
+methods treat validity, proximity, sparsity, and diversity as competing
+objectives \cite{dandl_multiobjective_2020}, and reviews distinguish
+counterfactuals as target states from recourse as feasible
+interventions \cite{karimi_algorithmic_2021} that must be controllable
+for the user \cite{ustun_actionable_2019}. Feasibility has been
+addressed with data-supported paths (FACE \cite{poyiadzi_face_2020}) and
+with tabu search (CFNOW \cite{DEOLIVEIRA2023}); these approaches
 motivate treating retrieval from observed configurations and generation
 beyond them as empirical alternatives rather than assuming that
 off-data generation is always necessary. Spreitzer et al.\ show that
-formally valid counterfactuals are not
-automatically perceived as practical by users
-\cite{spreitzer_evaluating_2022}, an observation directly relevant to
-operator-facing HPO recommendations.
+formally valid counterfactuals are not automatically perceived as
+practical by users \cite{spreitzer_evaluating_2022}, which is directly
+relevant to operator-facing recommendations.
 
-Counterfactuals have also been used to steer and personalise models
-interactively
-\cite{chandramouli_interactive_2023,bhattacharya_exmos_2024,misitano_towards_2022}.
+
 
 \subsection{Conversational Interfaces for Human-Centred Machine-Learning Workflows}
 \label{subsec:rw-llm-human}
 
 Conversational interfaces make machine-learning systems more
-accessible: TalkToModel shows natural-language dialogue helps users
-query and understand explanations without manually selecting tools
+accessible: TalkToModel lets users query explanations in dialogue
 \cite{slack_explaining_2023}, and recent work asks whether
 conversational XAI assistants improve understanding, trust, and
-reliance over dashboards \cite{he_is_2025}. Both lower interaction
-barriers and warn that fluent explanations may increase overreliance
-where uncertainty is not communicated.
-
-Design-oriented XAI research frames explanation needs as user
-questions that interfaces should support \cite{liao_questioning_2020},
-and human-centred perspectives on explainability in the era of large
-language models emphasise
-users, contexts, and downstream effects over black-box opening
-\cite{ehsan_human-centered_2024,reinhard_effects_2026}. This
-perspective informs our user study, which evaluates the interface
-inside a decision-support workflow rather than in isolation.
-
-In AutoML, human-centred studies show that users need support for
-understanding automation and deciding when to trust automated results
-\cite{drozdal2020trust,xin_whither_2021,wang_autods_2021}, and
-interactive systems expose pipelines, optimisation histories, and
-trade-offs through inspectable interfaces
-\cite{zoller_xautoml_2023,weidele_autodoviz_2023,franke_autorl_2024,10.1007/978-3-031-48232-8_42}. Our
-framework uses a schema-constrained conversational layer: the language
-model maps requests into validated objectives and constraints, while
-recommendation remains with the surrogate and counterfactual
-pipeline.
+reliance over dashboards \cite{he_is_2025}; both warn that fluent
+explanations may increase over-reliance where uncertainty is not
+communicated. Design-oriented XAI frames explanation needs as user
+questions \cite{liao_questioning_2020}, and human-centred perspectives
+in the era of large language models emphasise users, contexts, and
+downstream effects \cite{ehsan_human-centered_2024,reinhard_effects_2026},
+which is why our user study evaluates the interface inside a
+decision-support workflow. In AutoML, users need support for deciding
+when to trust automated results \cite{drozdal2020trust,wang_autods_2021},
+and interactive systems expose pipelines and trade-offs through
+inspectable interfaces
+\cite{zoller_xautoml_2023,10.1007/978-3-031-48232-8_42}. Our framework
+uses a schema-constrained conversational layer: the language model maps
+requests into validated objectives and constraints, while
+recommendation remains with the surrogate and counterfactual pipeline.
 
 \subsection{Industrial Visual Anomaly Detection as an Explanation-Critical Setting}
 \label{subsec:rw-ad}
 
-Industrial visual anomaly detection aims to identify defective or
-unusual regions in product images, often under limited supervision.
-Benchmark datasets such as MVTec~AD have become standard for
-evaluating unsupervised and semi-supervised anomaly-detection methods
-in industrial inspection scenarios \cite{bergmann_mvtec_2019}.
-Representative approaches span self-supervised, distribution-modelling,
-embedding-based, and deployment-oriented designs
+Industrial visual anomaly detection identifies defective regions in
+product images under limited supervision; MVTec~AD is the standard
+benchmark \cite{bergmann_mvtec_2019}, and representative methods span
+self-supervised, distribution-modelling, embedding-based, and
+deployment-oriented designs
 \cite{li_cutpaste_2021,defard_padim_2021,roth_towards_2022,batzner_efficientad_2024}.
+Deployment still depends on configuration choices (backbone, image
+size, feature layers, coreset sampling, neighbours, aggregation) that
+interact with available training data, review effort, latency, and
+tolerance to corrupted data; benchmarks score detection metrics
+\cite{bergmann_mvtec_2019,roth_towards_2022} and give little support
+for choosing among configurations of similar quality but different
+operational cost, as the Proditec production use case exemplifies.
 
-Although anomaly-detection methods have become increasingly strong,
-deployment still depends on configuration choices such as backbone,
-image size, feature layers, coreset sampling, nearest-neighbour
-settings, and aggregation strategy. These technical choices interact
-with practical constraints such as available training data, review
-effort, latency, and tolerance to corrupted or noisy data. Standard benchmarks focus on detection metrics
-\cite{bergmann_mvtec_2019,roth_towards_2022}, leaving less support for
-choosing among configurations with similar quality but different
-operational costs, as the Proditec production use case
-exemplifies.
+The review-budget rule of Section~\ref{subsec:problem-formulation} is a
+standard operating-point choice rather than a contribution of this
+paper: inspecting the top-$k$ highest-scoring items, or a fixed
+fraction of items, is common practice in industrial quality control and
+amounts to selecting an operating point on the score ranking rather than
+a score threshold. What the framework adds is to expose that operating
+point as a soft operator-facing control that the surrogate predicts and
+the counterfactual layer optimises over, and to test whether the
+surrogate preserves it under retraining.
 
-\subsection{Positioning of This Work}
-\label{subsec:rw-positioning}
 
-The reviewed threads provide the building blocks for this paper: HPO
-and AutoML automate configuration search, explainable HPO makes it
-inspectable, counterfactual explanations provide actionable
-alternatives, conversational XAI improves accessibility, and
-industrial anomaly detection motivates the deployment setting. Our
-work combines them by using HPO logs as the basis for constrained
-configuration recommendation exposed through a schema-constrained
-conversational interface. The evaluation separates three questions
-that are often conflated: whether a recommendation satisfies its query
-under the surrogate, whether the underlying model confirms the target,
-and whether users can act on the resulting alternatives. It also tests
-when retrieval from the existing log is sufficient and when generation
-beyond it adds measurable value.
 
 \subsection{Relation to the Conference Version}
 \label{subsec:rw-conference}
 
 Manai et al.\ \cite{manai_cfhpo_conference} introduced a preliminary
-version of this framework. Two ideas carry over from that work: the
-separation of hard model hyperparameters from soft, human-controllable
-parameters, and the reuse of a completed optimisation log as the basis
-for counterfactual configuration queries answered through a surrogate.
-The remainder has been rebuilt.
+version on four tabular benchmarks with XGBoost: soft parameters were
+fixed manually, DiCE and CFNOW varied only model hyperparameters around
+one factual, and the evidence was an aggregate comparison of surrogate,
+generated, and retrained F1 (one case study gave Pearson $r = 0.53$ over
+16 candidates). The hard/soft control separation and the reuse of a
+completed log through a surrogate carry over; the industrial setting,
+the validated query schema, constrained retrieval, per-candidate
+confirmation, the conversational layer, the human-participant
+evaluation, and the analyses of Sections~\ref{subsec:surrogate-fidelity},
+\ref{subsec:multi-factual}, and~\ref{subsec:compute-cost} are new, as
+are Sections~\ref{sec:evaluation} and~\ref{sec:user-study}, the schema
+and interface of Sections~\ref{subsec:cf-generation}
+and~\ref{subsec:interface}, and the problem formulation of
+Section~\ref{subsec:problem-formulation}.
 
-Their study was conducted on four tabular binary-classification
-benchmarks with XGBoost as the main model. Soft parameters there
-described data-handling actions such as the training-row fraction,
-injected missingness, resampling strategy, feature fraction, and the
-labelled ratio of a self-training scheme. An operator fixed those
-values manually, and DiCE and CFNOW then varied only the model
-hyperparameters around a single factual seed. Candidates were
-re-evaluated by retraining XGBoost over five seeds, and the reported
-evidence was an aggregate per-dataset comparison of surrogate,
-generated, and retrained F1, together with one case study showing a
-moderate surrogate-to-model correlation (Pearson $r = 0.53$ over 16
-candidates). That paper contained no structured query schema, no
-natural-language interface, no evaluation with human participants, and
-no industrial use case; a language-model summarisation layer and the
-Proditec deployment were named only as future directions.
 
-The present paper moves the framework to industrial visual anomaly
-detection with PatchCore, replaces manually fixed soft parameters with
-a validated query schema over deployment-facing controls, adds
-constrained log retrieval as a first-class alternative to generation,
-and makes main-model confirmation the reporting standard rather than an
-aggregate check. It also implements and evaluates the conversational
-layer that Manai et al.\ proposed, and evaluates the resulting
-workflow with human participants. Three supporting analyses are also
-new: a thirteen-model surrogate benchmark with grouped cross-validation
-and duplicate control (Section~\ref{subsec:surrogate-fidelity}), an
-anchor-sensitivity sweep over five factual configurations
-(Section~\ref{subsec:multi-factual}), and component and
-complete-interaction cost accounting
-(Section~\ref{subsec:compute-cost}).
-Table~\ref{tab:conference-delta} summarises the difference. The new
-material comprises the whole of Sections~\ref{sec:evaluation}
-and~\ref{sec:user-study}, the query schema and interface of
-Sections~\ref{subsec:cf-generation} and~\ref{subsec:interface}, and the
-problem formulation of Section~\ref{subsec:problem-formulation}.
-
-\begin{table*}[!tb]
-\centering
-\footnotesize
-\caption{Comparison with the conference version
-\cite{manai_cfhpo_conference}. Dashes mark aspects not present in that
-paper.}
-\label{tab:conference-delta}
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}p{0.19\textwidth}p{0.36\textwidth}p{0.40\textwidth}@{}}
-\toprule
-Aspect & Conference version & This paper \\
-\midrule
-Domain and main model
-& Tabular binary classification; XGBoost
-& Industrial visual anomaly detection; PatchCore
-  (Sections~\ref{subsec:datasets}--\ref{subsec:protocol}) \\
-Datasets
-& Four public tabular benchmarks
-& MVTec~AD benchmark and the Proditec production line \\
-Soft controls
-& Row fraction, injected missingness, resampling, feature fraction,
-  labelled ratio; fixed manually per query
-& Training fraction, review budget, corruption level, tied to a
-  deployment thresholding rule
-  (Section~\ref{subsec:problem-formulation}) \\
-Query specification
-& ---
-& Validated schema with three objective types, repair, snapping, and
-  explicit fallback
-  (Sections~\ref{subsec:cf-generation}--\ref{subsec:interface}) \\
-Candidate production
-& DiCE and CFNOW
-& DiCE, ACFX, and constrained log retrieval, with a direct
-  generation-versus-retrieval test
-  (Section~\ref{subsec:retrieval-comparison}) \\
-Confirmation evidence
-& Aggregate per-dataset comparison over five seeds
-& 60 confirmed configurations with per-candidate gaps and
-  target-satisfaction rates
-  (Sections~\ref{subsec:cf-validity}--\ref{subsec:main-model-confirmation}) \\
-Reliability analysis
-& ---
-& Score-level diagnosis, selection-conditioned fidelity, and
-  threshold/score-scale decomposition
-  (Section~\ref{subsec:gap-diagnosis}) \\
-Natural-language layer
-& Named as future work
-& Implemented and evaluated on 40 labelled utterances across two
-  front-ends (Section~\ref{subsec:parser-eval}) \\
-Human evaluation
-& ---
-& 22-participant between-subjects study with qualitative analysis
-  (Section~\ref{sec:user-study}) \\
-\bottomrule
-\end{tabular}
-\end{table*}
 
 % =======================================================================
 \section{The CF-XHPO Framework}
 \label{sec:method}
 % =======================================================================
 
-This section presents the proposed framework for generating
-operator-centred counterfactual guidance from hyperparameter
-optimisation logs. The main idea is to transform optimisation trials
-into a reusable configuration--performance dataset, train a surrogate
-model over this dataset, and use the surrogate as a fast what-if layer
-for counterfactual recommendation. A schema-constrained conversational
-interface then allows users to express objectives and constraints in
-natural language, while the recommendation process remains grounded in
-validated structured queries, feature domains, and the
-candidate-production methods.
+The framework transforms optimisation trials into a reusable
+configuration--performance dataset, trains a surrogate over it, uses
+the surrogate as a fast what-if layer for counterfactual recommendation,
+and exposes the result through a schema-constrained conversational
+interface whose recommendations remain grounded in validated structured
+queries, feature domains, and the candidate-production methods.
 
 \subsection{Configuration Guidance Problem}
 \label{subsec:problem-formulation}
@@ -489,8 +333,11 @@ where $\mathbf{h}$ denotes hard model hyperparameters, the technical
 choices internal to the anomaly-detection model, and $\mathbf{s}$
 denotes soft operator-facing controls, the operationally meaningful
 choices an operator reasons about: the fraction of training data used,
-the review budget, and the assumed corruption level of the training
-data. The concrete variables instantiating $\mathbf{h}$ and
+the review budget, and the training-data corruption level. The
+corruption level is a controlled degradation that the experimenter
+applies to the training images to emulate a data-quality condition
+(Section~\ref{subsec:protocol}); the operator selects it as a scenario
+assumption and does not perform it on the line. The concrete variables instantiating $\mathbf{h}$ and
 $\mathbf{s}$ in our implementation are listed in
 Section~\ref{subsec:logs-features} (Table~\ref{tab:configuration-space}).
 
@@ -517,19 +364,27 @@ it is truly anomalous. The predicted anomaly label is:
     \end{cases}
     \label{eq:review-budget-prediction}
 \end{equation}
-The optimisation target for a configuration $\mathbf{x}$ is then:
+Ties are resolved conservatively: every image whose score equals
+$\tau_{\beta}$ is reviewed, so the reviewed set can exceed $m_{\beta}$
+when scores coincide; with continuous PatchCore scores this is rare.
+When the pipeline covers several product categories $c \in \mathcal{K}$
+(the four MVTec categories; a single category for Proditec), one
+PatchCore model and one review-budget threshold $\tau_{\beta,c}$ are
+fitted per category and the optimisation target averages the
+per-category scores:
 \begin{equation}
-    v(\mathbf{x}) = F_1\!\left(\mathbf{y}^{\mathrm{val}},
-                               \hat{\mathbf{y}}^{\mathrm{val}}_{\beta}\right).
+    v(\mathbf{x}) = \frac{1}{|\mathcal{K}|}\sum_{c \in \mathcal{K}}
+    F_1\!\left(\mathbf{y}^{\mathrm{val}}_{c},
+               \hat{\mathbf{y}}^{\mathrm{val}}_{c,\beta}\right).
     \label{eq:hpo-target}
 \end{equation}
+This is the quantity logged by HPO and predicted by the surrogate.
+Confirmation must use the same construction: a single pooled threshold over all categories, with or without a pooled model, measures a different quantity (Section~\ref{subsec:gap-diagnosis}).
 
-The soft controls act at different points of the pipeline: training
-fraction sets how much normal data fits the model, corruption level
-sets the data-quality condition, and review budget sets the
-thresholding rule, an operator-facing deployment trade-off between
-detection quality and inspection effort rather than a model
-hyperparameter in the narrow sense.
+Training fraction sets how much normal data fits the model, corruption
+level sets the data-quality condition, and review budget sets the
+thresholding rule, an operator-facing trade-off between detection
+quality and inspection effort rather than a model hyperparameter.
 
 The objective is not to find a high-performing configuration in
 isolation but to support guidance after optimisation has finished. The
@@ -553,31 +408,21 @@ recommendation problem.
 \subsection{Framework Overview}
 \label{subsec:framework-overview}
 
-Figure~\ref{fig:framework-overview} illustrates the proposed
-framework. The process starts with an automated HPO run in which
-Optuna's tree-structured Parzen estimator (TPE) samples both hard
-hyperparameters and soft operator-facing controls. Each completed trial stores a configuration and its
-resulting validation F1 score, producing a trial-level
-configuration--performance log. This log is cleaned, typed, and
-transformed into a surrogate-ready dataset.
-
-A surrogate model is trained to approximate the mapping from
-configurations to validation performance. The surrogate provides a
-reusable approximation layer that allows the system to explore local
-what-if alternatives without retraining PatchCore \cite{roth_towards_2022}
-for every user query. The candidate-production methods then search
-this surrogate space for configurations that satisfy a desired
-performance objective and selected soft constraints.
-
-The final layer is the conversational query interface: natural-language
-goals are mapped to a structured query schema, validated, repaired, and
-snapped to the allowed domains before generation, and the output is a
-ranked list of configurations with predicted quality, soft-control
-values, constraint status, and textual trade-off explanations.
+Figure~\ref{fig:framework-overview} illustrates the framework. An
+automated HPO run (Optuna's tree-structured Parzen estimator, TPE)
+samples hard hyperparameters and soft controls and logs each trial's
+configuration and validation F1. The cleaned log trains a surrogate of
+the configuration--performance mapping, which the candidate-production
+methods search for configurations meeting a performance objective under
+soft constraints without retraining PatchCore \cite{roth_towards_2022}.
+The conversational layer maps natural-language goals to a structured
+query, validates, repairs, and snaps it, and returns a ranked list of
+configurations with predicted quality, soft-control values, constraint
+status, and textual trade-off explanations.
 
 \begin{figure*}[!tb]
     \centering
-    \includegraphics[width=\textwidth]{framework_overview.png}
+    \includegraphics[width=0.64\textwidth]{framework_overview.png}
     \caption{Framework overview. HPO denotes hyperparameter optimisation;
     TPE, tree-structured Parzen estimator; KNN, k-nearest neighbours;
     SHAP, Shapley additive explanations; DiCE, Diverse Counterfactual
@@ -614,17 +459,16 @@ incomplete trials, and retain only features used by the surrogate and
 candidate-production methods. The cleaned MVTec and Proditec logs
 contain $9{,}976$ and $2{,}999$ trials, respectively.
 
-Table~\ref{tab:configuration-space} summarises the configuration
-variables used by the framework. The same configuration space applies
-to both the MVTec and Proditec use cases, enabling direct comparison
-of surrogate fidelity and counterfactual quality across the two
-datasets.
+Table~\ref{tab:configuration-space} lists the configuration variables;
+the same space applies to both use cases.
 
 \begin{table}[!t]
 \centering
 \footnotesize
 \renewcommand{\arraystretch}{1.0}
-\caption{Configuration variables used in the proposed framework (hard hyperparameters and soft controls).}
+\caption{Configuration variables used in the proposed framework (hard
+hyperparameters and soft controls). The corruption level is applied by
+the experimenter to the training images (Section~\ref{subsec:protocol}).}
 \label{tab:configuration-space}
 \begin{tabular}{@{}p{0.30\columnwidth}p{0.60\columnwidth}@{}}
 \toprule
@@ -676,20 +520,15 @@ error:
     \label{eq:surrogate-loss}
 \end{equation}
 
-The trained surrogate serves two roles: fast approximation of model
-quality for unseen or modified configurations, and local what-if
-exploration that lets candidate-production methods search for
+The surrogate approximates quality for unseen or modified
+configurations and lets candidate-production methods search for
 configurations meeting a target without retraining PatchCore.
-Generated candidates need not coincide with any logged trial, and for
-such configurations the surrogate is the only source of estimates;
-whether generation beyond the log is \emph{needed} is an empirical
-question of log coverage, tested directly in
-Section~\ref{subsec:retrieval-comparison}.
-Crucially,
-the surrogate is used as an interactive search layer, not as final
-evidence that a configuration will necessarily perform identically when
-retrained. Selected recommendations are therefore subject to main-model
-confirmation in the technical evaluation.
+Generated candidates need not coincide with any logged trial, so for
+them the surrogate is the only estimate, and whether generation beyond
+the log is \emph{needed} is tested in
+Section~\ref{subsec:retrieval-comparison}. The surrogate is a search
+layer, not final evidence; selected recommendations are confirmed with
+the underlying model.
 
 \subsection{Counterfactual Configuration Generation}
 \label{subsec:cf-generation}
@@ -731,33 +570,25 @@ A candidate satisfies its recorded query under the surrogate when:
     \mathbf{x}' \in \mathcal{X}_{q}.
     \label{eq:cf-validity}
 \end{equation}
-We call the proportion of candidates satisfying
-Eq.~\ref{eq:cf-validity} the \emph{surrogate-level query satisfaction
-rate}. It answers whether candidate production and constraint handling
-return what was requested according to the model used for search. The
-\emph{confirmation rate} instead measures the proportion whose
-retrained PatchCore score meets the same objective
-(Section~\ref{subsec:cf-validity}). Reporting both prevents
+The proportion of candidates satisfying Eq.~\ref{eq:cf-validity} is the
+\emph{surrogate-level query satisfaction rate}; the \emph{confirmation
+rate} is the proportion whose retrained PatchCore score meets the same
+objective (Section~\ref{subsec:cf-validity}). Reporting both prevents
 surrogate-level compliance from being mistaken for evidence about the
-underlying model. When candidate production does not return enough
-query-satisfying alternatives, the system retains near-compliant
-candidates but marks unmet constraints explicitly and ranks them below
-fully compliant alternatives.
+underlying model. When too few query-satisfying alternatives exist, the
+system retains near-compliant candidates, marks unmet constraints, and
+ranks them below fully compliant alternatives.
 
 Candidate production compares two generators with one retrieval
-method. DiCE \cite{10.1145/3351095.3372850} produces diverse
-alternatives, while Actionable Counterfactual Explanations (ACFX)
-\cite{bobek_acfx} uses explainable boosting
-machines to seek alternatives close to the factual configuration.
-\textsc{LogTopK} filters observed HPO trials by the query constraints
-and re-ranks them using the surrogate. It therefore cannot recommend
-configurations outside the log. The archived notebooks use the legacy
-identifier \texttt{CFNOW} for this procedure, but it is not the CFNOW
-tabu-search algorithm \cite{DEOLIVEIRA2023}. The comparison tests
-whether generation beyond the log adds value while holding surrogate
-scoring fixed. Each method receives the factual configuration, the
-surrogate model, the desired performance interval, the permitted
-feature ranges, and the required number of alternatives:
+method: DiCE \cite{10.1145/3351095.3372850} produces diverse
+alternatives; Actionable Counterfactual Explanations (ACFX)
+\cite{bobek_acfx} uses explainable boosting machines to seek
+alternatives close to the factual; and \textsc{LogTopK} filters logged
+trials by the query constraints and re-ranks them with the surrogate,
+so it cannot leave the log (the archived notebooks call it
+\texttt{CFNOW}, but it is not the CFNOW tabu-search algorithm
+\cite{DEOLIVEIRA2023}). Each method receives the factual, the
+surrogate, the desired interval, the permitted ranges, and $K$:
 \begin{equation}
     \mathcal{C}_{m} =
     G_{m}(\mathbf{x}_0, \hat{f}_{\theta}, R, \mathcal{X}_{q}, K),
@@ -792,8 +623,12 @@ constrained and reproducible. A user request $u$ is mapped to a
 structured query $q = \Phi(u)$, where $\Phi$ denotes the
 language-model-based parser followed by deterministic validation,
 repair, normalisation, and snapping. The parser is implemented with an
-instruction-tuned open-weight language model (Qwen2.5-3B-Instruct with
-Phi-3-mini and Llama-3.2-3B supported as alternatives).
+instruction-tuned open-weight language model behind a fixed JSON schema.
+The deployment used in the user study called
+\texttt{qwen/qwen-2.5-7b-instruct} through the OpenRouter API; the
+released offline front-end runs Qwen2.5-3B-Instruct locally (Phi-3-mini
+and Llama-3.2-3B are supported alternatives), and
+Section~\ref{subsec:parser-eval} evaluates both.
 
 The structured query has three components. The \emph{objective} is
 \texttt{target\_min}($v$), \texttt{delta\_improve}($\delta$), or
@@ -801,33 +636,24 @@ The structured query has three components. The \emph{objective} is
 training fraction and review budget as \texttt{free},
 \texttt{fixed}, or \texttt{range}, and corruption level as
 \texttt{free}, \texttt{fixed}, or \texttt{allowed}. The
-\emph{selection} request is an integer $K$. To illustrate the interface, a user asking \emph{``Find me three
-configurations with F1 at least 0.85 and review budget below 0.30,
-training on no more than 60\% of the data''} is mapped to
-\texttt{target\_min(0.85)} with \texttt{review\_budget: range(0, 0.30)}
-and \texttt{training\_fraction: range(0, 0.60)} as soft constraints; a
-request for \emph{``10\% less review effort at similar quality''} is
-\emph{representable} as \texttt{delta\_improve(0.0)} with the relative
-constraint \texttt{review\_budget: range(0, 0.90 *
-current\_budget)}. We stress the distinction between what the schema
-can express and what the evaluated parser resolves: relative requests
-of this form are not reliably produced by the parser
-(Section~\ref{subsec:parser-eval}) and currently trigger the explicit
-fallback. Deterministic resolution requires extracting the target
-field, direction, and percentage, then computing the bound in code;
-this is not yet implemented.
+\emph{selection} request is an integer $K$. For example, \emph{``Find me three configurations with F1 at least 0.85
+and review budget below 0.30, training on no more than 60\% of the
+data''} maps to \texttt{target\_min(0.85)} with
+\texttt{review\_budget: range(0, 0.30)} and
+\texttt{training\_fraction: range(0, 0.60)}; \emph{``10\% less review
+effort at similar quality''} is representable as
+\texttt{delta\_improve(0.0)} with \texttt{review\_budget: range(0,
+0.90\,*\,current\_budget)}, but relative requests of this form are not reliably produced by the parser (Section~\ref{subsec:parser-eval}): they may trigger the fallback or yield schema-valid queries with incorrect numerical bounds; deterministic resolution (extract field,
+direction, and percentage, compute the bound in code) is not yet
+implemented.
 
-The language model is instructed to return only JavaScript Object
-Notation (JSON) matching the
-expected schema. The raw output is normalised to handle common
-shorthand forms, validated against the schema, repaired if necessary,
-and snapped to valid domains. For example, review-budget values are
-snapped to the allowed grid, training fractions are clipped and
-quantised to the valid range, and corruption levels are restricted to
-\texttt{none}, \texttt{mild}, or \texttt{strong}. Explicit numerical
-preferences detected in the user request are overlaid after parsing,
-so that user-stated values take precedence over ambiguous model
-interpretations.
+The language model must return only JavaScript Object Notation (JSON)
+matching the schema; the output is normalised, validated, repaired, and
+snapped to valid domains (the review-budget grid, a clipped and
+quantised training fraction, the allowed corruption levels), and
+explicit numerical preferences in the request are overlaid after
+parsing so that user-stated values take precedence over ambiguous
+model interpretations.
 
 The factual reference for generation is resolved automatically from
 the optimisation log: after scoring all trials with the surrogate, the
@@ -840,33 +666,33 @@ requested $K$.
 
 The interface presents alternatives in a compact table (predicted
 quality, main configuration choices, soft-control values, constraint
-status), followed by a textual explanation intended to summarise the
-objective, compare alternatives, identify best and runner-up, report
-ties correctly, and surface shared violations once. These are design
-intentions of the explanation layer; we did not audit the factual
-faithfulness of the generated prose against the structured payload
-(Section~\ref{subsec:limitations}). This confines the language model
-to translating intent into a structured query and verbalising a
-structured payload, while ranking, constraint checks, and candidates remain
-grounded in the surrogate, the feature domains, and the
-candidate-production method.
+status), followed by a textual explanation that summarises the
+objective, compares alternatives, identifies best and runner-up,
+reports ties, and surfaces shared violations once. In the released
+interface this text is rendered by a deterministic template from the
+structured payload, so every number in it is copied from the table,
+and a fixed note states that the summary is generated automatically and
+has not been audited beyond that. The study-time interface additionally
+passed the template through the language model for fluency; a post-hoc
+numeric audit of those 51 polished explanations is reported in
+Section~\ref{subsec:limitations}. The language model is thus confined
+to translating intent into a structured query and, in the study, to
+rephrasing a structured payload, while ranking, constraint checks, and
+candidates remain grounded in the surrogate, the feature domains, and
+the candidate-production method.
 
 % =======================================================================
 \section{Technical Evaluation}
 \label{sec:evaluation}
 % =======================================================================
 
-This section evaluates the proposed counterfactual-guided HPO pipeline
-in the visual anomaly-detection setting. The evaluation has three
-goals: assessing whether the surrogate is accurate enough for fast
-local search, whether the methods return alternatives satisfying the
-structured operator-facing query, and whether selected recommendations
-survive confirmation by the underlying PatchCore pipeline. The pipeline is
-evaluated on MVTec, the controlled benchmark, and Proditec, the
-production use case, with the full three-method
-comparison and $24$ confirmed candidates each, followed by the five
-diagnostic analyses announced in Section~\ref{sec:introduction}
-(Sections~\ref{subsec:gap-diagnosis}--\ref{subsec:parser-eval}).
+This section evaluates the pipeline on MVTec, the controlled
+benchmark, and Proditec, the production use case: surrogate fidelity
+(Section~\ref{subsec:surrogate-fidelity}), query satisfaction and
+main-model confirmation of 24 candidates per dataset
+(Sections~\ref{subsec:cf-validity}--\ref{subsec:gap-diagnosis}), and
+the diagnostic analyses of
+Sections~\ref{subsec:multi-factual}--\ref{subsec:parser-eval}.
 
 \subsection{Datasets and Use Cases}
 \label{subsec:datasets}
@@ -879,44 +705,41 @@ Our MVTec configuration log contains $9{,}976$ completed trials over
 the PatchCore configuration space across four of the fifteen MVTec
 categories (bottle, cable, capsule, hazelnut). This restriction is a compute-budget decision fixed in advance rather
 than chosen on downstream results: every logged trial retrains
-PatchCore, so four categories alone cost roughly $85$ hours of graphics
+PatchCore, so four categories alone cost roughly $77$ hours of graphics
 processing unit (GPU) time
 (Section~\ref{subsec:compute-cost}) and all fifteen would scale that
 by about $4\times$.
 
 \paragraph{Proditec}
-Unlike MVTec, Proditec data are acquired under varying production
-conditions and reflect image variability, sensor noise, and imbalanced
-defect frequencies. This lets
-us test whether the pipeline generalises from benchmark to deployment
-and whether MVTec's confirmation behaviour holds in a different data
-regime. Our Proditec configuration log contains
-$2{,}999$ completed trials over the same configuration space.
+Proditec is a production dataset from an inline coin-inspection system:
+images of several coin denominations captured from fixed camera
+positions during one acquisition campaign and labelled good or
+defective at image level, without defect-type annotation. Unlike MVTec,
+the images reflect production variability, sensor noise, and imbalanced
+defect frequencies, which lets us test whether the pipeline generalises
+from benchmark to deployment. The images are proprietary; we release
+the derived logs, features, and models. The split uses $4{,}538$ normal
+training images and $867$ held-out images each for validation ($567$
+normal / $300$ defective) and test ($568$ / $299$); images are resized
+to the configured input size and optionally centre-cropped
+(Table~\ref{tab:configuration-space}). Our Proditec configuration log
+contains $2{,}999$ completed trials over the same configuration space.
 
-Both use cases share the same PatchCore configuration space
-(Table~\ref{tab:configuration-space}), enabling direct comparison of
-surrogate fidelity and main-model confirmation across datasets.
+
 
 \subsection{Experimental Protocol}
 \label{subsec:protocol}
 
 All experiments ran on a single workstation with one NVIDIA RTX~A5500
 GPU (power-capped to 70\% of its board limit), an AMD Threadripper PRO
-5995WX central processing unit (CPU), and 256 gigabytes of memory. The experimental pipeline starts from
-Optuna optimisation logs
-collected independently over the PatchCore configuration space for
-each use case. Each completed trial stores the sampled hard
-hyperparameters, the soft controls, and the resulting validation F1
-score. Invalid or incomplete trials are removed, categorical variables
-are normalised, numerical variables are snapped to their allowed
-domains, and the remaining trials are used to train the surrogate model
-$\hat{f}_{\theta}$ (Eq.~\ref{eq:surrogate}) by minimising the squared
-prediction error of Eq.~\ref{eq:surrogate-loss}. The original
-stratified $80/20$ split is retained as a development comparison:
-CatBoost uses its $20\%$ portion for early stopping, so it is not
-treated as independent test evidence. The primary fidelity estimate
-uses the grouped cross-validation protocol of
-Section~\ref{subsec:surrogate-fidelity}.
+5995WX central processing unit (CPU), and 256 gigabytes of memory. Optuna logs were collected independently for each use case; invalid or
+incomplete trials are removed, categorical variables normalised,
+numerical variables snapped to their domains, and the remaining trials
+train the surrogate (Eqs.~\ref{eq:surrogate}--\ref{eq:surrogate-loss}).
+The original stratified $80/20$ split is retained as a development
+comparison only, because CatBoost uses its $20\%$ portion for early
+stopping; the primary fidelity estimate is the grouped cross-validation
+of Section~\ref{subsec:surrogate-fidelity}.
 
 A CatBoost regressor \cite{prokhorenkova_catboost_2018} is used as the surrogate because it provides
 native handling of categorical configuration features and competitive
@@ -938,7 +761,10 @@ configuration $\mathbf{x}_0$ is a logged trial chosen by the
 experimenter from a pipeline-presented set containing the trials
 nearest the 50th, 70th, 85th, and 95th validation-F1 percentiles plus
 the best trial. The selected factual is held fixed across all three
-methods. For exact reproduction,
+methods. On both datasets the selected primary factual is the best
+logged trial (MVTec: trial $4523$, validation F1 $0.820$, $99.97$th
+percentile of the log; Proditec: trial $2738$, $0.908$, $99.97$th
+percentile), chosen before any confirmation was run; Section~\ref{subsec:multi-factual} reports the full anchor sweep. For exact reproduction,
 \path{mvtec_all_methods_cfs_metadata.json} and
 \path{proditec_all_methods_cfs_metadata.json} record the primary
 \texttt{factual\_index}, which resolves the complete feature vector in
@@ -947,24 +773,26 @@ Both datasets use the same methods, $K$, and free soft controls. The
 recorded MVTec objective is \texttt{target\_min(0.70)}; Proditec uses
 \texttt{target\_band(0.75,0.95)} (Eq.~\ref{eq:objective-types}).
 
-Finally, every candidate is confirmed using the underlying PatchCore pipeline,
-which retrains the model under the candidate configuration on the
-corresponding splits and recomputes the actual validation and test F1
-scores together with test area under the receiver operating
-characteristic curve (AUROC). All $24$ candidates are confirmed on each
-dataset ($48$ retrainings), separating fast recommendation from
-main-model evidence. For the diagnostic analyses of Section~\ref{subsec:gap-diagnosis}, each
-confirmed candidate is re-run once with the same nominal seeds to
-capture the raw per-image anomaly scores. This is a linked diagnostic
-replication of the confirmation protocol, not a seed-variability test.
-To characterise pipeline noise across the full candidate set, we
-repeated all 24 candidates on each dataset under three seeds (42, 43,
-44): the mean seed-to-seed F1 standard deviation is $0.009$ on MVTec
-and $0.004$ on Proditec for pretrained-backbone configurations, and the
-mean absolute rerun difference is $0.006$ and $0.003$ respectively.
-Method differences larger than $0.02$ should be treated with caution on
-MVTec, where within-seed variance for random-initialisation backbones
-can reach $0.046$.
+Finally, every candidate is confirmed with the underlying PatchCore
+pipeline under the protocol of the HPO objective
+(Eq.~\ref{eq:hpo-target}): on MVTec one model and one
+validation-calibrated threshold per category, with the four
+per-category F1 scores averaged; on Proditec a single model.
+Confirmation recomputes validation and test F1 and test AUROC. All 24
+candidates per dataset were retrained under three seeds (42, 43, 44) in
+one frozen run, and every confirmation number in this paper is taken
+from that run; the \emph{gap} is confirmed test F1 minus surrogate F1
+unless stated otherwise. The mean seed-to-seed F1 standard deviation is
+$0.009$ on MVTec and $0.004$ on Proditec for pretrained backbones, so
+method differences below about $0.02$ are not interpreted.
+To check that logged scores reproduce, the same run also retrained 96
+logged trials in total (48 per dataset: 40 stratified across the F1
+range and the 8 best) under the same three seeds. Pretrained-backbone
+trials reproduce their logged validation F1 with a mean absolute
+difference of $0.004$ on MVTec and $0.007$ on Proditec (maximum $0.018$; the Proditec maximum of $0.070$ is a low-scoring trial with logged F1 $0.32$), and the eight best MVTec trials re-measure $0.008$ below
+their logged value, so the log carries no material winner's curse.
+Random-initialisation backbones are unstable (seed standard deviation up
+to $0.10$ on Proditec); none of the 48 recommendations uses one.
 
 \paragraph{Implementation details}
 PatchCore is our own implementation over torchvision feature
@@ -975,24 +803,25 @@ packaged library. Corruption is applied deterministically to training
 Gaussian blur of radius $0.6$; \texttt{strong} is a Gaussian blur of
 radius $1.2$ followed by additive Gaussian noise ($\sigma = 8$ on the
 $0$--$255$ scale, clipped); \texttt{none} leaves images unchanged.
-Held-out images are divided into validation and test halves by a
-label-stratified $50/50$ split. Proditec has $4{,}538$ normal
-training images, validation $567$ normal / $300$ anomalous and test
-$568$ / $299$, with anomaly prevalence $\approx 34.5\%$ in both;
-with the same construction applied per MVTec category. HPO uses
+Held-out images are divided into validation and test halves by a label-stratified $50/50$ split, per MVTec category and once for Proditec (anomaly prevalence $0.70$ pooled over the MVTec categories, $0.345$ on Proditec). HPO uses
 Optuna's TPE sampler (fixed seed, \texttt{multivariate=False},
 \texttt{group=False}), with $1{,}500$ start-up trials for Proditec and
 $4{,}000$ for MVTec, maximising
 Eq.~\ref{eq:hpo-target}, with no pruning and a fixed trial budget. The
 surrogate is CatBoost ($5{,}000$ iterations with early stopping after
 $200$ rounds, learning rate $0.05$, depth $8$, \texttt{l2\_leaf\_reg}
-$3.0$, root mean squared error loss). DiCE uses
-\texttt{method="random"} with per-feature
-ranges taken from the observed log domain; ACFX fits its required
-main-effects explainable boosting machine (EBM) classifier (\texttt{interpret},
-\texttt{interactions=0}) to CatBoost-derived objective labels, and all
-final candidates are rescored with the common CatBoost surrogate, so
-the three methods share final scoring.
+$3.0$, root mean squared error loss). DiCE runs in regression mode (\texttt{model\_type="regressor"},
+\texttt{method="random"}) with the desired range $R(q,\mathbf{x}_0)$ of
+Eq.~\ref{eq:objective-types} as target interval, per-feature ranges
+taken from the observed log domain, and a raw pool of $\max(30, 10K)$
+candidates before repair. ACFX requires a binary target: every logged
+configuration is labelled $1$ if its CatBoost-predicted F1 lies in
+$R(q,\mathbf{x}_0)$ and $0$ otherwise, a main-effects explainable
+boosting machine classifier (\texttt{interpret},
+\texttt{interactions=0}) is fitted to these labels, and ACFX
+counterfactuals towards class $1$ are generated around the factual. All
+final candidates are rescored with the common CatBoost surrogate, so the
+three methods share final scoring.
 Software: Python 3.11.9,
 PyTorch 2.10.0 (CUDA 12.8), torchvision 0.25.0, scikit-learn 1.6.1,
 Optuna 4.2.0, CatBoost 1.2.8, dice-ml 0.12, acfx 0.3.6, interpret
@@ -1002,10 +831,8 @@ Optuna 4.2.0, CatBoost 1.2.8, dice-ml 0.12, acfx 0.3.6, interpret
 \label{subsec:surrogate-fidelity}
 
 We benchmarked $13$ candidate regressors for the surrogate role
-(twelve scikit-learn models plus CatBoost);
-Table~\ref{tab:surrogate-fidelity} reports the two most relevant:
-CatBoost, the operational surrogate, and HistGradientBoosting, the
-strongest alternative on both datasets. We selected CatBoost not
+(twelve scikit-learn \cite{pedregosa_scikit-learn_2011} models plus CatBoost);
+the two most relevant are CatBoost, the operational surrogate, and HistGradientBoosting, the strongest alternative, which are indistinguishable on the development split (RMSE $0.015$ / $0.086$, MAE $0.008$ / $0.046$, $R^2$ $0.996$ / $0.936$ for CatBoost on MVTec / Proditec; $0.015$ / $0.085$, $0.008$ / $0.043$, $0.996$ / $0.937$ for HistGradientBoosting). We selected CatBoost not
 because it topped the benchmark but because it handles the mixed
 categorical--numerical space natively for the downstream
 counterfactual pipeline and ships built-in feature-importance and
@@ -1016,70 +843,47 @@ subsample; it achieves $R^2 = 0.990$ and $R^2 = 0.919$ on MVTec and
 Proditec respectively with well-calibrated uncertainty (90\% prediction
 interval coverage $0.89$ and $0.90$), confirming that the high fidelity
 is not specific to CatBoost. We retain CatBoost for the deployed system
-because of its native categorical handling and faster inference.
+because of its native categorical handling and faster inference; the
+GP's calibrated intervals are the natural basis for the per-candidate
+support indicator the system still lacks (Section~\ref{subsec:limitations}).
 
-\begin{table}[!t]
-\centering
-\footnotesize
-\caption{Development-split surrogate fidelity for MVTec and Proditec
-(CatBoost compared with HistGradientBoosting~\cite{pedregosa_scikit-learn_2011}).
-RMSE denotes root mean squared error; MAE, mean absolute error; and
-$R^2$, the coefficient of determination. Arrows indicate whether lower
-($\downarrow$) or higher ($\uparrow$) is better. CatBoost uses this split
-for early stopping; grouped cross-validation below is the primary
-generalisation estimate.}
-\label{tab:surrogate-fidelity}
-\begin{tabular}{@{}llrrr@{}}
-\toprule
-Dataset & Model & RMSE $\downarrow$ & MAE $\downarrow$ & $R^2$ $\uparrow$ \\
-\midrule
-MVTec    & CatBoost & 0.015 & 0.008 & 0.996 \\
-MVTec    & HistGradientBoosting & 0.015 & 0.008 & 0.996 \\
-Proditec & CatBoost & 0.086 & 0.046 & 0.936 \\
-Proditec & HistGradientBoosting & 0.085 & 0.043 & 0.937 \\
-\bottomrule
-\end{tabular}
-\end{table}
 
-The surrogate thus captures the main structure of the
-configuration--performance relationship on both datasets. MVTec's
-higher $R^2$ partly reflects its narrower validation-F1 range
-(roughly $0.02$--$0.82$ versus $0.0$--$0.91$ on Proditec, where real
-production variability widens the target).
 
-To understand how much of the surrogate's predictive power comes from
-each feature class we ablated the model and computed SHAP importances.
+
+
+The two surrogates differ in error profile: development-split RMSE is $0.015$ on MVTec and $0.086$ on Proditec, over validation-F1 ranges of roughly $0.02$--$0.82$ and $0.0$--$0.91$. To understand where each surrogate's predictive power comes from, we ablated the model and computed SHAP importances.
 On MVTec the review-budget feature alone accounts for $75.3\%$ of the
-full-model SHAP magnitude, and removing it collapses grouped $R^2$ from
-$0.995$ to $0.098$ (Table~\ref{tab:surrogate-ablation}); the
+full-model SHAP magnitude, and removing it collapses $R^2$ from $0.995$ to $0.098$ (Table~\ref{tab:surrogate-ablation}); the
 remaining hard hyperparameters carry the rest. On Proditec the budget
 share is lower ($23.0\%$), and the top SHAP features are the feature
 layer choice ($21.8\%$) and pretrained weights ($14.1\%$), reflecting
 that the production use case involves both architecture choices and
-operational trade-offs in its optimisation target; removing the review
-budget reduces grouped $R^2$ to $0.749$. This asymmetry cautions
+operational trade-offs in its optimisation target; removing the review budget reduces $R^2$ to $0.749$. This asymmetry cautions
 against treating cross-dataset $R^2$ comparisons as equivalent: the
 MVTec surrogate is largely a monotone review-budget function, while
 Proditec's involves genuine hyperparameter structure.
 
 To confirm that fidelity holds across the query-relevant score range
 and not only in aggregate, we computed $R^2$ within each review-budget
-band (grouping candidates by their budget value). Median within-band
-$R^2$ is $0.938$ (range $0.914$--$0.986$) on MVTec and $0.879$
-($0.846$--$0.936$) on Proditec, so the surrogate is locally consistent
-in the query-relevant regions used to generate candidates.
+band (five equal-count bands of the logged budget values; 381--415 trials per band on MVTec, 112--132 on Proditec). From the lowest to the highest band, $R^2$ is $0.986$, $0.966$, $0.923$, $0.914$, and $0.938$ on MVTec (median $0.938$) and $0.876$, $0.846$, $0.936$, $0.879$, and $0.910$ on Proditec (median $0.879$), so the surrogate is locally consistent
+in the query-relevant regions used to generate candidates. Nor is it
+optimistic where a query selects: binned by predicted quantile, the
+mean signed error of predicted minus recorded F1 is within $\pm 0.001$
+on MVTec and within $\pm 0.007$ on Proditec for the top $10\%$ of
+predictions, so the surrogate does not inherit a winner's curse from
+the log.
 
 To complement absolute error reporting, we also compute scale-normalised
-metrics: relative RMSE (rRMSE, normalised by the mean) is $2.9\%$ on
-MVTec and $17.0\%$ on Proditec; the higher Proditec rRMSE reflects
-the wider F1 range ($0.0$--$0.91$) rather than worse absolute calibration.
+metrics: relative RMSE (rRMSE, normalised by the mean~\cite{jin2024officegpr}) is $2.9\%$ on MVTec and $17.0\%$ on Proditec. The difference between the two surrogates is consistent with the ablation above rather than with the range of the target: the MVTec objective is largely a function of the review budget, which the surrogate recovers almost exactly, whereas the Proditec objective depends on hard hyperparameters whose effect is harder to predict.
 
 \begin{table}[!t]
 \centering
 \footnotesize
-\caption{Surrogate ablation: grouped $R^2$ as features are removed
-(MVTec and Proditec). ``Budget only'' uses review budget as the single
-feature; ``hard HPs only'' removes all soft controls.}
+\caption{Surrogate ablation: development-split $R^2$ of CatBoost models
+re-trained on feature subsets with inner early stopping (MVTec and
+Proditec). ``Budget only'' uses the review budget as the single feature;
+``hard HPs only'' removes all soft controls. Because of the inner
+early-stopping split, the full-model row differs slightly from the development-split value (0.936) and from the grouped estimate (0.934).}
 \label{tab:surrogate-ablation}
 \setlength{\tabcolsep}{3pt}
 \begin{tabular}{@{}lrr@{}}
@@ -1095,96 +899,86 @@ Hard hyperparameters only   & 0.086 & 0.753 \\
 \end{table}
 
 Because TPE revisits promising regions, the logs contain exact
-duplicate configurations (15.0\% of MVTec rows, 17.6\% of Proditec
-rows), so a shuffled split places some test configurations whose exact
-signature also appears in training (19.9\% on MVTec, 26.2\% on
-Proditec). We therefore use 5-fold GroupKFold cross-validation grouped
-by exact configuration signature as the primary generalisation check.
-It removes cross-fold duplicates and trains fixed 500-iteration models
-without holdout-driven early stopping. The resulting estimates
-($R^2 = 0.995 \pm 0.0005$ on MVTec, $0.934 \pm 0.008$ on Proditec) closely match
-the development values in Table~\ref{tab:surrogate-fidelity}, so the
-fidelity conclusion is not an artefact of duplicate leakage or reuse
-of the early-stopping split. The Proditec development-split $R^2$ of
-$0.936$ should be read with this grouped estimate ($0.934$) rather
-than rounded to $0.96$.
+duplicate configurations ($15.0\%$ of MVTec rows, $17.6\%$ of
+Proditec rows), and a shuffled split places $19.9\%$ and $26.2\%$ of
+test configurations next to an identical training row. The primary
+generalisation estimate is therefore 5-fold GroupKFold cross-validation
+grouped by configuration signature with fixed 500-iteration models:
+$R^2 = 0.995 \pm 0.0005$ on MVTec and $0.934 \pm 0.008$ on Proditec,
+matching the development values, so the fidelity conclusion is not an
+artefact of duplicate leakage. 
 
 \subsection{Surrogate Query Satisfaction and Main-Model Confirmation}
 \label{subsec:cf-validity}
 
 Surrogate-level query satisfaction is 24/24 on both datasets: every
 candidate meets its recorded objective and soft constraints under
-Eq.~\ref{eq:cf-validity}. Main-model confirmation gives the
-complementary result. Under the per-category protocol (matching the
-HPO objective), 24/24 Proditec candidates and 22/24 MVTec candidates
-meet their respective targets after retraining. The first figure
-verifies the structured search and constraint layer; the second
-measures whether the surrogate estimate persists in PatchCore.
-Section~\ref{subsec:gap-diagnosis} analyses the effect of the
-confirmation protocol on the MVTec result.
-
-The methods differed in proximity (the mixed-type distance of
-Eq.~\ref{eq:mixed-distance}) and generation time, consistently across
-datasets (Table~\ref{tab:technical-evaluation-summary}): DiCE was
-fastest with moderate distance, \textsc{LogTopK} fast and closest to
-the factual, and ACFX two orders of magnitude slower.
+Eq.~\ref{eq:cf-validity}. Main-model confirmation under the protocol of
+the HPO objective gives the same count: all 24 Proditec candidates fall
+inside the requested $[0.75, 0.95]$ band (minimum three-seed mean
+$0.814$) and all 24 MVTec candidates exceed the $0.70$ minimum (minimum
+$0.758$). The first figure verifies the structured search and constraint layer;
+the second shows that the surrogate estimate persists in PatchCore. The
+second count has limited discriminating power, however: $29\%$ of all
+$9{,}976$ MVTec trials and every trial in the top decile of the log
+(validation F1 $0.803$--$0.820$) already exceed $0.70$, and $43\%$ of
+Proditec trials and the whole top decile ($0.895$--$0.908$) already lie
+in the $[0.75, 0.95]$ band, so meeting the target mostly shows that the
+candidates stay near the top of the log.
+Section~\ref{subsec:gap-diagnosis} compares the pooled and per-category
+protocols and adds an untuned reference.
 
 \subsection{Comparison of Candidate-Production Methods}
 \label{subsec:cf-comparison}
 
 Under the primary factual configuration,
-Table~\ref{tab:technical-evaluation-summary} summarises the generation
-and confirmation results for both datasets under the per-category
-protocol. Two observations stand out. First, all three methods deliver
-confirmed F1 well above target on both datasets: on MVTec the range is
-$0.781$--$0.793$; on Proditec $0.863$--$0.889$. Gaps are small and
-consistent ($-0.001$ to $-0.034$ on MVTec; $-0.001$ to $-0.007$ on
-Proditec). Second, proximity and runtime profiles are stable across
-datasets: DiCE is fastest with moderate distance, \textsc{LogTopK}
-fast and closest to the factual under the primary anchor, and ACFX
-slowest. Because the two datasets use different objectives, their
-confirmed-F1 levels are not comparable across the horizontal rule.
+Table~\ref{tab:technical-evaluation-summary} summarises generation and
+confirmation for both datasets. Two observations stand out. First, all
+three methods deliver confirmed F1 above target on both datasets
+(MVTec $0.781$--$0.793$, Proditec $0.863$--$0.889$), with gaps of
+$-0.016$ to $-0.034$ on MVTec and $-0.001$ to $-0.011$ on Proditec.
+Second, proximity and runtime differ between methods. At the primary
+anchor ACFX is closest to the factual on MVTec ($0.13$) and DiCE on
+Proditec ($0.10$); DiCE is fastest ($0.3$--$0.5$\,s per eight-candidate call), \textsc{LogTopK} takes a few seconds because the archived implementation re-scores the filtered log on every query, and ACFX is two orders of magnitude slower ($100$--$117$\,s per call). Because the two
+datasets use different objectives, their confirmed-F1 levels are not
+comparable across the horizontal rule.
 
-Confirmed PatchCore F1 is stable within methods; \textsc{LogTopK} is
-the tightest on both datasets ($0.010$ and $0.003$ across eight
-retrainings each). Seed-to-seed standard deviations from the
-three-seed noise-floor run are $0.009$ (MVTec, pretrained) and $0.004$
-(Proditec, pretrained), so method differences of $\leq 0.02$ on MVTec
-should be treated with caution. Complete per-candidate results are
-included in the public archive.
+Confirmed PatchCore F1 is stable within methods: across-candidate
+standard deviations are $0.010$--$0.015$ on MVTec and $0.005$--$0.028$
+on Proditec, against three-seed standard deviations of $0.009$ and
+$0.004$. The largest difference between method means on MVTec
+($0.012$) is within this noise, so we do not rank the methods by
+confirmed quality. Complete per-candidate results are included in the
+public archive.
 
-\begin{table*}[!tb]
-\centering
-\small
-\caption{Candidate-production and confirmation results (eight
-candidates per method; PatchCore F1 as mean\,$\pm$\,standard deviation
-\emph{across candidates}, not across seeds).
-Surrogate-level query satisfaction was 100\% in all six cells and is
-therefore stated here rather than tabulated.
-Gap = PatchCore F1 minus surrogate F1. Distance is the
-mixed-type measure of Eq.~\ref{eq:mixed-distance} summed over the 13
-configuration features, so larger values are further from the factual
-(\emph{primary anchor}; see Section~\ref{subsec:multi-factual} for the
-full anchor sweep). Time is per-candidate (s).
-The two datasets used different objectives; figures are not comparable
-across the horizontal rule. The archived code labels \textsc{LogTopK}
-as \texttt{CFNOW} (Section~\ref{subsec:cf-generation}).}
+\begin{table*}[!tb] \centering \footnotesize \caption{Candidate-production and confirmation results at the primary
+anchor (eight candidates per method; PatchCore test F1 as
+mean\,$\pm$\,standard deviation \emph{across candidates} of the
+three-seed means, not across seeds). Surrogate-level query satisfaction
+was 100\% in all six cells. Gap = PatchCore F1 minus surrogate F1.
+Distance is the mixed-type measure of Eq.~\ref{eq:mixed-distance}
+summed over the 13 configuration features
+(Section~\ref{subsec:multi-factual} gives the anchor sweep). Time is the wall-clock generation time of the eight-candidate call (s). MVTec uses the per-category protocol; AUROC is the mean per-category test AUROC on MVTec and the
+test AUROC on Proditec. The two datasets used different objectives;
+figures are not comparable across the horizontal rule. The archived
+code labels \textsc{LogTopK} as \texttt{CFNOW}
+(Section~\ref{subsec:cf-generation}).}
 \label{tab:technical-evaluation-summary}
 \setlength{\tabcolsep}{4.5pt}
-\begin{tabular}{@{}lllrrrrr@{}}
+\begin{tabular}{@{}lllrrrrrr@{}}
 \toprule
 Dataset & Method & Objective & Distance & Time & Surrogate &
-PatchCore & Gap \\
-        &        &           &          & (s)       & F1        &
-F1        &     \\
+PatchCore & Gap & AUROC \\
+        &        &           &          & (s)  & F1        &
+F1        &     &       \\
 \midrule
-MVTec    & ACFX             & minimum 0.70 & 0.13 &  117.01 & 0.802 & $0.786 \pm 0.024$ & $-0.016$ \\
-MVTec    & \textsc{LogTopK} & minimum 0.70 & 1.41 &    5.62 & 0.815 & $0.781 \pm 0.010$ & $-0.034$ \\
-MVTec    & DiCE             & minimum 0.70 & 0.77 &    0.32 & 0.813 & $0.793 \pm 0.008$ & $-0.021$ \\
+MVTec    & ACFX             & minimum 0.70 & 0.13 & 117.0 & 0.802 & $0.786 \pm 0.010$ & $-0.016$ & 0.901 \\
+MVTec    & \textsc{LogTopK} & minimum 0.70 & 1.41 &   5.6 & 0.815 & $0.781 \pm 0.015$ & $-0.034$ & 0.915 \\
+MVTec    & DiCE             & minimum 0.70 & 0.77 &   0.3 & 0.813 & $0.793 \pm 0.011$ & $-0.021$ & 0.922 \\
 \midrule
-Proditec & ACFX             & band 0.75--0.95 & 0.28 & 99.94 & 0.870 & $0.863 \pm 0.004$ & $-0.007$ \\
-Proditec & \textsc{LogTopK} & band 0.75--0.95 & 0.22 &  1.45 & 0.897 & $0.886 \pm 0.003$ & $-0.011$ \\
-Proditec & DiCE             & band 0.75--0.95 & 0.10 &  0.48 & 0.890 & $0.889 \pm 0.003$ & $-0.001$ \\
+Proditec & ACFX             & band 0.75--0.95 & 0.28 & 99.9 & 0.870 & $0.863 \pm 0.028$ & $-0.007$ & 0.976 \\
+Proditec & \textsc{LogTopK} & band 0.75--0.95 & 0.22 &  1.4 & 0.897 & $0.886 \pm 0.005$ & $-0.011$ & 0.975 \\
+Proditec & DiCE             & band 0.75--0.95 & 0.10 &  0.5 & 0.890 & $0.889 \pm 0.005$ & $-0.001$ & 0.977 \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -1192,393 +986,443 @@ Proditec & DiCE             & band 0.75--0.95 & 0.10 &  0.48 & 0.890 & $0.889 \p
 \subsection{Main-Model Confirmation}
 \label{subsec:main-model-confirmation}
 
-The central technical result is the contrast between successful
-production confirmation and a benchmark reliability boundary. On
-Proditec, the 24 recommendations average confirmed PatchCore test F1 of
-$0.879$, a mean surrogate-to-model gap of only $-0.007$, and test AUROC
-of $0.976$; all 24 satisfy the requested target band under the
-per-category protocol. The same evaluation
-protocol exposes different behaviour on MVTec: using the per-category
-protocol (one PatchCore model and one threshold per category, matching
-how HPO was run), mean confirmed F1 is $0.787$, the gap is $-0.023$,
-and per-category test AUROC is $0.912$; 22/24 meet the $0.70$ target.
-Proditec therefore demonstrates that the framework can deliver useful
-recommendations in the studied production setting. The per-category MVTec
-result shows that when the confirmation protocol matches the HPO protocol,
-the surrogate estimates hold. Main-model confirmation remains the final
-deployment gate in both settings.
+The central technical result is that main-model confirmation agrees with the surrogate on both datasets once the confirmation protocol matches the optimisation objective. On Proditec, the 24
+recommendations average confirmed test F1 of $0.879$, a gap of
+$-0.007$, and test AUROC of $0.976$; all 24 fall in the requested band.
+On MVTec under the per-category protocol, mean confirmed F1 is $0.787$
+(gap $-0.023$), the re-measured validation F1 equals the surrogate
+prediction to three decimals ($0.810$), per-category test AUROC is
+$0.913$, and all 24 exceed the $0.70$ minimum. Applying one pooled threshold to the concatenated scores of the same 24 per-category models gives $0.570$ (gap $-0.240$), a different quantity (Section~\ref{subsec:gap-diagnosis}). Main-model confirmation remains the final deployment gate in both settings; on these data it confirms the surrogate rather than contradicting it.
 
-Figure~\ref{fig:surrogate-vs-test} plots confirmed PatchCore F1
-against surrogate F1 for every candidate on Proditec: most points lie
-near the ideal-agreement line, with the tightest cluster for \textsc{LogTopK} in
-the high-quality region and the largest individual gaps among ACFX
-candidates.
+Figure~\ref{fig:surrogate-vs-test} plots confirmed against surrogate
+F1 for all 48 candidates with seed error bars. On Proditec the points
+follow the identity line (Spearman $0.58$), with the two largest gaps
+among ACFX candidates at review budget $0.455$. On MVTec the confirmed
+scores lie $0.02$--$0.03$ below the surrogate and are not ordered by it
+(Spearman $-0.20$ against test F1, $0.80$ against validation F1): the
+surrogate predicts its own target almost exactly (mean error $+0.000$),
+and the residual is the validation-to-test shift of the threshold,
+which is as large as the spread between candidates ($0.012$).
 
-\begin{figure}[!t]
+\begin{figure*}[!tb]
 \centering
-\includegraphics[width=\linewidth]{proditec_cf_confirmation_surrogate_vs_test_clean.pdf}
-\caption{Confirmed PatchCore F1 versus surrogate F1 for all $24$
-Proditec candidates (best candidate and largest gap annotated). The
-archived chart label CFNOW denotes \textsc{LogTopK}.}
+\includegraphics[width=0.8\textwidth]{fig_surrogate_vs_confirmed_both.pdf}
+\caption{Confirmed PatchCore test F1 (mean of three seeds; error bars
+show the seed standard deviation) against surrogate F1 for the 24 MVTec
+candidates under the per-category protocol (left) and the 24 Proditec
+candidates (right); the query targets ($0.70$ and $0.75$) lie below both axis ranges.}
 \label{fig:surrogate-vs-test}
-\end{figure}
+\end{figure*}
 
-A complementary view on Proditec compares the soft-parameter profiles
-of the six candidates with the highest confirmed PatchCore F1 against
-the remaining $18$.
-The top confirmed candidates obtain a mean confirmed PatchCore F1 of
-$0.888$ versus $0.790$ for the others, using a \emph{lower} average
-training fraction ($0.792$ compared with $0.832$), a lower review budget
-($0.345$ compared with $0.371$), and, most strikingly, uniformly \texttt{none} or
-\texttt{mild} corruption, whereas the weaker group is dominated by
-\texttt{strong} corruption. A
-standardised regression of confirmed F1 on the three soft controls
-jointly over the 24 candidates supports this reading beyond the
-post-hoc top-6 split: the strong-corruption indicator is the only
-significant term (coefficient $-0.048$, $p \approx 10^{-4}$; Spearman
-$\rho = -0.77$; model $R^2 = 0.67$), while training fraction and
-review budget are not significant. The corruption assumption is thus
-the soft control most strongly associated with confirmed quality on
-Proditec, and the best configurations are not those that consume the
-most training data. This is exactly the kind of
-trade-off that a standard HPO ranking would hide and that the
-operator-centred view is designed to surface.
+The 48 recommendations are local to a strong anchor. All 24 Proditec
+candidates share the best trial's backbone, feature layer, and
+clean-data setting (\texttt{resnet34}, \texttt{l3}, no corruption) and
+vary in training fraction ($0.68$--$0.97$), review budget
+($0.340$--$0.455$), coreset ratio, and neighbours; the six candidates
+with the highest confirmed F1 ($0.892$ versus $0.875$ for the other 18)
+differ from the rest mainly by a lower review budget ($0.348$ versus
+$0.370$; Spearman $-0.39$ between budget and confirmed F1 over the 24).
+On MVTec, 23 of 24 candidates use clean training data and all use
+pretrained \texttt{wide\_resnet50\_2} or \texttt{resnet50} backbones,
+with review budgets at the top of the grid ($0.495$--$0.500$). With 24 non-independent local candidates we report descriptive statistics only.
+The primary query therefore tests local fidelity around the best trial;
+Section~\ref{subsec:multi-factual} covers weaker anchors.
 
-Section~\ref{subsec:gap-diagnosis} decomposes this dataset difference
-at the level of raw anomaly scores, separating surrogate error on the
-defined target from threshold transfer and from cross-category
-score-scale effects.
+
 
 \subsection{Diagnosing the Confirmation Gap}
 \label{subsec:gap-diagnosis}
 
-To understand why pooled and per-category protocols diverge we re-ran
-each of the $24$ confirmed candidates per dataset with the same nominal
-seeds, capturing raw per-image anomaly scores on validation and test,
-and analysed thresholding, category, and distance effects without
-further retraining (Table~\ref{tab:gap-diagnosis}).
+To understand why the pooled and per-category protocols diverge, we
+evaluated the same 24 retrained per-category MVTec models under both thresholding protocols (per-category thresholds, and one pooled threshold over their concatenated scores),
+retrained the logged HPO optimum and a no-HPO reference configuration,
+and computed the F1 bounds implied by the review-budget rule
+(Tables~\ref{tab:gap-diagnosis} and~\ref{tab:per-category}).
 
-\begin{table}[!t]
-\centering
-\small
-\caption{Score-level diagnosis of the confirmation gap (means over the
-$24$ confirmed candidates per dataset). ``Pooled threshold'' uses one
-review-budget threshold over all four MVTec categories combined;
-``per-category threshold'' applies it within each category separately,
-matching the HPO objective. The oracle is the best single global
-threshold on test scores. Per-category AUROC is the mean of four
-per-category values.}
+\begin{table}[!t] \centering \footnotesize \caption{Protocol diagnosis (means over the 24 confirmed candidates per
+dataset). Per-category rows use the three-seed run; the pooled rows apply, for reference, one pooled review-budget threshold to the concatenated scores of the same seed-42 per-category models, so the protocol effect isolates pooled thresholding on identical models. Gap = confirmed test F1 minus surrogate F1. Per-category AUROC is the mean of four per-category
+values.}
 \label{tab:gap-diagnosis}
 \setlength{\tabcolsep}{2.5pt}
-\begin{tabular}{@{}p{0.62\columnwidth}rr@{}}
+\begin{tabular}{@{}p{0.66\columnwidth}rr@{}}
 \toprule
 Quantity (mean over 24 candidates) & MVTec & Proditec \\
 \midrule
-Surrogate-predicted F1                         & 0.810 & 0.886 \\
-Confirmed F1 (per-category protocol)           & 0.787 & 0.879 \\
-Confirmed F1 (pooled threshold, for reference) & 0.570 & 0.879 \\
-Confirmed F1 at oracle global threshold        & 0.832 & 0.839 \\
+Surrogate-predicted F1                                 & 0.810 & 0.886 \\
+Re-measured validation F1 (per-category)               & 0.810 & 0.891 \\
+Confirmed test F1 (per-category protocol)              & 0.787 & 0.879 \\
+Gap (per-category protocol)                            & $-0.023$ & $-0.007$ \\
+Confirmed test F1 (per-category protocol, seed-42 models) & 0.785 & -- \\
+Confirmed test F1 (pooled protocol, for reference, seed 42) & 0.570 & -- \\
+Gap (pooled protocol)                                  & $-0.240$ & -- \\
+Protocol effect, same seed-42 models (pooled $-$ per-category) & $-0.215$ & -- \\
 \midrule
-Per-category test AUROC                        & 0.912 & 0.976 \\
-Pooled test AUROC (reference)                  & 0.527 & 0.976 \\
-F1 gain: per-category vs.\ pooled threshold    & $+0.217$ & -- \\
+Per-category test AUROC                                & 0.913 & 0.976 \\
+Pooled test AUROC                                      & 0.527 & -- \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\paragraph{Per-category protocol aligns confirmation with HPO}
-The HPO objective trains one PatchCore model per category and computes
-one review-budget F1 threshold per category. The original confirmation
-protocol instead pooled all four categories into a single model with a
-single threshold, producing a mismatch between what was optimised and
-what was confirmed. Using the per-category protocol (one model per
-category, one threshold per category, matching Eq.~\ref{eq:hpo-target}
-as used during HPO), the mean confirmed F1 rises from $0.570$ to
-$0.787$ and the mean gap narrows to $-0.023$; 22/24 candidates meet
-the $0.70$ minimum. The surrogate error localises to the pooled
-protocol, not to a fundamental model-reliability problem.
+\paragraph{Pooled confirmation measures a different quantity}
+The HPO objective (Eq.~\ref{eq:hpo-target}) trains one PatchCore model
+per category and computes one review-budget threshold per category.
+Applying one pooled threshold to the concatenated scores of the same 24 per-category models yields a score $0.215$ lower ($0.570$ against
+$0.785$ for the seed-42 models), although the surrogate error on its own
+target is $0.000$ and the validation-to-test shift is $-0.025$: almost
+all of the apparent gap under a pooled protocol is the protocol itself,
+not the surrogate. Under the per-category protocol all 24 candidates
+meet the $0.70$ minimum.
 
 \paragraph{Pooled score-scale incompatibility remains a deployment constraint}
-Although the per-category protocol resolves the confirmation gap, the
-pooling pathology is relevant for any deployment that presents a single
-score over heterogeneous product types. Because the anomaly-score
-scales differ across categories, merging them destroys the \emph{global
-ranking}: pooled AUROC falls from $0.912$ (per-category) to $0.527$
-(pooled), a purely ranking-level effect that is independent of any
-threshold. Applying the same review budget \emph{within} each category
-recovers $+0.217$ mean F1 over the pooled threshold without changing
-the models. Operators deploying over multiple product categories must
-therefore calibrate thresholds per category.
+The pooling pathology is still relevant for any deployment that applies
+one score threshold across heterogeneous product types. Because
+anomaly-score scales differ across categories, merging them destroys
+the \emph{global ranking}: the AUROC of the concatenated test scores of the four per-category models is $0.527$, against a mean within-category AUROC of $0.913$ for the same models and scores (Figure~\ref{fig:pooled-vs-perclass}), a ranking-level effect that is independent of any threshold. Applying the review budget within each
+category recovers $+0.215$ mean F1 without changing the models.
+Operators deploying over several product categories must therefore
+calibrate thresholds per category.
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=\linewidth]{mvtec_pooled_vs_perclass_auroc.pdf}
-\caption{Pooled versus mean per-category test AUROC of the confirmed
-MVTec candidates by method (per-category protocol). The retrained
-models rank anomalies well within each category; pooling categories
-whose anomaly-score scales are not commensurable destroys the global
-ranking.}
+\includegraphics[width=\linewidth]{fig_mvtec_pooled_vs_percategory_auroc.pdf}
+\caption{Pooled versus mean per-category test AUROC for each of the 24
+confirmed MVTec candidates (seed 42), grouped by method; both values are computed from the same four per-category models, the pooled one on their concatenated scores. Within each category the retrained models rank anomalies well; pooling categories
+whose score scales are not commensurable drives the global ranking to
+chance.}
 \label{fig:pooled-vs-perclass}
 \end{figure}
 
-\paragraph{No-HPO reference at equal budget}
-To determine whether the HPO search itself adds value we retrained a
-reference configuration without HPO (the log's default settings) on
-the same four MVTec categories at the same review budget ($0.495$). The
-reference reaches F1 $0.867$ and AUROC $0.960$ at the per-category
-protocol, versus HPO-best $0.809$ F1 and AUROC $0.909$: HPO as run
-here does not outperform the reference at this budget level, suggesting
-the HPO search did not yet escape the default configuration's region.
-This result is specific to the evaluated budget and category subset and
-does not generalise to other query regions or objectives.
+\begin{table}[!t]
+\centering
+\footnotesize
+\caption{Per-category MVTec results at the HPO review budget
+($\beta = 0.495$, seed 42): test anomaly prevalence, mean confirmed
+test F1 of the 24 candidates, and test F1 / AUROC of the retrained HPO
+optimum and of the no-HPO reference configuration. Published PatchCore
+image-level AUROC \cite{roth_towards_2022} is given for orientation
+only: it uses the official test set without a held-out validation half
+and an unsubsampled memory bank.}
+\label{tab:per-category}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+ & & Cand. & \multicolumn{2}{c}{HPO optimum} & \multicolumn{2}{c}{Reference} & Publ. \\
+Category & Prev. & F1 & F1 & AUROC & F1 & AUROC & AUROC \\
+\midrule
+bottle   & 0.76 & 0.847 & 0.857 & 0.953 & 0.857 & 0.981 & 1.00 \\
+cable    & 0.61 & 0.778 & 0.741 & 0.855 & 0.874 & 0.905 & 0.99 \\
+capsule  & 0.82 & 0.624 & 0.659 & 0.864 & 0.813 & 0.968 & 0.98 \\
+hazelnut & 0.64 & 0.891 & 0.889 & 0.964 & 0.925 & 0.986 & 1.00 \\
+\midrule
+mean     & 0.70 & 0.785 & 0.786 & 0.909 & 0.867 & 0.960 & 0.99 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\paragraph{Consequence: evaluate fidelity where decisions are made}
-Aggregate cross-validation measures fidelity over the logged
-configuration distribution, whereas a recommendation system acts on a
-subset selected by its surrogate and the operator's constraints. We
-refer to accuracy on that induced subset as \emph{selection-conditioned
-fidelity}. The per-category confirmation shows that reliability is
-adequate when the protocol matches the HPO objective; the pooled
-protocol must not be used for heterogeneous multi-category deployments.
-The supported design rules are therefore to match the confirmation
-protocol to the HPO objective, test fidelity on configurations selected
-by representative queries, confirm final candidates with the underlying
-model, and define and calibrate review-budget objectives per category
-for heterogeneous product types.
+\paragraph{No-HPO reference at equal budget}
+To test whether the search itself added value, we retrained a reference
+configuration without HPO (pretrained \texttt{wide\_resnet50\_2},
+layers \texttt{l2\_l3}, input $256$ with centre crop $0.875$, coreset
+ratio $0.101$, one neighbour, max reduction, $1{,}024$ patches per
+image, full training set, no corruption) on the four categories at the
+HPO budget $\beta = 0.495$. The reference reaches test F1 $0.867$ and
+AUROC $0.960$, against $0.786$ and $0.909$ for the retrained HPO optimum
+(logged $0.820$, re-measured validation $0.809$) and $0.787$ for the mean recommendation (Table~\ref{tab:per-category}); it is better at every budget from $0.2$ to $0.7$ (by $0.03$--$0.09$), and the HPO optimum is better only at $\beta = 0.1$ (by $0.04$). On the HPO objective itself the two
+are indistinguishable: validation F1 is $0.812$ for the reference and
+$0.809$ for the optimum, and the top tenth of the log (roughly a
+thousand trials) lies within $0.80$--$0.82$. The search converged on a
+plateau of the validation objective that the objective cannot resolve,
+and the test difference reflects which point of that plateau
+generalises. In this run (one seed for the optimum and for the reference) and on these four categories, HPO did not improve on the untuned reference configuration, and the recommendations, which inherit the
+plateau through the surrogate, do not either; capsule is the weakest
+category (candidate F1 $0.624$ against $0.813$ for the reference). Our AUROC is below published PatchCore values because the memory bank is subsampled to at most $1{,}024$ patches per image, half of the official test images are held out for validation, and no ensemble is used; the reference configuration comes within $0.01$--$0.02$ of them on bottle, capsule, and hazelnut, but $0.09$ below on cable ($0.905$ against $0.99$), a gap we have not decomposed and for which no run with an unrestricted memory bank exists.
+
+\paragraph{F1 is bounded by the review-budget rule}
+On validation exactly $m_{\beta}$ images are reviewed, so F1 is bounded
+for any ranker: with pooled anomaly prevalence $p = 0.70$ and
+$\beta = 0.495$, a perfect ranker reaches $2\beta/(\beta+p) = 0.827$
+and a random ranker $2\beta p/(\beta+p) = 0.580$; the first is a hard ceiling, the second a reference point, since an anti-correlated ranker scores lower. The HPO optimum
+($0.809$) and the reference ($0.812$) both sit near this ceiling, and
+the top of the log selects $\beta$ at the top of its grid because F1
+under this rule increases with $\beta$ up to the prevalence, which is
+why the review budget carries $75\%$ of the surrogate's SHAP mass on
+MVTec (Section~\ref{subsec:surrogate-fidelity}). Test F1 is not bounded
+in the same way because the validation-calibrated threshold flags a
+free number of test images, which is how the reference's test F1
+($0.867$) exceeds the validation ceiling. Two consequences follow. The
+$0.70$ target lies roughly midway between random and perfect ranking
+and is a modest target. And MVTec and Proditec F1 are not comparable at face value: re-weighting the MVTec test positives and negatives to Proditec's prevalence ($0.345$) at the fixed validation-calibrated threshold, the HPO optimum scores $0.752$ and the reference $0.845$. Threshold-free AUROC and
+prevalence-matched F1 should accompany review-budget F1 whenever
+datasets are compared.
+
+\paragraph{Consequence: the MVTec objective is degenerate at the HPO budget}
+F1 runs from $0.58$ for a random ranker to a ceiling of $0.83$, the top tenth of the log lies within
+$0.80$--$0.82$, $R^2$ collapses to $0.098$ without the review budget,
+all 24 candidates sit at $\beta = 0.495$--$0.500$, and the reference
+beats the candidate mean in every category
+(Table~\ref{tab:per-category}). MVTec therefore supports the protocol
+and objective lessons of this section, not a claim of recommendation
+value: the surrogate is reliable on the subset a query selects, while
+the objective itself limits what any recommendation can achieve. The
+design rules that follow are to match the confirmation protocol to the
+HPO objective, to report AUROC and prevalence-matched F1 next to
+review-budget F1, to compare against an untuned reference and the
+in-band share of the log before attributing value to HPO, to confirm
+final candidates with the underlying model, and to calibrate
+review-budget thresholds per category for heterogeneous product types.
 
 \subsection{Sensitivity to the Factual Configuration}
 \label{subsec:multi-factual}
 
-The main method comparison (Section~\ref{subsec:cf-comparison}) uses one
-factual configuration per dataset (the primary anchor, the best logged
-trial on each dataset: MVTec F1 $0.820$, 99.97th log percentile;
-Proditec F1 $0.908$, 99.97th log percentile). As an auxiliary
-anchor-sensitivity analysis, we repeated generation under a common
-target-band query (\texttt{target\_band}
-$[0.75,0.95]$, free soft controls, $K=8$) at five factual anchors drawn
-from each log to span the target distribution (the trials nearest the
-50th, 70th, 85th, and 95th percentiles of validation F1, plus the best
-trial), covering the two fast methods, DiCE and \textsc{LogTopK}
-($80$ additional surrogate-level candidates per dataset, no additional
-retraining); ACFX was excluded because of its two-orders-of-magnitude
-higher generation cost. Confirmation of two candidates per anchor--method cell
-was performed for all five anchors on both datasets.
+The main method comparison uses one factual configuration per dataset:
+the primary anchor, which is the best logged trial on both datasets
+(Section~\ref{subsec:protocol}). As an anchor-sensitivity analysis we
+repeated generation under a common target-band query
+(\texttt{target\_band} $[0.75,0.95]$, free soft controls, $K=8$) at
+five factual anchors spanning the log (the trials nearest the 50th,
+70th, 85th, and 95th percentiles of validation F1, plus the best trial)
+for the two fast methods, DiCE and \textsc{LogTopK}; ACFX was excluded
+because of its generation cost. For every anchor--method cell the three
+top-ranked candidates, i.e.\ those an operator would be shown first,
+were retrained ($60$ retrainings, seed 42, per-category protocol on
+MVTec), and a candidate is verified when its confirmed test F1 meets
+the query minimum of $0.75$.
 
-Surrogate-level query satisfaction remains $100\%$ in every anchor--method
-combination, so the post-processing and validation layer is robust to
-the starting point. The confirmation rate (F1 $\geq 0.75$) on MVTec is
-$80\%$ for \textsc{LogTopK} and $87\%$ for DiCE pooled across all
-anchors; on Proditec it is $100\%$ for both methods. The primary anchor
-(best logged trial) achieves the highest confirmation rates on both
-datasets.
-
-\textsc{LogTopK} returns the same top-scoring logged configurations at
-every anchor (constant $\bar{F}_1$ $0.815$ on MVTec, $0.897$ on
-Proditec), so its \emph{primary-anchor} distance is $1.41$ and $0.22$;
-the full anchor sweep produces distances ranging $1.41$--$5.65$ on
-MVTec and $0.18$--$3.83$ on Proditec as the anchor moves away from the
-best trial. DiCE adapts locally, trading a lower score near weak
-anchors ($\bar{F}_1$ $0.781$--$0.814$ and $0.832$--$0.893$) for
-smaller distances near strong ones (down to $0.69$ and $0.09$).
+Surrogate-level query satisfaction is $100\%$ in every cell. On
+Proditec all $30$ candidates are verified; on MVTec $12/15$
+\textsc{LogTopK} and $13/15$ DiCE candidates are, with per-anchor
+counts (p50, p70, p85, p95, best) of $2, 3, 2, 2, 3$ and $2, 2, 3, 3,
+3$ of $3$. All five failures are marginal ($0.728$--$0.749$ against
+$0.75$), all $60$ candidates verify on validation F1, and verification
+does not track the anchor (Spearman correlation between anchor
+percentile and validation error $0.48$ on MVTec, $0.00$ on Proditec,
+$n = 30$). One caveat: \textsc{LogTopK} returns the same top-scoring
+logged configurations at every anchor (constant surrogate F1 $0.820$
+and $0.898$), so its $15$ cells per dataset are five seeded
+replications of three configurations rather than fifteen independent
+candidates, and only its distance to the factual varies with the anchor
+($1.41$ at the best trial to about $6$ at the median trial on MVTec;
+$0.22$ to $3.9$ on Proditec). DiCE adapts to the anchor, trading a
+lower surrogate score near weak anchors ($\bar{F}_1$ $0.787$--$0.815$
+and $0.858$--$0.895$) for smaller distances near strong ones (down to
+$0.43$ and $0.01$).
 
 \subsection{Generation versus Log Retrieval under Constrained Queries}
 \label{subsec:retrieval-comparison}
 
-We tested generation beyond the log with twelve structured queries (ten
-base and two dataset-relative quantile variants) at three factual anchors
-per dataset. They cover
-broad, tight, absolute, quantile, one-sided, relative, combined, and
-infeasible constraints. We compare DiCE with \textsc{LogTopK}, which
-ranks query-satisfying logged configurations by surrogate score, and
-\textsc{NearestFeasible}, which ranks them by the mixed-type distance
-of Eq.~\ref{eq:mixed-distance}. As a simple baseline, \textsc{RecordedTopK}
-filters the log by the query constraints and ranks remaining trials by
-their \emph{recorded} F1 rather than the surrogate prediction; it
-represents a filter-and-sort strategy that does not use the surrogate
-at all. For DiCE we report raw counts before repair or domain snapping
-and final query satisfaction. Because \textsc{LogTopK} is surrogate-ranked,
-this experiment tests generation beyond the log, not surrogate ranking
-against the recorded trial F1.
+We tested generation beyond the log with twelve structured queries
+(broad, tight, absolute, quantile, one-sided, relative, combined, and
+infeasible constraints) at three factual anchors per dataset, comparing
+DiCE with \textsc{LogTopK} (query-satisfying logged configurations
+ranked by surrogate score), \textsc{NearestFeasible} (ranked by the
+distance of Eq.~\ref{eq:mixed-distance}), and \textsc{RecordedTopK}, a
+filter-and-sort baseline that ranks by \emph{recorded} F1 and does not
+use the surrogate at all. For DiCE we report raw counts before repair
+and domain snapping as well as final query satisfaction.
 
 Three findings summarise the suite. First, in every query cell where
-any method produced query-satisfying candidates, the retrieval baselines
-did as well, and DiCE satisfied no query that retrieval could not;
-conversely, the absolute tight band $[0.85, 0.90]$, the relative
+any method produced query-satisfying candidates, the retrieval
+baselines did as well, and DiCE satisfied no query that retrieval could
+not; conversely, the absolute tight band $[0.85, 0.90]$, the relative
 budget-reduction query, and the combined tight query were infeasible on
 MVTec for \emph{all} methods, generation included, because the surrogate
-assigns no configuration a score in the requested region. Second,
-\textsc{RecordedTopK} matches \textsc{LogTopK} in coverage (both $100\%$
-of answerable cells on MVTec at the full log density), and the mean
-Jaccard overlap between the two methods' returned sets is $0.26$ on
-MVTec and $0.15$ on Proditec; \textsc{RecordedTopK}'s mean confirmed F1
-gain over \textsc{LogTopK} is $-0.003$ on MVTec and $+0.002$ on
-Proditec, so both strategies select candidates of comparable quality
-when the log is dense. Third, main-model confirmation of the top candidates
-under the tight quantile band (two per method per dataset, twelve
-additional PatchCore retrainings) shows retrieval matching or slightly
-exceeding generation in confirmed quality (Table~\ref{tab:retrieval-confirmed}).
+assigns no configuration a score in the requested region ($13$ of $36$
+query--anchor cells are answerable on MVTec, $22$ on Proditec). Second,
+\textsc{RecordedTopK} answers the same cells as \textsc{LogTopK} and
+returns sets of comparable recorded quality: the mean Jaccard overlap
+between the two methods' returned sets is $0.26$ on MVTec and $0.15$ on
+Proditec, and the mean recorded F1 of the returned sets differs by
+$-0.003$ and $+0.002$, so surrogate ranking neither helps nor hurts
+retrieval when the log is dense. Third, main-model confirmation of the
+top candidates under the tight quantile band (two per method per
+dataset, twelve retrainings, per-category protocol on MVTec) shows retrieval no worse than generation in confirmed quality; all differences in Table~\ref{tab:retrieval-confirmed} are below the $0.02$ noise floor.
 
 Across this suite, off-log generation does not increase feasible-query
-coverage, and both surrogate-ranked and recorded-F1-ranked retrieval
-give comparable top-candidate quality. We read this as a
-coverage-conditioned deployment result rather than a general ranking of
-counterfactual methods: for the two logs studied here, retrieval is the
-appropriate first-stage policy because it stays within previously
-evaluated configurations without sacrificing coverage or confirmed
-quality. Generation remains useful when retrieval returns too few
-feasible, local, or diverse alternatives, a regime not observed in
-these dense logs that should be tested under deliberately reduced
-coverage. Because logged status did not guarantee confirmation under
-every query, a retrieve-first policy reduces unsupported search but
-does not replace main-model confirmation.
+coverage, and surrogate-ranked, recorded-F1-ranked, and distance-ranked
+retrieval give comparable top-candidate quality. For these two logs, retrieval is therefore the appropriate first-stage policy, and because \textsc{RecordedTopK} performs like \textsc{LogTopK}, the surrogate is not needed for retrieval on dense logs; it matters for generation and for scoring configurations outside the log. Because logged status did not guarantee confirmation under every query, retrieval reduces unsupported search but does not replace main-model confirmation.
 
 \begin{table}[!t]
 \centering
 \footnotesize
 \caption{Confirmed generation-versus-retrieval comparison under the
-tight quantile band (top two candidates per method; means of surrogate
-and confirmed PatchCore F1 and their gap).}
+tight quantile band (top two candidates per method at the p85 anchor;
+seed 42; per-category protocol on MVTec; means of surrogate and
+confirmed PatchCore test F1, their gap, and test AUROC).}
 \label{tab:retrieval-confirmed}
 \setlength{\tabcolsep}{2pt}
-\begin{tabular}{@{}lp{0.22\columnwidth}rrr@{}}
+\begin{tabular}{@{}lp{0.22\columnwidth}rrrr@{}}
 \toprule
-Dataset & Method & Surrogate F1 & Confirmed F1 & Gap \\
+Dataset & Method & Surrogate F1 & Confirmed F1 & Gap & AUROC \\
 \midrule
-MVTec    & DiCE            & 0.802 & 0.793 & $-0.009$ \\
-MVTec    & \textsc{LogTopK}         & 0.808 & 0.793 & $-0.015$ \\
-MVTec    & \textsc{Nearest\-Feasible} & 0.800 & 0.801 & $+0.000$ \\
+MVTec    & DiCE            & 0.802 & 0.771 & $-0.030$ & 0.919 \\
+MVTec    & \textsc{LogTopK}         & 0.808 & 0.789 & $-0.020$ & 0.922 \\
+MVTec    & \textsc{Nearest\-Feasible} & 0.800 & 0.773 & $-0.027$ & 0.901 \\
 \midrule
-Proditec & DiCE            & 0.896 & 0.876 & $-0.020$ \\
-Proditec & \textsc{LogTopK}         & 0.898 & 0.888 & $-0.010$ \\
-Proditec & \textsc{Nearest\-Feasible} & 0.891 & 0.882 & $-0.009$ \\
+Proditec & DiCE            & 0.896 & 0.871 & $-0.025$ & 0.969 \\
+Proditec & \textsc{LogTopK}         & 0.898 & 0.890 & $-0.007$ & 0.977 \\
+Proditec & \textsc{Nearest\-Feasible} & 0.891 & 0.883 & $-0.008$ & 0.975 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\paragraph{Coverage as a function of log density}
+We subsampled each log to $50$, $25$, $10$, and $5\%$ of its trials
+(three draws each; spread given as the standard deviation across
+draws). \textsc{LogTopK} returns a full set of eight candidates for all
+answerable MVTec cells down to $25\%$ of the log and for $0.77$ of them
+at $10$ and $5\%$ (no spread); on Proditec the share is $0.86$ from
+$100$ down to $10\%$ and $0.77 \pm 0.08$ at $5\%$. At least one
+candidate is returned for every answerable MVTec cell down to $10\%$
+($0.92 \pm 0.13$ at $5\%$) and for $86$--$91\%$ of Proditec cells at
+every reduced density; \textsc{RecordedTopK} behaves the same within
+$0.05$. DiCE's full-set share does not degrade with density but is
+lower on Proditec throughout ($0.61$--$0.68$); on MVTec it is
+$0.79$--$0.90$ (spread up to $0.12$) and exceeds retrieval's only at
+$10\%$ and below. Operationally, full eight-candidate coverage needs
+about a quarter of the MVTec log ($\approx 2{,}500$ trials) and a tenth
+of the Proditec log ($\approx 300$ trials); below that retrieval returns
+partial sets, and generation is a useful fallback on MVTec but not on
+Proditec.
 
 \subsection{Computational Cost and Reuse}
 \label{subsec:compute-cost}
 
 We distinguish the cost of one surrogate prediction from the complete
 interaction. Table~\ref{tab:compute-cost} compares mean PatchCore
-confirmation time, surrogate latency over 200 warmed-up single-row
-queries, and the measured CPU-only interaction including parsing,
-candidate production, and explanation. The complete-interaction range
-sums measured parse, anchor-scoring, generation, ranking, and
-explanation times per method; the two language-model stages were timed
-over the 40 labelled utterances of Section~\ref{subsec:parser-eval}.
-Their dataset-independent cost sets the common lower bound, while
-method-specific generation sets the upper bound. No power telemetry
-was collected, so energy and CO$_2$ estimates are not reported.
+retraining time per candidate in the frozen confirmation run (four
+per-category models per MVTec candidate), surrogate latency over 200
+warmed-up single-row queries, the retrieval step of \textsc{LogTopK}
+and \textsc{RecordedTopK} on cached scores, and the complete
+interaction including parsing, candidate production, and explanation.
+The interaction range sums measured parse, anchor-scoring, generation,
+ranking, and explanation times per method; the two language-model
+stages were timed over the 40 labelled utterances of
+Section~\ref{subsec:parser-eval} with the local 3B model, once on CPU and once on a GPU in bf16. No
+power telemetry was collected, so energy and CO$_2$ estimates are not
+reported.
 
 \begin{table}[!t]
 \centering
 \footnotesize
-\caption{Component and complete-interaction wall-clock costs. The
-eight-retraining and interaction-plus-confirmation rows are derived from
-the measured means to provide matched multi-alternative comparators.}
+\caption{Component and complete-interaction wall-clock costs.
+Retraining times are per candidate from the frozen three-seed
+confirmation run; derived rows use the measured means. ``Break-even
+$K$'' is the number of alternatives at which one interaction costs as
+much as $K$ sequential retrainings (retrieval or DiCE $\mid$ ACFX). LM
+denotes the language model.}
 \label{tab:compute-cost}
 \setlength{\tabcolsep}{2pt}
-\begin{tabular}{@{}p{0.54\columnwidth}rr@{}}
+\begin{tabular}{@{}p{0.56\columnwidth}rr@{}}
 \toprule
 Quantity & MVTec & Proditec \\
 \midrule
-PatchCore retraining (s)              & 30.8   & 67.1   \\
-Surrogate prediction (ms)             & 2.15   & 2.05   \\
-Component speed-up                    & $14{,}306\times$ & $32{,}720\times$ \\
-Sequential eight retrainings (s)      & 246.4  & 536.8  \\
-Eight-candidate interaction (s)       & 141.4--241.2 & 141.4--252.8 \\
-Interaction + one confirmation (s)   & 172.2--272.0 & 208.5--319.9 \\
+PatchCore retraining per candidate (s)         & 57.8  & 46.5 \\
+Surrogate prediction (ms)                      & 2.15  & 2.05 \\
+Retrieval step, LogTopK / RecordedTopK (ms)    & 1.4   & 1.4 \\
+Sequential eight retrainings (s)               & 462   & 372 \\
+Eight-candidate interaction, CPU LM (s)        & 141--258 & 141--241 \\
+Eight-candidate interaction, GPU LM (s)        & 6.6--124 & 6.6--107 \\
+Interaction + one confirmation, CPU LM (s)     & 199--316 & 188--288 \\
+Break-even $K$, CPU LM                         & 2.4 $\mid$ 4.5 & 3.0 $\mid$ 5.2 \\
+Break-even $K$, GPU LM                         & 0.11 $\mid$ 2.1 & 0.14 $\mid$ 2.3 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The isolated surrogate component is four orders of magnitude faster
-than one retraining, but parsing, candidate production, and explanation
-dominate complete-interaction latency. One eight-candidate interaction
-therefore takes longer than one PatchCore retraining. For the intended
-screening task, however, the matched unit is a set of alternatives. At
-the measured mean costs on the evaluated single-workstation hardware,
-sequentially retraining eight configurations
-would take $246.4$\,s on MVTec and $536.8$\,s on Proditec, whereas the
-interaction screens eight in $141.4$--$241.2$\,s and
-$141.4$--$252.8$\,s, respectively. This corresponds to a conditional
-screening advantage of $1.02$--$1.74\times$ on MVTec and
-$2.12$--$3.80\times$ on Proditec. If one selected candidate is then
-confirmed, the total remains below eight sequential retrainings for all
-Proditec routes and for the faster MVTec candidate producers, but not
-for the slowest MVTec route. This is an amortised wall-clock result for
-multi-alternative screening, not an equivalence between surrogate
-predictions and confirmed scores. No energy or CO$_2$ conclusion is
-drawn without power telemetry.
+The surrogate and retrieval components are four orders of magnitude
+faster than one retraining, but with a CPU language model parsing and
+explanation dominate, so one eight-candidate interaction takes longer
+than one retraining. The matched unit for screening is a set of
+alternatives: eight sequential retrainings take $462$\,s on MVTec and
+$372$\,s on Proditec, whereas the interaction screens eight in
+$141$--$258$\,s and $141$--$241$\,s, a conditional advantage of
+$1.8$--$3.3\times$ and $1.5$--$2.6\times$. The framework is clearly
+advantageous once the operator wants at least three alternatives
+(break-even $K \approx 2.4$--$3.0$ for retrieval and DiCE) or, with a
+GPU language model, for any query ($K \approx 0.1$). ACFX is the exception: at $100$--$117$\,s per eight-candidate call it breaks even only at
+$K \approx 4.5$--$5.2$ on CPU and is unsuitable for interactive use.
+Confirming the selected candidate adds one retraining and leaves every
+route below eight sequential retrainings. This is an amortised
+wall-clock result for multi-alternative screening, not an equivalence
+between surrogate predictions and confirmed scores; the HPO log itself
+($77$ and $42$ GPU-hours) is a sunk cost of the optimisation that the
+interface reuses, and no energy or CO$_2$ conclusion is drawn without
+power telemetry.
 
 \subsection{Evaluation of the Conversational Parser}
 \label{subsec:parser-eval}
 
-The utterance-to-structured-query pipeline was previously assessed only
-end-to-end through the user study. We add a direct evaluation on 40 labelled operator utterances covering
-all three objective types, absolute and relative constraints,
-percentage and decimal units, alternative-count extraction (including
-number words), fixed-value snapping, decoy numbers, paraphrase pairs,
-and deliberately infeasible or out-of-domain requests.
-Two front-ends are scored against field-level gold annotations: the
-one deployed during the user study (\texttt{qwen/qwen-2.5-7b-instruct}
-via OpenRouter, \texttt{llm\_only\_with\_repair} parser, greedy
-decoding, temperature 0), and the released version, which adds a
-factual-aware prompt with worked examples, coercion of one-sided
-constraint phrasings, and one error-aware retry, keeping schema,
-validator, repair, and fallback layers identical. Scoring is exact at
-the field level after canonical snapping, with a documented
-semantic-equivalence variant that credits operationally identical
-encodings; fallback outputs receive no credit under either scoring.
+We evaluate the parser directly on 40 labelled operator utterances
+covering all three objective types, absolute and relative constraints,
+percentage and decimal units, alternative-count extraction, fixed-value
+snapping, decoy numbers, paraphrase pairs, and infeasible or
+out-of-domain requests. Two front-ends are scored against field-level
+gold annotations: the study-time front-end
+(\texttt{qwen/qwen-2.5-7b-instruct} through OpenRouter,
+\texttt{llm\_only\_with\_repair} parser, greedy decoding) and the
+released front-end (Qwen2.5-3B-Instruct run locally, with a
+factual-aware prompt, worked examples, coercion of one-sided phrasings,
+and one error-aware retry); schema, validator, repair, and fallback
+layers are identical. Scoring is exact at the field level after
+canonical snapping, with a semantic variant that credits operationally
+identical encodings; fallback outputs receive no credit, although for
+three utterances (including the out-of-domain requests) the gold query
+equals the fallback default.
 
 Table~\ref{tab:parser-eval} summarises the results. The study-time
-front-end achieved $7.5\%$ exact full-query accuracy on the evaluation
-benchmark and fell back for $55\%$ of utterances. The revised front-end
-raises first-attempt acceptance to $72.5\%$, cuts fallback to $22.5\%$,
-and reaches $60\%$ exact ($62.5\%$ semantic) accuracy; exact accuracy
-among accepted JSON outputs is $77\%$. Both front-ends score $0\%$ on
-relative constraints such as ``10\% less review effort'': the
-seven-billion-parameter model cannot reliably perform arithmetic against
-the current configuration, so these requests trigger the explicit
-fallback. This matches the user study, where condition-B participants
-needed most attempts on baseline-relative Task~3 ($3.1$ per task,
-compared with $1.75$ and $1.42$ on absolute Tasks~1 and~2) because
-iteration, anchoring, and overlay resolved relative requests. The
-$19/72$ study attempts that are numerically unfaithful without being
-flagged as fallback underscore that workflow iteration compensated for
-parser limitations; the task-success results of Section~\ref{sec:user-study}
-reflect this complete loop, not one-shot parsing.
-Although the released front-end handles absolute requests substantially
-better, $40\%$ of labelled utterances are still not parsed exactly.
-The parser should therefore extract the relative field, direction, and
-quantity, then resolve the arithmetic deterministically before candidate
-production.
+front-end fell back on $55\%$ of utterances. Because the study
+interface fixed $K = 3$, we report exact accuracy on the fields it
+used (objective, training fraction, review budget, corruption): $15\%$
+of utterances and $6$ of the $18$ schema-valid outputs, the other $12$
+being wrong in at least one of those fields, most often through a
+spurious fixed constraint; including the alternative count, which this
+front-end extracted correctly for only $7.5\%$ of utterances, exact
+accuracy is $2.5\%$. An accepted output was therefore not a reliable
+signal of a correct parse. The released front-end raises first-attempt
+acceptance to $72.5\%$, cuts fallback to $22.5\%$, and reaches $60\%$
+exact accuracy ($62.5\%$ excluding $K$, $65\%$ semantic), with $25$ of
+$31$ accepted outputs exact on the fields the interface uses. Both
+front-ends score $0\%$ on relative constraints such as ``10\% less
+review effort'': neither model reliably performs arithmetic against the
+current configuration. The live study matches. We call a parse \emph{unfaithful} when it
+contains a numeric value the utterance did not state, and
+\emph{incomplete} when it drops a value the utterance did state. The fallback never fired in the live session, yet $25$ of the $72$ parses were incomplete or unfaithful: all $19$ unfaithful parses fell in the baseline-relative Task~3 ($20$ of its $34$ utterances used relative phrasing), and values were dropped in $5$ Task-1 and $11$ Task-3 parses ($10$ parses were both unfaithful and incomplete, $9$ only unfaithful, $6$ only incomplete). Of the $25$, $17$ returned zero options, a visible failure, and $8$ ($3$ in Task~1, $5$ in Task~3) returned a fluent list for a query the participant had not asked; three of those led to invalid selections. The
+task-success results of Section~\ref{sec:user-study} therefore reflect
+the complete repair-and-iteration loop, not one-shot parsing. The
+parser should extract the relative field, direction, and quantity and
+resolve the arithmetic deterministically; a post-hoc overlay that does
+so recovers the gold budget bound for $14$ of the $20$ relative study
+utterances, but it was designed after inspecting them and is not
+held-out evidence.
 
 \begin{table}[!t]
 \centering
 \footnotesize
-\caption{Labelled parser evaluation (40 utterances, \texttt{qwen-2.5-7b-instruct}).
-``Accepted@1'' = model JSON schema-valid on the first attempt; fallback
-outputs score zero. The user study ran on the study-time front-end; the
-revised front-end is the released version.}
+\caption{Labelled parser evaluation (40 utterances). Study-time:
+\texttt{qwen-2.5-7b-instruct} through OpenRouter as deployed in the user study. Released:
+Qwen2.5-3B-Instruct, local. ``Accepted@1'' = schema-valid JSON on the
+first attempt. Fallback outputs score zero. The study interface fixed $K = 3$, so the rows excluding $K$ describe the fields the live session used.}
 \label{tab:parser-eval}
 \setlength{\tabcolsep}{2.5pt}
 \begin{tabular}{@{}p{0.62\columnwidth}rr@{}}
 \toprule
-Metric & Study-time & Revised \\
+Metric & Study-time & Released \\
 \midrule
-Accepted@1 (\%)                    & 45.0 & 72.5 \\
-Fallback rate (\%)                 & 55.0 & 22.5 \\
-Objective type accuracy (\%)       & 35.0 & 77.5 \\
-Objective value accuracy (\%)      & 7.5  & 70.0 \\
-Constraint fidelity, train fraction (\%) & 7.5 & 75.0 \\
-Constraint fidelity, review budget (\%)  & 10.0 & 72.5 \\
-Constraint fidelity, corruption (\%)     & 7.5 & 75.0 \\
-$K$ extraction accuracy (\%)       & 82.5 & 87.5 \\
-Exact full query (\%)              & 7.5  & 60.0 \\
-Exact $\mid$ accepted (\%)         & 16.7 & 77.4 \\
-Exact, relative subset (\%)        & 0.0  & 0.0 \\
-Exact, paraphrase subset (\%)      & 16.7 & 66.7 \\
+Accepted@1 (\%)                          & 45.0 & 72.5 \\
+Fallback rate (\%)                       & 55.0 & 22.5 \\
+Objective type accuracy (\%)             & 45.0 & 75.0 \\
+Objective value accuracy (\%)            & 42.5 & 70.0 \\
+Constraint fidelity, train fraction (\%) & 27.5 & 75.0 \\
+Constraint fidelity, review budget (\%)  & 17.5 & 72.5 \\
+Constraint fidelity, corruption (\%)     & 45.0 & 75.0 \\
+$K$ extraction accuracy (\%)             & 7.5  & 87.5 \\
+Exact full query, all fields (\%)         & 2.5  & 60.0 \\
+Exact full query, excluding $K$ (\%)      & 15.0 & 62.5 \\
+Semantic full query (\%)                 & 2.5  & 65.0 \\
+Exact $\mid$ accepted (\%)               & 5.6  & 77.4 \\
+Accepted but wrong, excluding $K$ (count) & 12 of 18 & 6 of 31 \\
+Exact, relative subset (\%)              & 0.0  & 0.0 \\
+Exact, paraphrase subset (\%)            & 0.0  & 66.7 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1588,85 +1432,56 @@ Exact, paraphrase subset (\%)      & 16.7 & 66.7 \\
 \label{sec:user-study}
 % =======================================================================
 
-The proposed framework is intended to support human decision-making
-during configuration selection, not only to generate query-satisfying
-counterfactual alternatives. We therefore conducted a user evaluation
-to examine whether participants could select machine-learning
-configurations under quality and deployment-oriented constraints, and
+We conducted a user evaluation to examine whether participants could
+select configurations under quality and deployment constraints and
 whether the conversational interface supported comparison of
-alternatives and understanding of configuration trade-offs. The study
-was run with computer-science master's students rather than industrial
-operators; it therefore tests whether the interface makes
-constraint-based configuration selection tractable for
-technically literate non-specialists, which is a necessary but not
-sufficient condition for deployment with production operators
-(Section~\ref{subsec:limitations}).
+alternatives. The participants were computer-science master's students
+rather than industrial operators, so the study tests whether
+constraint-based selection is tractable for technically literate
+non-specialists, a necessary but not sufficient condition for
+deployment (Section~\ref{subsec:limitations}).
 
 \subsection{Study Design}
 \label{subsec:study-design}
 
 The study used a between-subjects design with two conditions: (A) an
-application programming interface (API) baseline, using the pipeline
-through its Python API in a Jupyter
-notebook with criteria in code, and (B) the conversational interface,
-with natural-language criteria and textual explanations alongside
-tabular results. Both conditions used the same pipeline: anchors were
-selected from the log (Section~\ref{subsec:interface}), candidates were
-generated under the constraints, scored by the surrogate, and merged
-into a presented top-$K$. The conditions differed only in how criteria
-were expressed and results presented.
+application programming interface (API) baseline, in which the
+pipeline is driven from a Jupyter notebook with criteria in code, and
+(B) the conversational interface, with natural-language criteria and
+textual explanations alongside tabular results. Both used the same
+pipeline (anchors from the log, candidates generated under the
+constraints, scored by the surrogate, merged into a top-$K$) and
+differed only in how criteria were expressed and results presented.
 
 Under the university requirements applicable to this minimal-risk,
 course-based software-usability evaluation, no separate
-ethics-committee review was required. The responsible academic
-supervisor and the course coordinator authorised the study.
-Participation was voluntary and
-unpaid, did not affect course assessment, and participants could withdraw
-at any time. All participants received study information and provided
-written informed consent. Each session began
-by explaining that the tool, not the participant, was evaluated. Participants then
+ethics-committee review was required; the responsible academic
+supervisor and the course coordinator authorised the study. Because
+participants were students of a course taught at the authors'
+institution, we state the safeguards against perceived pressure
+explicitly: recruitment was an open invitation during a scheduled
+laboratory session, participation was voluntary and unpaid, declining
+or withdrawing at any time had no consequence, no grade component or
+course credit was attached, and the data were pseudonymised before
+analysis. All participants received study information and provided
+written informed consent, and each session began by explaining that
+the tool, not the participant, was being evaluated. Participants then
 completed three configuration-selection tasks. In each task, they
 selected one final configuration and wrote a short justification
 explaining their choice. After completing the tasks, participants
 answered a short post-task questionnaire about their experience with
 the assigned system.
 
-Tasks~1 and~2 evaluated selection under \emph{absolute} constraints on
-predicted F1 score, training fraction, review budget, and corruption
-level. Task~3 evaluated selection under constraints defined
-\emph{relative} to a base configuration: participants had to select an
-alternative that preserved predicted F1 score while reducing review
-budget by at least 5\%.
-Table~\ref{tab:user-study-tasks} summarises the task requirements.
+Tasks~1 and~2 used \emph{absolute} constraints: Task~1 asked for
+predicted F1 in $[0.80, 0.92]$, training fraction in $[0.40, 0.70]$,
+review budget at most $0.40$, any corruption level; Task~2 for
+predicted F1 in $[0.78, 0.91]$, training fraction at most $0.60$,
+review budget at most $0.30$, corruption \texttt{none} or
+\texttt{mild}. Task~3 used constraints \emph{relative} to a base
+configuration: an alternative with predicted F1 not lower than the base
+and review budget at least 5\% lower.
 
-\begin{table*}[!tb]
-\centering
-\scriptsize
-\caption{Configuration-selection tasks used in the user evaluation.}
-\label{tab:user-study-tasks}
-\begin{tabular}{@{}p{0.07\textwidth}p{0.16\textwidth}p{0.70\textwidth}@{}}
-\toprule
-Task & Type & Requirement \\
-\midrule
-Task~1
-& Independent constraints
-& Select one configuration with predicted F1 score between 0.80 and
-  0.92, training fraction between 0.40 and 0.70, review budget at most
-  0.40, and any corruption level allowed. \\
-Task~2
-& Independent constraints
-& Select one configuration with predicted F1 score between 0.78 and
-  0.91, training fraction at most 0.60, review budget at most 0.30,
-  and corruption level equal to \texttt{none} or \texttt{mild}. \\
-Task~3
-& Baseline-relative constraints
-& Select one alternative compared with a base configuration. The
-  selected alternative must have predicted F1 score not lower than the
-  base configuration and review budget at least 5\% lower than the
-  base configuration. \\
-\bottomrule
-\end{tabular}
-\end{table*}
+
 
 The evaluation was exploratory, covering valid selection, completion
 time, perceived ease, and the Task-3 quality--effort trade-off, with
@@ -1676,19 +1491,13 @@ descriptive statistics only, given the sample size.
 \label{subsec:participants-measures}
 
 Twenty-two computer-science master's students participated (one
-condition-A participant's duplicated session was removed from the logs,
-leaving 22 unique participants across 10 API and 12
-conversational-interface sessions). All were enrolled in a
-computer-science master's programme and had completed coursework in
-machine learning, so they were familiar with model training and
-hyperparameters but were not industrial inspection operators;
-Section~\ref{subsec:limitations} discusses what this proxy population
-does and does not license. Participants were recruited during
-laboratory sessions; none was an author or involved in developing the
-system. Conditions were run in non-overlapping time blocks rather than
-randomised per-participant; we note this as a limitation
-(Section~\ref{subsec:limitations}). Beyond programme enrolment and
-prior machine-learning coursework, no demographic data were collected.
+condition-A participant's duplicated session was removed, leaving 10
+API and 12 conversational-interface sessions). All had completed
+machine-learning coursework, so they were familiar with model training
+and hyperparameters but were not inspection operators
+(Section~\ref{subsec:limitations}); none was an author or involved in
+developing the system. Conditions were run in non-overlapping time blocks on the same day (plus two condition-A sessions two weeks later) rather than randomised per participant, which we note as a limitation, and no demographic data beyond programme enrolment and
+prior coursework were collected.
 
 A task answer was
 counted as \emph{usable} if the session log contained an explicitly
@@ -1741,7 +1550,9 @@ solution-quality figures, under which the two conditions are within
 \footnotesize
 \caption{Task-level validity and selected-configuration summaries.
 ``Mean F1 (all)'' averages every recorded final answer including
-invalid ones; ``Mean F1 (valid)'' averages valid selections only.}
+invalid ones; ``Mean F1 (valid)'' averages valid selections only. The condition-A
+Task~1 all-answer mean (0.773) lies below the task's 0.80 lower bound
+because one invalid selection (predicted F1 0.08, review budget 0.045) is included; its written justification shows the task was misread, so it is a genuine selection, not a logging artefact. The valid-only mean is 0.851.}
 \label{tab:user-study-validity}
 \setlength{\tabcolsep}{2.5pt}
 \begin{tabular}{@{}llrrrrrrrr@{}}
@@ -1767,34 +1578,23 @@ and not directly comparable across conditions.
 \end{table*}
 
 \paragraph{Violation analysis}
-In condition B, Task~1 errors were caused by
-training fraction being outside the allowed range, suggesting that
-participants occasionally misread or deprioritised this constraint when
-focusing on F1 and review budget. In Task~3, the main issue was failure
-to satisfy the relative review-budget reduction requirement: two
-selections did not reduce the review budget by at least 5\%, and one
-selection had lower predicted quality than the base configuration. In condition A, violations were distributed across quality, training
-fraction, review budget, and the same-or-better-quality requirement in
-Task~3.
+Condition-B Task~1 errors were training fractions outside the allowed
+range; in Task~3 two selections did not reduce the review budget by at
+least 5\% and one had lower predicted quality than the base.
+Condition-A violations were spread across quality, training fraction,
+review budget, and the same-or-better-quality requirement in Task~3.
 
 \paragraph{Task~3 baseline-relative analysis}
-Task~3 was analysed separately because, unlike Tasks~1 and~2, its
-constraints are defined relative to a base configuration, the task
-form that most closely mirrors how counterfactual guidance would be
-used in practice. The base configuration had predicted F1 $=0.850$ and review budget
-$=0.375$. Relative to it, condition A achieved mean $\Delta F1 =
-0.026$ with a 15.20\% budget reduction (90.0\% valid, $n=10$) and
-condition B $\Delta F1 = 0.033$ with 3.76\% (81.82\% valid, $n=11$):
-condition B gained slightly more predicted quality while condition A
-cut review effort far more.
-
-Figure~\ref{fig:user-study-task3} visualises the quality--effort
-trade-off for Task~3. Valid selections should fall above $\Delta F1 =
-0$ and to the right of the 5\% budget-reduction threshold. The figure shows that several condition-B participants preserved or
-improved predicted quality but did not achieve sufficient budget
-reduction,
-suggesting that the interface's emphasis on quality maximisation came at
-the expense of satisfying the relative budget constraint.
+Task~3, whose constraints are relative to a base configuration
+(predicted F1 $0.850$, review budget $0.375$), is the form closest to
+how counterfactual guidance would be used. Condition A achieved mean
+$\Delta F1 = 0.026$ with a $15.2\%$ budget reduction ($90.0\%$ valid,
+$n=10$), condition B $\Delta F1 = 0.033$ with $3.8\%$ ($81.8\%$ valid,
+$n=11$): B gained slightly more predicted quality while A cut review
+effort far more. Figure~\ref{fig:user-study-task3} shows that several
+condition-B participants preserved or improved quality without
+sufficient budget reduction, so the interface's emphasis on quality came
+at the expense of the relative budget constraint.
 
 \begin{figure}[!t]
     \centering
@@ -1818,48 +1618,45 @@ indicators of perceived usability rather than as reliable effect
 estimates, given the sample sizes ($n_A = 9$, $n_B = 11$) and the
 between-subjects design.
 
+\paragraph{Over-reliance proxies}
+Over-reliance was not measured directly; three descriptive proxies from
+the condition-B logs bound it. Of the $32$ answers for which the
+interface displayed a ``balanced choice'' recommendation ($35$
+selections in total), $16$ followed it; all $35$ selected options were
+retrieved logged trials, because retrieval answered every query; and all four invalid selections were made while the interface stated
+that every displayed option met the parsed constraints. Three trace to a fluently confirmed parse that was incomplete (two Task-1 parses dropped the upper training-fraction bound) or unfaithful (one Task-3 parse); the fourth participant rewrote the $5\%$ reduction as an absolute budget that reduced it by less. In all four the interface confirmed the parsed query rather than the task.
+
 \subsection{Qualitative Analysis of Participant Justifications}
 \label{subsec:justification-analysis}
 
 To complement the quantitative results we analysed the short written
 justifications qualitatively, using a large language model as an
 automated judge \cite{zheng_judging_2023} to reduce confirmation bias.
-Anonymised justifications with condition, task, and
-selected-configuration metadata were submitted under a structured
-prompt covering attribute references, trade-off reasoning, condition
-differences, Task-3 what-if reasoning, and over-reliance on predicted
-F1, requiring descriptive analysis without overclaiming or identifying
-participants. The authors reviewed the summary for factual consistency
-with the raw comments; the model may still miss subtle patterns, and
-the output reflects the prompt's framing.
+The model was Claude Opus~5 (Anthropic), used through its interactive interface in a single session in July 2026 (the interface exposes no model snapshot identifier); the complete structured prompt and the
+anonymised comment bundle it received are released in the archive
+(\path{user_study/tables/qualitative_comments/}). The prompt requested
+descriptive analysis of attribute references, trade-off reasoning,
+condition differences, Task-3 what-if reasoning, and over-reliance on
+predicted F1, without overclaiming or identifying participants. Because
+the interactive interface does not expose a sampling temperature, the
+output is not bit-reproducible; the authors reviewed the summary for
+factual consistency with the raw comments, and the observations below
+are the model's reading of the comments, not measurements.
 
-\paragraph{Overall pattern}
-Across conditions and tasks, participants grounded choices in a small
-set of observable attributes: predicted F1, review budget, and, less
-often, training fraction and corruption level. They provided brief,
-outcome-oriented justifications (most often highest F1 or lowest
-budget) and a minority engaging in deliberative trade-off reasoning;
-justification length was marginally higher in condition B.
-
-\paragraph{Condition differences and design implications}
-The two conditions produced similar strategies with different framing:
-condition-A participants anchored on F1 maximisation, while
-condition-B participants more often referenced named options and the
-interface's ``balanced compromise'' framing, occasionally prioritising
-corruption level over F1. Three tentative design implications follow:
-secondary metrics (budget reduction, corruption robustness) should be
-scaffolded as first-class criteria; baseline-relative constraints need
-salient, continuously updated satisfaction feedback; and evaluative
-option labels should be used with care, since they may be accepted
-uncritically.
-
-\paragraph{Task~3 and baseline-relative reasoning}
-Task~3 elicited the most varied justifications: the \emph{relative}
-budget constraint led to at least two invalid selections believed to
-be valid, and several participants in both conditions optimised
-absolute F1 gain or the absolute budget value rather than the
-percentage reduction, suggesting that relative framing is cognitively
-less accessible than absolute comparisons.
+\paragraph{Findings}
+Participants grounded choices in a few attributes (predicted F1, review
+budget, less often training fraction and corruption level) with brief,
+outcome-oriented justifications; a minority reasoned about trade-offs.
+Condition-A participants anchored on F1 maximisation, condition-B
+participants more often cited named options and the interface's
+``balanced compromise'' framing. Task~3 elicited the most varied
+justifications: the relative constraint led to invalid selections
+believed to be valid, and several participants in both conditions
+optimised absolute F1 or the absolute budget rather than the percentage
+reduction. Tentative design implications: scaffold secondary metrics as
+first-class criteria, give baseline-relative constraints continuously
+updated satisfaction feedback, and use evaluative option labels with
+care, since they may be accepted uncritically.
 
 % =======================================================================
 \section{Discussion}
@@ -1869,126 +1666,140 @@ less accessible than absolute comparisons.
 \subsection{Interpreting the Two-Dataset Technical Results}
 \label{subsec:discussion-technical}
 
-The paired evaluation establishes a useful production result and the
-condition needed to trust it. On Proditec, all 24 recommendations meet
-their target after retraining under the per-category protocol, with
-mean confirmed F1 of $0.879$, gap of $-0.007$, and AUROC of $0.976$.
-On MVTec under the same per-category protocol (matching the HPO
-objective), 22/24 satisfy the target, mean confirmed F1 is $0.787$,
-and the gap is $-0.023$: the surrogate estimates hold once the
-confirmation protocol is aligned with the HPO objective. The original
-pooled protocol, which used a single model and threshold over all four
-categories, produced an apparent surrogate error of $-0.217$ F1 that
-dissolved under the correct per-category evaluation. Per-category
-AUROC of $0.912$ versus pooled $0.527$ shows that pooling categories
-with incommensurable anomaly-score scales damages the global ranking
-independently of any threshold. Together, the experiments support a
-concrete evaluation rule: match the confirmation protocol to the HPO
-objective, define review-budget thresholds per category for
-heterogeneous deployments, and complement global surrogate fidelity
-with confirmation on query-selected regions.
+The paired evaluation establishes a production result and the two
+conditions needed to trust it. On Proditec, all 24 recommendations meet
+their target after retraining (mean confirmed F1 $0.879$, gap $-0.007$,
+AUROC $0.976$). On MVTec, all 24 meet the target under the per-category
+protocol (mean $0.787$, gap $-0.023$); a single pooled threshold over the same models' concatenated scores measures a different quantity and shows an apparent gap of $-0.24$. The first condition is therefore that confirmation follows the optimisation objective. The second is that surrogate fidelity is not
+the same as HPO value: on these four MVTec categories, in the single run available, an untuned reference beats the HPO optimum and every recommendation at the HPO
+budget ($0.867$ against $0.786$ and $0.787$), because the review-budget
+objective at $\beta \approx 0.5$ and $70\%$ prevalence is bounded at
+$0.83$ and flat across the top of the log. A surrogate that faithfully reproduces such an objective faithfully reproduces its blind spot, so MVTec supports the protocol and objective lessons rather than a claim of recommendation value.
+Per-category AUROC of $0.913$ against pooled $0.527$ shows,
+independently of any threshold, that pooling categories with
+incommensurable score scales damages the global ranking. The two
+datasets use different objectives, prevalences ($0.70$ and $0.345$),
+log sizes, and anchors, so their comparison is descriptive, not
+controlled. 
 
 \subsection{Implications for Operator-Centred HPO}
 \label{subsec:discussion-operator}
 
 The user evaluation concerns the complete study-time workflow.
 Technically literate non-specialists produced high task validity in
-both conditions and reported greater ease of comparing options with the
-conversational interface (questionnaire score 4.36 vs.\ 3.44). Because
-the study-time parser achieved only $7.5\%$ exact full-query accuracy
-on the evaluation benchmark, these task results cannot be attributed
-to one-shot parsing; they reflect the combined interaction including
-repair, anchoring, presentation, fallback, and iteration.
-The $19/72$ study attempts that were numerically unfaithful without
-triggering a fallback show that the workflow succeeded in spite of
-parser limitations rather than because of accurate parsing. The present
-study does not isolate the contribution of each layer, but it shows why
-parser accuracy and workflow task success must be evaluated separately.
-Baseline-relative requirements were hardest in both conditions (Task~3
-per-task attempts: A $1.20$, B $3.09$), and quality maximisation
-sometimes displaced the requested budget reduction. The labelled parser
-test identifies a direct remedy: treat relative constraints as
-first-class objects, extract their field, direction, and quantity, and
-resolve the arithmetic deterministically. The revised parser and the
-target population of production operators are the next evaluation setting.
+both conditions; condition-B participants rated ease of comparing
+options higher (4.36 against 3.44), but no item survives Holm
+correction, assignment was by time block, and both conditions presented
+tabular results, so the difference is descriptive and cannot be
+attributed to conversational interaction rather than to the added
+summary and option labels. Because the study-time parser reached $15\%$
+exact accuracy on the fields the interface uses and $25$ of $72$ live parses were incomplete or unfaithful ($17$ visibly, $8$ as fluent lists), task success reflects the combined interaction (repair, anchoring, presentation, iteration) rather than one-shot parsing, and three of the four invalid condition-B selections trace to parses the interface fluently confirmed. Baseline-relative requirements drove condition-B
+attempt counts ($3.1$ per Task-3 answer against $1.4$--$1.8$ on the
+absolute tasks; condition-A counts measure API invocations and are not
+comparable). The direct remedy is to treat relative constraints as
+first-class objects and resolve their arithmetic deterministically; the
+revised parser and production operators are the next evaluation
+setting.
 
 \subsection{Limitations}
 \label{subsec:limitations}
 
 \paragraph{Scope of datasets and task}
-The evaluation covers one benchmark (four MVTec categories) and one
-production use case on a single architecture (PatchCore) with a fixed
-configuration space. The score-scale pathology is observed in the
-pooled four-category MVTec setting and not in Proditec; two datasets do
-not establish that this difference generalises to all multi-category
-and single-product deployments.
+The evaluation covers four MVTec categories and one production use case
+on a single architecture with a fixed configuration space; two datasets
+do not establish that the pooled score-scale pathology, seen on MVTec
+and not on Proditec, generalises to other multi-category or
+single-product deployments.
 
 \paragraph{Confirmation coverage}
-Confirmation covers all $24$ main candidates per dataset plus the $12$
-retrieval-comparison candidates, but the multi-anchor sweep is
-surrogate-level only and per-candidate variability rests on single
-confirmations with one seeded re-run each.
+Confirmation covers the 24 primary candidates per dataset under three
+seeds, the 12 retrieval-comparison candidates, the 60 anchor-sweep candidates, 96 logged trials (48 per dataset), and the MVTec no-HPO reference, but the anchor sweep, the retrieval comparison, and the reference use a single seed,
+and the Proditec recommendations all lie in a small neighbourhood of the
+best trial, so local fidelity is well tested and fidelity far from the
+anchor is tested only by the sweep.
 
 \paragraph{Language-model parsing reliability}
 The released front-end parses 60\% of labelled utterances exactly
-(77\% among accepted JSON outputs) and falls back on 22.5\%. Relative
-constraints fail entirely at the parser level. This is an addressable
-architecture limitation rather than a reason to delegate arithmetic to
-a larger language model: the parser can extract the quantity and
-reference field, after which deterministic code computes the bound.
-The user study used the earlier front-end ($7.5\%$ exact accuracy,
-$55\%$ fallback rate on the evaluation benchmark), so its results
-apply to the complete workflow, including repair, anchoring, overlay,
-fallback, and iteration, rather than to one-shot parsing.
+(77\% among accepted outputs) and falls back on 22.5\%; the study-time front-end parsed 15\% exactly on the fields the interface uses (2.5\% including the alternative count, which the interface fixed) and, when it returned schema-valid JSON, was wrong on those fields in 12 of 18 cases. Relative constraints fail entirely
+at the parser level in both. This is an addressable architecture
+limitation rather than a reason to delegate arithmetic to a larger
+language model: the parser can extract the quantity and reference
+field, after which deterministic code computes the bound. The
+user-study results apply to the complete workflow, including repair,
+anchoring, overlay, and iteration, rather than to one-shot parsing, and incomplete or unfaithful parses that are fluently confirmed (8 of 72 live attempts) are the safety-relevant failure mode of that workflow.
 
 \paragraph{User-study population}
-The participants were computer-science master's students, not
-industrial inspection operators. They are a proxy for reasoning about
-model quality, training data, and thresholds without being specialists
-in the deployed pipeline. Recruiting
-comparable numbers of production operators was not feasible for this
-study. They nonetheless differ from the target users in ways that plausibly
-matter: operators carry domain priors about defects and inspection
-cost, face real consequences for a wrong configuration, and may weigh
-review effort differently. The study therefore supports usability
-claims for technically literate non-specialists and motivates, rather
-than substitutes for, a planned operator-population study.
+The participants were computer-science master's students, a proxy for
+reasoning about model quality, training data, and thresholds, not
+industrial inspection operators, who carry domain priors about defects
+and inspection cost, face real consequences for a wrong configuration,
+and may weigh review effort differently. The study therefore supports
+usability claims for technically literate non-specialists and
+motivates, rather than substitutes for, a planned operator-population
+study.
 
 \paragraph{User-study scale and design}
-The user study is exploratory: $22$ participants across two conditions,
-descriptive statistics only, condition-specific logging of attempt
-counts, and voluntary questionnaire completion with a mild response
-imbalance ($n_A = 9$, $n_B = 11$). Conditions were run in
-non-overlapping time blocks, so condition assignment is not independent
-of recruitment timing. Demographic attributes beyond programme
-enrolment and prior machine-learning coursework were not collected, so
-their influence cannot be analysed. No questionnaire item survives Holm
-correction for five simultaneous comparisons. The results should be
-read as design evidence, not as confirmatory effect estimates.
+The study is exploratory: 22 participants across two conditions
+assigned by time block, descriptive statistics only, condition-specific
+logging of attempt counts, voluntary questionnaire completion with a
+mild imbalance ($n_A = 9$, $n_B = 11$), no demographic covariates, and
+no questionnaire item surviving Holm correction. The results are design
+evidence, not confirmatory effect estimates.
+
+\paragraph{Presentation confound and over-reliance}
+Condition B differs from condition A in input modality, in the textual
+summary, and in evaluative option labels, so the questionnaire
+differences cannot be attributed to conversational interaction alone.
+Over-reliance was not measured; the proxies of
+Section~\ref{subsec:user-study-results} (half of the selections
+following the recommended option; all invalid selections made under a
+fluent all-constraints-met message) motivate a dedicated study with
+manipulated recommendation quality.
+
+\paragraph{HPO value and the untuned reference}
+On MVTec, in the single run available, an untuned PatchCore reference outperforms the HPO optimum and all recommendations at the HPO budget (Section~\ref{subsec:gap-diagnosis}).
+On Proditec no reference run exists, so the positive result there
+(24/24 in band, all candidates near the best logged trial, whose logged
+F1 of $0.908$ re-measures at $0.904$) shows that surrogate and retrieval
+return what the log already contains, $43\%$ of which lies in the
+requested band, not that HPO or the recommendations beat an untuned reference. The
+framework cannot repair an objective whose top is a plateau bounded by
+the operating-point rule; recommendations drawn from such a log should
+be benchmarked against an untuned reference configuration before deployment.
 
 \paragraph{No surrogate support indicator}
-The MVTec results make the absence of a per-candidate reliability signal
-a substantive gap. The interface already computes mixed-type distance
-to the factual and logged status, so it could flag weakly supported
-candidates and recommend confirmation.
-Logged status alone is insufficient because the primary MVTec
-\textsc{LogTopK} candidates also show large gaps; a useful signal
-must combine support, local error, and target stability. Such a signal
-is not part of the evaluated system.
+The interface gives no per-candidate reliability signal. It already
+computes mixed-type distance to the factual and logged status, so it
+could flag weakly supported candidates and recommend confirmation.
+Logged status alone is insufficient: the primary MVTec \textsc{LogTopK}
+candidates are logged trials and were confirmed only once the protocol
+was corrected, and the anchor-sweep failures were marginal logged and
+generated candidates alike. A useful signal must combine support, local
+error, seed variability, and target stability; such a signal is not
+part of the evaluated system, and a Gaussian-process surrogate with
+calibrated intervals (Section~\ref{subsec:surrogate-fidelity}) is one
+route to it.
 
-\paragraph{Explanation faithfulness unevaluated}
-The parser is evaluated, but the generated textual explanations are
-not. Because they are produced from a structured payload, a
-mechanically checkable faithfulness suite (agreement with the
-candidate table, correct constraint status, tie preservation, no
-unsupported trade-offs) is feasible and is planned; until then, the
-explanations should be regarded as unverified presentation rather
-than validated evidence.
+\paragraph{Explanation faithfulness}
+The released interface renders explanations deterministically from the
+structured payload and appends a note that the text is generated
+automatically. The study-time interface additionally rephrased that
+template with the language model, and those texts were not audited at
+study time. A post-hoc numeric audit of the 51 polished explanations
+shown to participants found that 49 reproduced every number of the
+template exactly; two (both in Task~3) altered the figures, one omitting
+four small differences and one rendering a budget difference of $0.030$
+as $0.3$ and omitting two others. The audit covers numbers only, not
+comparative wording, so a mechanically checkable faithfulness suite
+(agreement with the candidate table, correct constraint status, tie
+preservation, no unsupported trade-offs) remains planned, and
+language-model rephrasing should be regarded as unverified presentation
+until it exists.
 
 \paragraph{Energy measurement}
-No component or end-to-end power telemetry was collected. Runtime is
-reported in Section~\ref{subsec:compute-cost}, but no energy or CO$_2$
-saving is claimed.
+No power telemetry was collected; runtime is reported in
+Section~\ref{subsec:compute-cost}, but no energy or CO$_2$ saving is
+claimed.
 
 % =======================================================================
 \section{Conclusion}
@@ -1997,54 +1808,43 @@ saving is claimed.
 
 This paper presented CF-XHPO, a framework that turns HPO logs into
 operator-centred what-if guidance for industrial visual anomaly
-detection. It combines surrogate modelling, constrained retrieval,
+detection by combining surrogate modelling, constrained retrieval,
 counterfactual generation, deterministic query validation, and a
-conversational interface. The evaluation confirms 60 selected
-configurations with PatchCore and demonstrates practical value on the
-Proditec production dataset: all 24 primary recommendations meet their
-target under the per-category protocol, with mean confirmed F1 of
-$0.879$, mean gap of $-0.007$, and test AUROC of $0.976$.
+conversational interface. Over 500 PatchCore retrainings confirm the evaluation. All 48 primary recommendations
+satisfy their surrogate-level queries and all 48 meet their targets after retraining (three-seed mean confirmed F1) under the protocol of the optimisation objective
+(mean confirmed F1 $0.879$ on Proditec and $0.787$ on MVTec, gaps
+$-0.007$ and $-0.023$).
 
 The evaluation also establishes how such guidance should be validated.
-All 48 primary recommendations satisfy their surrogate-level queries.
-Using the per-category protocol on MVTec (one model and threshold per
-category, matching the HPO objective), 22/24 meet the target with mean
-confirmed F1 $0.787$ and gap $-0.023$. The original pooled protocol
-produced an apparent surrogate error of $-0.217$ that dissolved under
-the correct per-category evaluation, confirming that the discrepancy
-was a protocol mismatch rather than a surrogate reliability problem.
-Pooling categories with incommensurable anomaly-score scales reduces
-per-category AUROC from $0.912$ to a pooled $0.527$, making one pooled
-threshold unsuitable for heterogeneous multi-category deployments. The
-resulting policy is concrete: match the confirmation protocol to the
-HPO objective, calibrate heterogeneous categories separately, evaluate
-fidelity on query-selected regions, and confirm final recommendations
-with the underlying model.
+A single pooled threshold over four categories measures a different quantity from the objective and shows an apparent gap of $-0.24$ for the same models; under the per-category protocol the surrogate predicts
+its target to within $0.001$. Pooling categories with incommensurable
+score scales reduces AUROC from $0.913$ to $0.527$, so heterogeneous
+deployments need per-category thresholds. And surrogate fidelity is not
+HPO value: the MVTec objective is degenerate at the HPO budget (F1
+bounded at $0.83$, the top tenth of the log within $0.80$--$0.82$) and
+an untuned reference reaches $0.867$ in a single run, above the HPO optimum and every recommendation, so MVTec supports the protocol and objective lessons
+rather than a claim of recommendation value, while Proditec, where
+$43\%$ of the log already lies in band and no reference was run, shows
+that retrieval returns what the log contains. The policy is to match the
+confirmation protocol to the objective, report threshold-free AUROC and
+the operating-point F1 bounds next to review-budget F1, benchmark
+against the untuned reference and the in-band share of the log, and
+confirm final recommendations with the underlying model.
 
-The supporting analyses translate these results into system-design
-choices. Constrained retrieval matches off-log generation on the tested
-dense logs, motivating a retrieve-first policy with generation reserved
-for insufficient coverage, proximity, or diversity. Complete
-interaction overhead is substantial but amortises across an
-eight-candidate screen, producing a clear wall-clock benefit on
-Proditec and on the faster MVTec routes under a sequential-retraining
-comparator. In the user study, both workflows support high task
-validity, while conversational participants report greater ease of
-option comparison. The parser evaluation separates this workflow-level
-result from one-shot parsing and identifies deterministic resolution of
-relative constraints as the immediate interface improvement. Together,
-these findings position CF-XHPO not as an automatic replacement for
-model evaluation, but as an empirically validated screening and
-decision-support layer over trials that an HPO process has already
-produced.
-
-Future work will define and calibrate the review-budget objective per
-category, resolve relative constraints deterministically before
-generation, surface a support indicator distinguishing logged from
-generated candidates, evaluate the factual faithfulness of the
-generated explanations, repeat the user evaluation with the released
-parser and with production operators, and extend confirmation across
-anchors, seeds, and further industrial use cases.
+Constrained retrieval matches off-log generation and a filter-and-sort baseline on the tested logs, so the surrogate is not needed for retrieval when the log is dense, motivating a retrieve-first policy, and the interaction overhead amortises from
+about three alternatives upward with a CPU language model. Both study
+workflows supported high task validity; questionnaire differences in
+favour of the conversational condition are descriptive and confounded
+with presentation, and the result was reached despite a parser that produced the exact query for $15\%$ of benchmark utterances on the fields the interface uses and parsed $25$ of $72$ live requests incompletely or unfaithfully, eight of them shown as fluent lists. CF-XHPO is therefore
+not a replacement for model evaluation but a screening and
+decision-support layer over trials an HPO process has already produced,
+whose value is bounded by the quality of that process. Future work will
+resolve relative constraints deterministically, surface a support
+indicator distinguishing confirmed, logged, and generated candidates,
+add a mechanically checked faithfulness suite for explanations, repeat
+the user evaluation with the released parser and with production
+operators, and extend confirmation across seeds, anchors, categories,
+and further industrial use cases.
 
 % =======================================================================
 \section*{Declaration of competing interest}
@@ -2064,21 +1864,16 @@ and take full responsibility for the publication.
 
 \section*{Data availability}
 The MVTec~AD benchmark is publicly available
-\cite{bergmann_mvtec_2019}. The Proditec dataset is proprietary
-industrial data and cannot be shared. All analysis code and derived
-data, together with a live demonstration of the conversational
-interface, are publicly archived; the repository and demonstration
-links are withheld here for double-blind review, are available to the
-editor and reviewers on request, and will be restored in the
-camera-ready version. The archive contains the optimisation-space
-definition, preprocessing and surrogate code, the candidate-production
-and retrieval implementations, the twelve-query suite, the parser
-prompts and the 40-utterance labelled parser-evaluation set,
-per-candidate confirmation results, the analysis notebooks, seeds, and
-a dependency list. Trial-level configuration and metric data are
-released for both use cases; only the proprietary Proditec images are
-withheld. The dataset-specific all-method metadata files also preserve
-each primary factual row identifier.
+\cite{bergmann_mvtec_2019}; the Proditec images are proprietary and
+cannot be shared. All code and derived data (optimisation logs,
+preprocessing and surrogate code, candidate-production and retrieval
+implementations, the twelve-query suite, parser prompts and the
+40-utterance evaluation set, per-candidate confirmation results, the
+review notebooks R00--R07 with their frozen result tables, seeds, and a
+dependency list), together with a live demonstration of the interface,
+are publicly archived; the links are withheld for double-blind review,
+are available to the editor and reviewers on request, and will be
+restored in the camera-ready version.
 
 \bibliographystyle{elsarticle-num}
 \bibliography{references}

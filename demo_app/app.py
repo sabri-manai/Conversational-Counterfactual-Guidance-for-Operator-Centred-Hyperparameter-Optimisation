@@ -896,7 +896,7 @@ def run_pipeline(
     explanation  = "No alternatives available."
     explain_path = None
     if summary_records and query_template:
-        explanation  = build_explanation(summary_records, query_template)
+        explanation  = build_explanation(summary_records, query_template) + "\n\n" + EXPLANATION_DISCLAIMER
         explain_path = export_dir / "option_explanations.txt"
         explain_path.write_text(explanation + "\n", encoding="utf-8")
 
@@ -966,6 +966,12 @@ def _rank_records(records: list[dict]) -> list[dict]:
         r["changed_feature_count"],
         r["cf_id"],
     ))
+
+
+EXPLANATION_DISCLAIMER = (
+    "Note: this summary is generated automatically from the option table above and has not been "
+    "audited for factual accuracy. Verify the values in the table before acting on them."
+)
 
 
 def build_explanation(summary_records: list[dict], query_template: dict) -> str:

@@ -3,25 +3,35 @@
 Code, data, and analysis notebooks accompanying the paper *"Conversational Counterfactual
 Guidance for Operator-Centred Hyperparameter Optimisation in Industrial Anomaly Detection"*
 (Sabri Manai, Szymon Bobek, Grzegorz J. Nalepa — Jagiellonian University; Horizon Europe PEER
-project). A live demonstration of the conversational interface is hosted separately at
-https://huggingface.co/spaces/smana/cf-xai-hpo.
+project), *Future Generation Computer Systems*. A live demonstration of the conversational
+interface is hosted separately at https://huggingface.co/spaces/smana/cf-xai-hpo.
 
-This is a cleaned, deduplicated release built from the project's working repository. Every
-notebook is organised around the two-dataset pipeline described in the paper (Section 3-4):
-optimisation-log collection → preprocessing → surrogate modelling → counterfactual candidate
-generation → real-model confirmation → cross-cutting diagnostics, plus the conversational
-interface/parser evaluation (Section 3.6/4.11) and the human-participant study (Section 5).
+## Where the paper's numbers come from
+
+Every number in the paper is taken from one frozen result artefact,
+[`review/outputs/frozen_numbers.json`](review/outputs/frozen_numbers.json), and the tables in
+[`review/outputs/tables/`](review/outputs/tables/). Both are produced by the reproduction notebooks
+`review/R00`–`R07` (see [`review/README.md`](review/README.md)), which read the committed logs,
+surrogates, and candidate files of `mvtec/` and `proditec/` and re-run every confirmation that the
+paper reports. The pipeline notebooks in `mvtec/`, `proditec/`, and `shared/` produce those inputs.
+
+One protocol note matters when reading the pipeline notebooks: the MVTec HPO objective trains one
+PatchCore model and one review-budget threshold **per category** and averages the four F1 scores
+(paper, Eq. 4). `mvtec/05_confirmation_evaluation.ipynb` confirms candidates with one pooled memory
+bank and one pooled threshold, which measures a different quantity. The paper's MVTec confirmation
+numbers therefore come from `review/R01` and `review/R02`, which use the per-category protocol; the
+pooled numbers appear in the paper only "for reference" (Table 4).
 
 ## Layout
 
 ```
 mvtec/        MVTec AD benchmark pipeline (4 categories: bottle, cable, capsule, hazelnut)
-proditec/     Proditec production use case
+proditec/     Proditec production use case (derived logs, features, and models; images are proprietary)
 shared/       Analyses that operate on both datasets together, and the conversational interface
-user_study/   Section 5 human-participant study: raw anonymised logs + analysis notebook
+user_study/   Section 5 human-participant study: pseudonymised logs + analysis notebook
+review/       Reproduction notebooks R00-R07, frozen result tables, figure script (source of all paper numbers)
 demo_app/     Streamlit source for the live HF Spaces demo (deployed separately)
-paper/        Submitted manuscript, decision letter with the reviews, revision plan, LaTeX source
-review/       Revision (FGCS-D-26-04298): audit + re-run notebooks R00-R07, outputs and run script (see review/README.md)
+paper/        LaTeX source of the manuscript (main.tex, references.bib, figures/)
 ```
 
 Each of `mvtec/` and `proditec/` is self-contained: the notebooks and their data artifacts
@@ -30,35 +40,36 @@ Each of `mvtec/` and `proditec/` is self-contained: the notebooks and their data
 `rglob`-based discovery expects. Run notebooks with their containing folder as the working
 directory (e.g. launch Jupyter from `mvtec/` to run `mvtec/01...06`).
 
-## Notebook → paper mapping
+## Paper → source mapping
 
-| Notebook | Produces | Paper linkage |
-|---|---|---|
-| `mvtec/01_data_collection.ipynb` | MVTec HPO log (9,976 COMPLETE trials) | Section 3.2/3.3, Section 4.2 |
-| `mvtec/02_preprocessing.ipynb` | Surrogate-ready MVTec table | Section 3.3 |
-| `mvtec/03_surrogate_modeling.ipynb` | CatBoost surrogate + dev-split benchmark | **Table 2** (dev-split rows), Section 3.4 |
-| `mvtec/04_candidate_generation.ipynb` | 24 MVTec candidates (DiCE/LogTopK/ACFX, K=8 each) | Section 3.5, Section 4.2 |
-| `mvtec/05_confirmation_evaluation.ipynb` | Real-PatchCore confirmation of the 24 candidates | **Table 3** (MVTec rows), Section 4.4-4.6 |
-| `mvtec/06_revision_diagnostics.ipynb` | Gap decomposition, per-category AUROC, anchor sensitivity | **Table 4**, **Figure 3**, Section 4.7-4.8 |
-| `proditec/01_data_collection.ipynb` | Proditec HPO log (2,999 COMPLETE trials) | Section 3.2/3.3, Section 4.2 |
-| `proditec/02_preprocessing.ipynb` | Surrogate-ready Proditec table | Section 3.3 |
-| `proditec/03_surrogate_modeling.ipynb` | CatBoost surrogate + dev-split benchmark | **Table 2** (dev-split rows) |
-| `proditec/04_candidate_generation.ipynb` | 24 Proditec candidates | Section 3.5, Section 4.2 |
-| `proditec/05_confirmation_evaluation.ipynb` | Real-PatchCore confirmation + retrieval-baseline confirmation (Section R) | **Table 3** (Proditec rows), **Table 5** (6 of 12 rows) |
-| `proditec/06_revision_diagnostics.ipynb` | Gap decomposition, anchor sensitivity | **Table 4** (Proditec column), Section 4.7-4.8 |
-| `shared/07_cross_dataset_revision_analysis.ipynb` | GroupKFold CV, duplication rate, 12-query suite, generation-vs-retrieval, end-to-end latency | Section 4.3 (primary R2), Section 4.9, **Table 5/6** |
-| `shared/08_final_results_export.ipynb` | Consolidated `final_results/` bundle | — |
-| `shared/09_conversational_interface_and_parser_eval.ipynb` | Conversational interface + **40-utterance labelled parser evaluation** | Section 3.6, **Table 7**, Section 4.11 |
-| `user_study/data_analysis.ipynb` | Task validity, completion time, questionnaire, qualitative-analysis evidence bundle | **Table 8/9**, **Figure 4**, Section 5 |
-| `demo_app/app.py` | Streamlit conversational-interface demo (source for the hosted HF Space) | Section 3.6 |
+| Paper item | Source |
+|---|---|
+| Table 1 (configuration space) | `objective()` in `*/01_data_collection.ipynb`; schema in `*/02_preprocessing.ipynb` |
+| Table 2 (surrogate ablation), §4.3 (SHAP, GP check, within-band R², rRMSE, winner's curse) | `review/R04_surrogate_diagnostics.ipynb` |
+| §4.3 development-split benchmark of 13 regressors | `*/03_surrogate_modeling.ipynb` |
+| §4.3 GroupKFold cross-validation, duplicate rate | `shared/07_cross_dataset_revision_analysis.ipynb` |
+| Candidate sets (24 per dataset, DiCE / LogTopK / ACFX) | `*/04_candidate_generation.ipynb` → `*/surrogate_pkl_cfs_metadata/*_counterfactuals/` |
+| §4.2 three-seed confirmation, noise floor, 96 logged trials re-run; Table 3; Figure 2 | `review/R02_frozen_table_rerun.ipynb`; distances checked in `review/R00_audit_repo_vs_paper.ipynb` |
+| Table 4 (protocol diagnosis), Table 5 (per-category MVTec, no-HPO reference, F1 bounds, prevalence-matched F1); Figure 3 | `review/R01_mvtec_per_category_confirmation.ipynb` |
+| §4.8 anchor sweep (60 retrainings); Table 6 (retrieval vs generation, confirmed) | `review/R03_anchors_and_baseline_confirmation.ipynb` |
+| §4.9 twelve-query suite | `shared/07_cross_dataset_revision_analysis.ipynb` (section S7) |
+| §4.9 RecordedTopK baseline, log-density sweep; Table 7 (cost, break-even K) | `review/R05_filter_sort_baseline_density_cost.ipynb` |
+| Table 8 (parser), study-time column | `review/R07_parser_eval_7b.ipynb` |
+| Table 8 (parser), released column; parser latency | `shared/09_conversational_interface_and_parser_eval.ipynb` |
+| §4.11 live parse audit, §5.3 over-reliance proxies, Table 9 attempt counts | `review/R06_user_study_audit.ipynb` |
+| Table 9 (task validity), questionnaire, completion time, §5.4 qualitative bundle | `user_study/data_analysis.ipynb` |
+| §6.3 numeric audit of the 51 study-time explanations | `review/audit_explanations.py` |
+| Figures 2–4 (as typeset) | `review/make_paper_figures.py` |
+| Figure 1 (framework overview) | `paper/figures/framework_overview.png` |
+| §3.6 conversational interface | `demo_app/app.py` (deployed), `shared/09` (offline front-end) |
 
 **Data Availability checklist** (as stated in the paper): the optimisation-space definition
 (`Table 1` — see the `objective()` functions in `01_data_collection.ipynb` and the schema in
 `02_preprocessing.ipynb`), preprocessing and surrogate code, the candidate-production and
 retrieval implementations, the twelve-query suite (`shared/07`, section S7), the parser prompts
 and the 40-utterance labelled parser-evaluation set (both inline in `shared/09`), per-candidate
-confirmation results (`*/surrogate_pkl_cfs_metadata/*_counterfactuals_evaluation/`), the
-analysis notebooks, seeds, and this dependency list are all included. Trial-level configuration
+confirmation results (`*/surrogate_pkl_cfs_metadata/*_counterfactuals_evaluation/`), the analysis and reproduction notebooks with their frozen result tables (`review/`), seeds,
+and this dependency list are all included. Trial-level configuration
 and metric data are released for both use cases; **only the proprietary Proditec images are
 withheld** (the Proditec pipeline notebooks reference them but the release ships only the
 derived logs, features, and models — see `proditec/01_data_collection.ipynb`'s header). MVTec AD
@@ -76,7 +87,7 @@ itself is public ([Bergmann et al. 2019](https://www.mvtec.com/company/research/
    this release, so its notebook will always take the "already collected" path here.
 2. `02_preprocessing` → `03_surrogate_modeling` → `04_candidate_generation` →
    `05_confirmation_evaluation` (per dataset; `05` retrains PatchCore 24 times — expect roughly
-   30-70 s per candidate, matching Table 6). Run `05`'s "Section R" cells (bottom of the
+   30-70 s per candidate, matching Table 7). Run `05`'s "Section R" cells (bottom of the
    notebook) after `shared/07`'s section S8 has produced `baseline_confirm_candidates_<ds>.csv`.
 3. `06_revision_diagnostics` (per dataset) — needs `05`'s confirmation CSV.
 4. `shared/07_cross_dataset_revision_analysis.ipynb` — run from `shared/` (or anywhere under
@@ -86,11 +97,13 @@ itself is public ([Bergmann et al. 2019](https://www.mvtec.com/company/research/
    Qwen2.5-3B-Instruct (or edit `MODEL_ID`/`LLM_MODEL_OPTIONS` for a CPU-friendly alternative).
    Writes `parser_eval_latency.json` to `shared/revision_outputs/`; copy that file into
    `mvtec/revision_outputs/` and `proditec/revision_outputs/` before re-running `shared/07`
-   section S11, so the end-to-end latency figures (Table 6) pick up the measured LLM latency
+   section S11, so the end-to-end latency figures (Table 7) pick up the measured LLM latency
    instead of falling back to `NaN`.
 6. `shared/08_final_results_export.ipynb` — run last; consolidates everything above into
    `final_results/`.
 7. `user_study/data_analysis.ipynb` — independent of steps 1-6; only needs `user_study/logs/`.
+8. `review/` — the reproduction notebooks that produce the paper's numbers; see
+   [`review/README.md`](review/README.md) for their order, cost, and environment variables.
 
 ## What was changed from the working repository
 
@@ -137,7 +150,7 @@ a small number of precise, verified edits — nothing was retyped from memory. I
   and no energy or CO2 saving is claimed* — the removed cells computed such figures from
   assumed, unmeasured power constants, and a consistency check on their own numbers showed the
   measured LLM parse/explain latency alone would make every method a net energy **cost**, not a
-  saving, under those assumptions. The legitimate, measured wall-clock **timing** (which Table 6
+  saving, under those assumptions. The legitimate, measured wall-clock **timing** (which Table 7
   does report as the "component speed-up" and "complete interaction range") is kept.
 - **Dropped dead/duplicate cells** (byte-identical duplicate diagnostic-plot cells, trailing
   empty cells) and **stripped all cell outputs** so the shipped notebooks are lightweight and
@@ -160,10 +173,9 @@ a small number of precise, verified edits — nothing was retyped from memory. I
 
 ## Known limitations (documented, not silently patched)
 
-- **MVTec TPE startup-trial count.** `mvtec/01_data_collection.ipynb` uses
-  `n_startup_trials=4000`; the Proditec collection notebook and the paper's stated protocol both
-  use 1,500. This is a property of the *already-collected* MVTec log (not re-run as part of this
-  release) and is left as an accurate record rather than edited retroactively.
+- **TPE startup-trial counts differ between the datasets.** `mvtec/01_data_collection.ipynb` uses
+  `n_startup_trials=4000` and the Proditec notebook 1,500; the paper (Section 4.2) reports both
+  values. They are properties of the already-collected logs and are left unchanged.
 - **`shared/07` section S7's `INCLUDE_ACFX_IN_SUITE` flag** is not wired to the query-suite job
   list (there is no effect either way); ACFX is excluded from the 12-query sweep for cost
   reasons regardless, consistent with Section 4.9 of the paper.
