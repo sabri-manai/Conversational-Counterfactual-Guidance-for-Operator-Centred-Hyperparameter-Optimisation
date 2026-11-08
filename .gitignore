@@ -47,3 +47,9 @@ _private/
 *.synctex.gz
 *.fdb_latexmk
 *.fls
+
+# ---- Response letter (review correspondence, never publish) ----
+paper/response_letter.*
+
+# ---- Editorial Manager upload staging (contains author-identifying files) ----
+uploaded/

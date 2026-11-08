@@ -31,7 +31,7 @@ shared/       Analyses that operate on both datasets together, and the conversat
 user_study/   Section 5 human-participant study: pseudonymised logs + analysis notebook
 review/       Reproduction notebooks R00-R07, frozen result tables, figure script (source of all paper numbers)
 demo_app/     Streamlit source for the live HF Spaces demo (deployed separately)
-paper/        LaTeX source of the manuscript (main.tex, references.bib, figures/)
+paper/        LaTeX source of the manuscript (main.tex, references.bib, highlights.tex, figures/)
 ```
 
 Each of `mvtec/` and `proditec/` is self-contained: the notebooks and their data artifacts
@@ -48,7 +48,7 @@ directory (e.g. launch Jupyter from `mvtec/` to run `mvtec/01...06`).
 | Table 2 (surrogate ablation), §4.3 (SHAP, GP check, within-band R², rRMSE, winner's curse) | `review/R04_surrogate_diagnostics.ipynb` |
 | §4.3 development-split benchmark of 13 regressors | `*/03_surrogate_modeling.ipynb` |
 | §4.3 GroupKFold cross-validation, duplicate rate | `shared/07_cross_dataset_revision_analysis.ipynb` |
-| Candidate sets (24 per dataset, DiCE / LogTopK / ACFX) | `*/04_candidate_generation.ipynb` → `*/surrogate_pkl_cfs_metadata/*_counterfactuals/` |
+| Candidate sets (24 per dataset, DiCE / LogTopK / ACFX; the notebooks and candidate files label LogTopK as `CFNOW`, a legacy name, not the CFNOW tabu-search algorithm) | `*/04_candidate_generation.ipynb` → `*/surrogate_pkl_cfs_metadata/*_counterfactuals/` |
 | §4.2 three-seed confirmation, noise floor, 96 logged trials re-run; Table 3; Figure 2 | `review/R02_frozen_table_rerun.ipynb`; distances checked in `review/R00_audit_repo_vs_paper.ipynb` |
 | Table 4 (protocol diagnosis), Table 5 (per-category MVTec, no-HPO reference, F1 bounds, prevalence-matched F1); Figure 3 | `review/R01_mvtec_per_category_confirmation.ipynb` |
 | §4.8 anchor sweep (60 retrainings); Table 6 (retrieval vs generation, confirmed) | `review/R03_anchors_and_baseline_confirmation.ipynb` |
@@ -121,11 +121,11 @@ a small number of precise, verified edits — nothing was retyped from memory. I
   it referenced all five without importing any of them anywhere in the file, so it could not
   have run in a fresh kernel; the imports are now present. Both GPU-selection cells fall back to
   GPU 0 or CPU if the hardcoded second GPU device does not exist.
-- **Removed** two early-stage prototype folders (ACFX/DiCE/CFNOW experiments on generic tabular
-  benchmarks — Adult income, breast cancer, phishing, bank marketing, fit with XGBoost) that
-  predate and are unconnected to the PatchCore/MVTec/Proditec pipeline the paper reports. No
-  notebook in this release references them, and the paper does not report results on those
-  datasets.
+- **Moved out** the conference-paper material (XGBoost tuned on Adult Income, Breast Cancer,
+  Phishing Websites, and Bank Marketing, with DiCE and CFNOW counterfactuals). It predates and is
+  unconnected to the PatchCore/MVTec/Proditec pipeline reported here. Its code and data are now
+  released in their own repository, named after that paper:
+  <https://github.com/sabri-manai/Counterfactual-User-Guidance-for-Improving-Transparent-Hyperparameter-Tuning>.
 - **Removed** superseded duplicate/conference-era notebooks once a later, more complete version
   was confirmed to be the one the rest of the pipeline actually consumes (e.g. an early DiCE-only
   candidate-generation notebook superseded by the 3-method version; an early single-method
